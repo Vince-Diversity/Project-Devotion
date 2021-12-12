@@ -1,0 +1,5 @@
+# Godot ignores
+.import/
+
+# IDE ignores
+.vscode/

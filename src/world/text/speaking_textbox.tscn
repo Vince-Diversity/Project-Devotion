@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/world/text/textbox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/world/text/speaking.gd" type="Script" id=2]
+[ext_resource path="res://assets/sfx/world/voice_basic.wav" type="AudioStream" id=3]
+
+[node name="SpeakingTextbox" instance=ExtResource( 1 )]
+
+[node name="Content" parent="." index="0"]
+text = "Find your way to Cirruseng."
+script = ExtResource( 2 )
+
+[node name="SpeechPlayer" type="AudioStreamPlayer" parent="Content" index="1"]
+stream = ExtResource( 3 )
+bus = "Sfx"
