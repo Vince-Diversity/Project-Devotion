@@ -12,12 +12,17 @@ func _process(_delta):
 	if Input.is_action_pressed("ui_menu"):
 		menu.get_popup().popup()
 
-func init_menu():
-	menu.connect("save_game", self, "_on_Menu_save")
-	menu.connect("show_objective", self, "_on_Menu_objective")
-	
-func _on_Menu_save():
-	emit_signal("save_game")
+func save():
+	var save_dict = {
+		"filename" : get_filename(),
+		"parent" : get_parent().get_path(),
+#		"parent" : "/root/Loader/Game",
+	}
+	return save_dict
 
-func _on_Menu_objective():
-	print("showing objective...")
+func init_menu():
+	pass
+#	menu.connect("save_game", self, "_on_Menu_save")
+	
+#func _on_Menu_save():
+#	emit_signal("save_game")

@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://source/main_menu/main_menu.gd" type="Script" id=1]
+[ext_resource path="res://source/main_menu/main_menu_button.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/visuals/main_menu/title.png" type="Texture" id=3]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -9,3 +11,40 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Title" type="VBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 300.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Title"]
+position = Vector2( 0, 150 )
+texture = ExtResource( 3 )
+offset = Vector2( 512, 0 )
+
+[node name="Options" type="VBoxContainer" parent="."]
+margin_top = 300.0
+margin_right = 1024.0
+margin_bottom = 600.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoadDevMode" parent="Options" instance=ExtResource( 2 )]
+margin_top = 98.0
+margin_bottom = 148.0
+focus_neighbour_bottom = NodePath("../LoadGame")
+text = "Load Dev Mode"
+
+[node name="LoadGame" parent="Options" instance=ExtResource( 2 )]
+margin_top = 152.0
+margin_bottom = 202.0
+focus_neighbour_top = NodePath("../LoadDevMode")
+text = "Load Game"
+
+[connection signal="pressed" from="Options/LoadDevMode" to="." method="_on_LoadDevMode_pressed"]
+[connection signal="pressed" from="Options/LoadGame" to="." method="_on_LoadGame_pressed"]

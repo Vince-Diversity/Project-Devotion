@@ -1,9 +1,19 @@
 extends Control
+class_name MainMenu
 
-onready var game_scene = preload("res://source/game/game.tscn")
+signal enter_game(save_id)
+
+onready var game_scene := preload("res://source/game/game.tscn")
+onready var focus := $Options/LoadDevMode
 
 func _ready():
-	load_game()
+	init_options()
 
-func load_game():
-	get_tree().change_scene_to(game_scene)
+func init_options():
+	focus.grab_focus()
+
+func _on_LoadDevMode_pressed():
+	emit_signal("enter_game", Keywords.Aspect.TIME)
+
+func _on_LoadGame_pressed():
+	print("no game to load...")

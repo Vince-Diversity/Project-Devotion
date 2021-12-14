@@ -1,37 +1,20 @@
 extends Node2D
+class_name Game
 
-const save_path = "user://savegame"
-onready var place_scene: PackedScene = preload("res://source/game/world/cirruseng/cirruseng.tscn")
+var save_path: String
+#var save_path := "user://savegame_temporal.save"
+#onready var place_scene: PackedScene = preload("res://source/game/world/cirruseng/cirruseng.tscn")
 var place: Overworld
 
 func _ready():
-	load_game()
-	load_world()
+	Events.connect("save_game", self, "_on_World_save")
+#	pass
+#	load_world()
 
-func load_game():
-	var save_game = File.new()
-	if not save_game.file_exists(save_path):
-		return
-	save_game.open(save_path, File.READ)
-	while save_game.get_position() < save_game.get_len():
-		var node_data = parse_json(save_game.get_line())
-		for i in node_data.keys():
-			if i=="loader":
-				continue
-			place_scene = load(node_data["place"])
-	save_game.close()
-
-func load_world():
-	place = place_scene.instance()
-	place.connect("save_game", self, "_on_World_save")
-	add_child(place)
-
-func save():
-	var save_dict = {
-		"loader" : get_filename(),
-		"place" : place.get_filename(),
-	}
-	return save_dict
+#func load_world():
+#	place = place_scene.instance()
+#	place.connect("save_game", self, "_on_World_save")
+#	add_child(place)
 
 func _on_World_save():
 	var save_game = File.new()

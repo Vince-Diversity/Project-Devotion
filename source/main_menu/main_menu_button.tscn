@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://source/main_menu/main_menu_button.gd" type="Script" id=1]
+[ext_resource path="res://assets/visuals/main_menu/main_menu_arrow.png" type="Texture" id=2]
+
+[node name="MainMenuButton" type="TextureButton"]
+margin_right = 1024.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+button_mask = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+bbcode_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FocusVisual" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[connection signal="focus_entered" from="." to="." method="_on_MainMenuButton_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_MainMenuButton_focus_exited"]

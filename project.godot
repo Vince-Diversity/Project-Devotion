@@ -40,6 +40,16 @@ _global_script_classes=[ {
 "path": "res://addons/dialogic/Other/DialogicUtil.gd"
 }, {
 "base": "Node2D",
+"class": "Game",
+"language": "GDScript",
+"path": "res://source/game/game.gd"
+}, {
+"base": "Control",
+"class": "MainMenu",
+"language": "GDScript",
+"path": "res://source/main_menu/main_menu.gd"
+}, {
+"base": "Node2D",
 "class": "Overworld",
 "language": "GDScript",
 "path": "res://source/game/world/overworld.gd"
@@ -51,18 +61,29 @@ _global_script_class_icons={
 "DialogicDefinitionsUtil": "",
 "DialogicResources": "",
 "DialogicUtil": "",
+"Game": "",
+"MainMenu": "",
 "Overworld": ""
 }
 
 [application]
 
 config/name="ProjectDevotion"
-run/main_scene="res://source/main_menu/main_menu.tscn"
+run/main_scene="res://source/loader.tscn"
 config/icon="res://icon.png"
 
 [audio]
 
 default_bus_layout="res://source/resources/project/default_bus_layout.tres"
+
+[autoload]
+
+Keywords="*res://source/autoloads/keywords.gd"
+Events="*res://source/autoloads/events.gd"
+
+[debug]
+
+gdscript/warnings/return_value_discarded=false
 
 [editor_plugins]
 
@@ -72,6 +93,8 @@ enabled=PoolStringArray( "res://addons/dialogic/plugin.cfg" )
 
 icon=false
 main=false
+warning=false
+warnings=false
 
 [input]
 
