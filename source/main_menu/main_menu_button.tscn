@@ -4,8 +4,8 @@
 [ext_resource path="res://assets/visuals/main_menu/main_menu_arrow.png" type="Texture" id=2]
 
 [node name="MainMenuButton" type="TextureButton"]
-margin_right = 1024.0
-margin_bottom = 50.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 rect_min_size = Vector2( 0, 50 )
 button_mask = 0
 script = ExtResource( 1 )
@@ -13,17 +13,36 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="RichTextLabel" parent="."]
+[node name="PointerMargin" type="MarginContainer" parent="."]
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-bbcode_enabled = true
+anchor_bottom = 0.5
+margin_left = 300.0
+margin_top = -12.0
+margin_right = -300.0
+margin_bottom = 12.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FocusVisual" type="Sprite" parent="."]
+[node name="TextureRect" type="TextureRect" parent="PointerMargin"]
+margin_right = 424.0
+margin_bottom = 24.0
 texture = ExtResource( 2 )
+
+[node name="LabelMargin" type="CenterContainer" parent="PointerMargin"]
+margin_right = 424.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PointerMargin/LabelMargin"]
+margin_left = 157.0
+margin_top = 5.0
+margin_right = 266.0
+margin_bottom = 19.0
+text = "Main Menu Label"
 
 [connection signal="focus_entered" from="." to="." method="_on_MainMenuButton_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_MainMenuButton_focus_exited"]

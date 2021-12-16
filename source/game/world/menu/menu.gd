@@ -1,9 +1,10 @@
 extends MenuButton
 
-enum Options {SAVE}
-var label_dict = {Options.SAVE: "Save"}
+enum Options {SAVE, CANCEL}
+var label_dict = {Options.SAVE: "Save", Options.CANCEL: "Cancel"}
 
 func _ready():
+	get_popup().popup_exclusive = true
 	get_popup().connect("id_pressed", self, "_on_Menu_id_pressed")
 	init_items()
 
@@ -15,3 +16,4 @@ func init_items():
 func _on_Menu_id_pressed(id):
 	match id:
 		Options.SAVE: Events.emit_signal("save_game")
+		Options.CANCEL: pass

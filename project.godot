@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Character",
+"class": "Ally",
+"language": "GDScript",
+"path": "res://source/game/character/ally/ally.gd"
+}, {
+"base": "Node2D",
+"class": "Character",
+"language": "GDScript",
+"path": "res://source/game/character/character.gd"
+}, {
 "base": "Reference",
 "class": "DTS",
 "language": "GDScript",
@@ -49,12 +59,19 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/main_menu/main_menu.gd"
 }, {
-"base": "Node2D",
+"base": "Node",
 "class": "Overworld",
 "language": "GDScript",
-"path": "res://source/game/world/overworld.gd"
+"path": "res://source/game/world/overworld/overworld.gd"
+}, {
+"base": "Resource",
+"class": "SaveGame",
+"language": "GDScript",
+"path": "res://source/resources/save_game.gd"
 } ]
 _global_script_class_icons={
+"Ally": "",
+"Character": "",
 "DTS": "",
 "Dialogic": "",
 "DialogicBackgroundMusic": "",
@@ -63,7 +80,8 @@ _global_script_class_icons={
 "DialogicUtil": "",
 "Game": "",
 "MainMenu": "",
-"Overworld": ""
+"Overworld": "",
+"SaveGame": ""
 }
 
 [application]
@@ -71,6 +89,7 @@ _global_script_class_icons={
 config/name="ProjectDevotion"
 run/main_scene="res://source/loader.tscn"
 config/icon="res://icon.png"
+config/version="0"
 
 [audio]
 
@@ -80,10 +99,6 @@ default_bus_layout="res://source/resources/project/default_bus_layout.tres"
 
 Keywords="*res://source/autoloads/keywords.gd"
 Events="*res://source/autoloads/events.gd"
-
-[debug]
-
-gdscript/warnings/return_value_discarded=false
 
 [editor_plugins]
 
@@ -95,6 +110,8 @@ icon=false
 main=false
 warning=false
 warnings=false
+version=""
+Version=""
 
 [input]
 

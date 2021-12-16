@@ -13,8 +13,9 @@ __meta__ = {
 }
 
 [node name="Title" type="VBoxContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 300.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -300.0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -26,25 +27,29 @@ texture = ExtResource( 3 )
 offset = Vector2( 512, 0 )
 
 [node name="Options" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_top = 300.0
-margin_right = 1024.0
-margin_bottom = 600.0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LoadDevMode" parent="Options" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 98.0
+margin_right = 1024.0
 margin_bottom = 148.0
-focus_neighbour_bottom = NodePath("../LoadGame")
 text = "Load Dev Mode"
 
-[node name="LoadGame" parent="Options" instance=ExtResource( 2 )]
+[node name="NewGameDevMode" parent="Options" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 152.0
+margin_right = 1024.0
 margin_bottom = 202.0
-focus_neighbour_top = NodePath("../LoadDevMode")
-text = "Load Game"
+text = "New Game Dev Mode"
 
 [connection signal="pressed" from="Options/LoadDevMode" to="." method="_on_LoadDevMode_pressed"]
-[connection signal="pressed" from="Options/LoadGame" to="." method="_on_LoadGame_pressed"]
+[connection signal="pressed" from="Options/NewGameDevMode" to="." method="_on_NewGameDevMode_pressed"]

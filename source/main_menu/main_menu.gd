@@ -2,6 +2,7 @@ extends Control
 class_name MainMenu
 
 signal enter_game(save_id)
+signal create_dev_game
 
 onready var game_scene := preload("res://source/game/game.tscn")
 onready var focus := $Options/LoadDevMode
@@ -15,5 +16,5 @@ func init_options():
 func _on_LoadDevMode_pressed():
 	emit_signal("enter_game", Keywords.Aspect.TIME)
 
-func _on_LoadGame_pressed():
-	print("no game to load...")
+func _on_NewGameDevMode_pressed():
+	emit_signal("create_dev_game")

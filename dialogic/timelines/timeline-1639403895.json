@@ -1,6 +1,10 @@
 {
 	"events": [
 		{
+			"event_id": "dialogic_024",
+			"set_theme": "default-theme.cfg"
+		},
+		{
 			"character": "",
 			"event_id": "dialogic_001",
 			"portrait": "",
@@ -11,14 +15,6 @@
 			"event_id": "dialogic_001",
 			"portrait": "",
 			"text": "Also... I wished I could thank those who helped me."
-		},
-		{
-			"audio": "stop",
-			"audio_bus": "Master",
-			"event_id": "dialogic_030",
-			"event_name": "AudioEvent",
-			"file": "",
-			"volume": 0
 		}
 	],
 	"metadata": {

@@ -1,0 +1,27 @@
+[gd_scene format=2]
+
+[node name="StatusDisplay" type="VBoxContainer"]
+margin_right = 300.0
+margin_bottom = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CharacterStatus" type="HBoxContainer" parent="."]
+margin_right = 300.0
+margin_bottom = 14.0
+alignment = 1
+
+[node name="Label" type="Label" parent="CharacterStatus"]
+margin_left = 43.0
+margin_right = 103.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 325, 154 )
+text = "Character"
+
+[node name="ProgressBar" type="ProgressBar" parent="CharacterStatus"]
+margin_left = 107.0
+margin_right = 257.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 150, 0 )
+rect_pivot_offset = Vector2( 17, 132 )
