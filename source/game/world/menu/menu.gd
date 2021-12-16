@@ -5,7 +5,8 @@ var label_dict = {Options.SAVE: "Save", Options.CANCEL: "Cancel"}
 
 func _ready():
 	get_popup().popup_exclusive = true
-	get_popup().connect("id_pressed", self, "_on_Menu_id_pressed")
+	var err = get_popup().connect("id_pressed", self, "_on_Menu_id_pressed")
+	if err != OK: print("Error %s when pressing menu button"%err)
 	init_items()
 
 func init_items():

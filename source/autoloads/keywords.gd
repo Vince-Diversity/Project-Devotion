@@ -8,5 +8,3 @@ const aspect_descr = {
 	Aspect.MATTER: "material",
 	Aspect.TIME: "temporal",
 }
-
-enum SaveKey {OVERWORLD}

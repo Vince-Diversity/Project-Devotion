@@ -99,6 +99,7 @@ default_bus_layout="res://source/resources/project/default_bus_layout.tres"
 
 Keywords="*res://source/autoloads/keywords.gd"
 Events="*res://source/autoloads/events.gd"
+Utils="*res://source/autoloads/utils.gd"
 
 [editor_plugins]
 

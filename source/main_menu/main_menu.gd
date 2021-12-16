@@ -2,7 +2,7 @@ extends Control
 class_name MainMenu
 
 signal enter_game(save_id)
-signal create_dev_game
+signal enter_dev_mode(save_id)
 
 onready var game_scene := preload("res://source/game/game.tscn")
 onready var focus := $Options/LoadDevMode
@@ -14,7 +14,7 @@ func init_options():
 	focus.grab_focus()
 
 func _on_LoadDevMode_pressed():
-	emit_signal("enter_game", Keywords.Aspect.TIME)
+	emit_signal("enter_dev_mode", Keywords.Aspect.TIME)
 
-func _on_NewGameDevMode_pressed():
-	emit_signal("create_dev_game")
+func _on_LoadGame_pressed():
+	emit_signal("enter_game", Keywords.Aspect.TIME)

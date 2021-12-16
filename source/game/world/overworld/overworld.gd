@@ -1,10 +1,9 @@
 extends Node
 class_name Overworld
 
+var ally_paths: Array
 onready var allies = $Allies
 onready var menu = $Menu
-onready var SAVE_KEY = "overworld_"+Keywords.SaveKey.OVERWORLD
-var ally_paths: Array
 
 func _process(_delta):
 	if Input.is_action_pressed("ui_menu"):
@@ -17,12 +16,3 @@ func load_team():
 		ally_scene = load(i)
 		ally = ally_scene.instance()
 		allies.add_child()
-
-func save(save_game: SaveGame):
-	save_game.data[SAVE_KEY] = {
-		"filename" : get_filename(),
-		"parent" : get_parent().get_path(),
-	}
-
-func load(save_game: Resource):
-	pass
