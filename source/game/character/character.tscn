@@ -2,5 +2,13 @@
 
 [ext_resource path="res://source/game/character/character.gd" type="Script" id=1]
 
-[node name="Character" type="Node2D" groups=["Persist"]]
+[node name="Character" type="Node2D" groups=["Loadable"]]
 script = ExtResource( 1 )
+
+[node name="CharacterVisual" type="Node2D" parent="."]
+
+[node name="BodySprite" type="AnimatedSprite" parent="CharacterVisual"]
+
+[node name="HairSprite" type="AnimatedSprite" parent="CharacterVisual"]
+
+[node name="AccessoriesSprite" type="AnimatedSprite" parent="CharacterVisual"]

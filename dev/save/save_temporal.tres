@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://source/resources/save_game.gd" type="Script" id=1]
+[ext_resource path="res://source/resources/individual/individuals/shade.tres" type="Resource" id=2]
+[ext_resource path="res://source/resources/individual/individuals/shade2.tres" type="Resource" id=3]
+[ext_resource path="res://source/resources/individual/individuals/shade3.tres" type="Resource" id=4]
+
+[resource]
+script = ExtResource( 1 )
+game_version = "0"
+data = {
+"0_Game": {
+"party": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"place": "res://source/game/world/overworld/freegrounds/training_grounds.tscn"
+}
+}

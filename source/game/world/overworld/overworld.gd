@@ -1,18 +1,22 @@
-extends Node
+extends GameWorld
 class_name Overworld
 
-var ally_paths: Array
-onready var allies = $Allies
 onready var menu = $Menu
+onready var party = $Party
+onready var npcs = $NPCs
+
+func _ready():
+	init_party()
 
 func _process(_delta):
 	if Input.is_action_pressed("ui_menu"):
 		menu.get_popup().popup()
+	if Input.is_action_pressed("ui_accept"):
+		start_battle(npcs.get_node("NPCShade"))
 
-func load_team():
-	var ally_scene: PackedScene
-	var ally: Ally
-	for i in ally_paths:
-		ally_scene = load(i)
-		ally = ally_scene.instance()
-		allies.add_child()
+func init_party():
+	for ally in party_dict.values():
+		party.add_child(ally)
+
+func start_battle(npc: NPC):
+	npc.confirm_battle()
