@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://source/resources/main_menu/main_menu_button.gd" type="Script" id=1]
+[ext_resource path="res://source/main_menu/main_menu_button.gd" type="Script" id=1]
 [ext_resource path="res://assets/visuals/main_menu/main_menu_arrow.png" type="Texture" id=2]
 
 [node name="MainMenuButton" type="TextureButton"]

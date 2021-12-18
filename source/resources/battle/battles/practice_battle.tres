@@ -8,7 +8,7 @@
 
 [resource]
 script = ExtResource( 4 )
-foe1 = ExtResource( 1 )
-foe2 = ExtResource( 3 )
-foe3 = ExtResource( 5 )
+foe_1 = ExtResource( 1 )
+foe_2 = ExtResource( 2 )
+foe_3 = ExtResource( 5 )
 spectators = [ ExtResource( 1 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 2 ) ]

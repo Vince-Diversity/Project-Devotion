@@ -5,14 +5,14 @@ const game_save_dir := "user://save/"
 var save_dir: String
 var main_menu: MainMenu
 var game: Game
-onready var main_menu_scene := preload("res://source/resources/main_menu/main_menu.tscn")
+onready var main_menu_scene := preload("res://source/main_menu/main_menu.tscn")
 onready var game_scene := preload("res://source/game/game.tscn")
 
 var save_names = {
-	Keywords.Aspect.SPACE: "save_%s.tres" % Keywords.aspect_descr[Keywords.Aspect.SPACE],
-	Keywords.Aspect.ENERGY: "save_%s.tres" % Keywords.aspect_descr[Keywords.Aspect.ENERGY],
-	Keywords.Aspect.MATTER: "save_%s.tres" % Keywords.aspect_descr[Keywords.Aspect.MATTER],
-	Keywords.Aspect.TIME: "save_%s.tres" % Keywords.aspect_descr[Keywords.Aspect.TIME],
+	Kw.Aspect.SPACE: "save_%s.tres" % Kw.aspect_descr[Kw.Aspect.SPACE],
+	Kw.Aspect.ENERGY: "save_%s.tres" % Kw.aspect_descr[Kw.Aspect.ENERGY],
+	Kw.Aspect.MATTER: "save_%s.tres" % Kw.aspect_descr[Kw.Aspect.MATTER],
+	Kw.Aspect.TIME: "save_%s.tres" % Kw.aspect_descr[Kw.Aspect.TIME],
 }
 
 func _ready():

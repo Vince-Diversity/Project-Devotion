@@ -14,7 +14,8 @@ func init_options():
 	focus.grab_focus()
 
 func _on_LoadDevMode_pressed():
-	emit_signal("enter_dev_mode", Keywords.Aspect.TIME)
+	emit_signal("enter_dev_mode", Kw.Aspect.TIME)
 
 func _on_LoadGame_pressed():
-	emit_signal("enter_game", Keywords.Aspect.TIME)
+	emit_signal("enter_game", Kw.Aspect.TIME)
+	print("Game not ready...")

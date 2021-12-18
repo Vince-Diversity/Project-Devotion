@@ -5,7 +5,7 @@
 [ext_resource path="res://source/game/world/battle/narrative.gd" type="Script" id=3]
 [ext_resource path="res://source/game/world/battle/battle_mode.gd" type="Script" id=4]
 
-[node name="World" instance=ExtResource( 1 )]
+[node name="BattleMode" instance=ExtResource( 1 )]
 script = ExtResource( 4 )
 
 [node name="BattleUI" type="Control" parent="." index="0"]
@@ -68,6 +68,45 @@ __meta__ = {
 
 [node name="Spectators" type="Node2D" parent="." index="1"]
 
+[node name="SpecPos1" type="Position2D" parent="Spectators" index="0"]
+position = Vector2( 512, 60 )
+
+[node name="SpecPos2" type="Position2D" parent="Spectators" index="1"]
+position = Vector2( 462, 70 )
+
+[node name="SpecPos3" type="Position2D" parent="Spectators" index="2"]
+position = Vector2( 562, 70 )
+
+[node name="SpecPos4" type="Position2D" parent="Spectators" index="3"]
+position = Vector2( 412, 75 )
+
+[node name="SpecPos5" type="Position2D" parent="Spectators" index="4"]
+position = Vector2( 612, 75 )
+
+[node name="SpecPos6" type="Position2D" parent="Spectators" index="5"]
+position = Vector2( 362, 80 )
+
+[node name="SpecPos7" type="Position2D" parent="Spectators" index="6"]
+position = Vector2( 662, 80 )
+
 [node name="Opponents" type="Node2D" parent="." index="2"]
 
+[node name="FoePos1" type="Position2D" parent="Opponents" index="0"]
+position = Vector2( 190, 250 )
+
+[node name="FoePos2" type="Position2D" parent="Opponents" index="1"]
+position = Vector2( 230, 400 )
+
+[node name="FoePos3" type="Position2D" parent="Opponents" index="2"]
+position = Vector2( 200, 550 )
+
 [node name="Allies" type="Node2D" parent="." index="3"]
+
+[node name="AllyPos1" type="Position2D" parent="Allies" index="0"]
+position = Vector2( 834, 250 )
+
+[node name="AllyPos2" type="Position2D" parent="Allies" index="1"]
+position = Vector2( 794, 400 )
+
+[node name="AllyPos3" type="Position2D" parent="Allies" index="2"]
+position = Vector2( 824, 550 )

@@ -11,13 +11,18 @@ var party := {}
 onready var SAVE_KEY := Utils.gen_save_key(self)
 onready var save_path := save_dir.plus_file(save_name)
 onready var ally_scene := preload("res://source/game/character/ally/ally.tscn")
+onready var npc_scene := preload("res://source/game/character/npc/npc.tscn")
+onready var battle_scene := load("res://source/game/world/battle/battle_mode.tscn")
 
 func _ready():
 	init_saver()
 
 func init_saver():
-	var err = Events.connect("save_game", self, "_on_Events_save_game")
+	var err
+	err = Events.connect("save_game", self, "_on_Events_save_game")
 	if err != OK: print("Error %s when connecting saver" % err)
+	err = Events.connect("load_battle", self, "_on_NPC_load_battle")
+	if err != OK: print("Error %s when connecting battle commencer")
 
 func save(save_game: Resource):
 	save_game.data[SAVE_KEY] = {
@@ -62,3 +67,25 @@ func _on_Events_save_game():
 	var err = ResourceSaver.save(save_path, save_game)
 	if err != OK:
 		print("Error %s saving to %s" % [err, save_path])
+
+func _on_NPC_load_battle(battle: Resource):
+	var battle_mode = battle_scene.instance()
+	add_child(battle_mode)
+	var party_list = place.party.get_children()
+	var ally_pos_list = battle_mode.allies.get_children()
+	for i in party_list.size():
+		place.party.remove_child(party_list[i])
+		battle_mode.allies.get_node(ally_pos_list[i].name).add_child(party_list[i])
+	_load_battle_npc_helper(battle.get_opponents(), battle_mode.opponents)
+	_load_battle_npc_helper(battle.spectators, battle_mode.spectators)
+	battle_mode.commence_battle()
+	place.queue_free()
+	place = battle_mode
+
+func _load_battle_npc_helper(battle_role, battle_mode_list):
+	var npc
+	var pos_list = battle_mode_list.get_children()
+	for i in battle_role.size():
+		npc = npc_scene.instance()
+		npc.individual = battle_role[i]
+		battle_mode_list.get_node(pos_list[i].name).add_child(npc)

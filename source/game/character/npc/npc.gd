@@ -4,4 +4,4 @@ class_name NPC
 export var battle: Resource
 
 func confirm_battle():
-	pass
+	Events.emit_signal("load_battle", battle)

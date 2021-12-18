@@ -5,6 +5,11 @@
 [resource]
 animations = [ {
 "frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 0.0
+}, {
+"frames": [ ExtResource( 1 ) ],
 "loop": false,
 "name": "tense",
 "speed": 0.0

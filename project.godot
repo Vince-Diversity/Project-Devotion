@@ -72,7 +72,7 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "MainMenu",
 "language": "GDScript",
-"path": "res://source/resources/main_menu/main_menu.gd"
+"path": "res://source/main_menu/main_menu.gd"
 }, {
 "base": "Character",
 "class": "NPC",
@@ -121,7 +121,7 @@ default_bus_layout="res://source/resources/project/default_bus_layout.tres"
 
 [autoload]
 
-Keywords="*res://source/autoloads/keywords.gd"
+Kw="*res://source/autoloads/keywords.gd"
 Events="*res://source/autoloads/events.gd"
 Utils="*res://source/autoloads/utils.gd"
 

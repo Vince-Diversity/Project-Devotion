@@ -15,6 +15,9 @@ func init_character():
 	hair.frames = individual.hair
 	accessories.frames = individual.accessories
 
+func get_sprites():
+	return [body, hair, accessories]
+
 func save(save_game: Resource):
 	pass
 
