@@ -7,7 +7,7 @@ var save_dir: String
 var save_name: String
 var place_path: String
 var place: GameWorld
-var party := {}
+var party := []
 onready var SAVE_KEY := Utils.gen_save_key(self)
 onready var save_path := save_dir.plus_file(save_name)
 onready var ally_scene := preload("res://source/game/character/ally/ally.tscn")
@@ -26,7 +26,8 @@ func init_saver():
 
 func save(save_game: Resource):
 	save_game.data[SAVE_KEY] = {
-		place_data_key : place_path,
+		place_data_key: place_path,
+		party_data_key: get_party_individuals()
 	}
 
 func load_save(save_game: Resource):
@@ -37,17 +38,17 @@ func load_save(save_game: Resource):
 func load_allies(save_data: Dictionary):
 	var allies = save_data[party_data_key]
 	var ally
-	for i in allies:
+	for ind in allies:
 		ally = ally_scene.instance()
-		ally.name = i.name
-		ally.individual = i
-		party[i.name] = ally
+		ally.name = ind.name
+		ally.individual = ind
+		party.append(ally)
 
 func load_place(save_data: Dictionary):
 	place_path = save_data[place_data_key]
 	var place_scene = load(place_path)
 	place = place_scene.instance()
-	place.party_dict = party
+	place.party_arr = party
 	add_child(place)
 
 func _on_Events_save_game():
@@ -88,4 +89,11 @@ func _load_battle_npc_helper(battle_role, battle_mode_list):
 	for i in battle_role.size():
 		npc = npc_scene.instance()
 		npc.individual = battle_role[i]
+		npc.name = battle_role[i].name
 		battle_mode_list.get_node(pos_list[i].name).add_child(npc)
+
+func get_party_individuals():
+	var inds = []
+	for ally in party:
+		inds.append(ally.individual)
+	return inds

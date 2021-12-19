@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://source/game/character/ally/ally.tscn" type="PackedScene" id=1]
-[ext_resource path="res://source/resources/individual/individuals/shade.tres" type="Resource" id=2]
-
-[node name="AllyShade" instance=ExtResource( 1 )]
-individual = ExtResource( 2 )

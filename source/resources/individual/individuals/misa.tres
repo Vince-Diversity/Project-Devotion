@@ -1,12 +1,14 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://source/resources/individual/individual.gd" type="Script" id=1]
 [ext_resource path="res://source/resources/individual/frames/shade/shade.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://source/resources/individual/aspects/terrian.tres" type="Resource" id=3]
 
 [resource]
-resource_name = "Shade"
 script = ExtResource( 1 )
-name = "Shade3"
+name = "Misa"
 body = ExtResource( 2 )
 hair = ExtResource( 2 )
 accessories = ExtResource( 2 )
+aspect = ExtResource( 3 )
+lvl = 1
