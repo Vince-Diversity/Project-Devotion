@@ -8,11 +8,10 @@ var save_name: String
 var place_path: String
 var place: GameWorld
 var party := []
-onready var SAVE_KEY := Utils.gen_save_key(self)
+onready var SAVE_KEY := name
 onready var save_path := save_dir.plus_file(save_name)
 onready var ally_scene := preload("res://source/game/character/ally/ally.tscn")
 onready var npc_scene := preload("res://source/game/character/npc/npc.tscn")
-onready var battle_scene := load("res://source/game/world/battle/battle_mode.tscn")
 
 func _ready():
 	init_saver()
@@ -27,29 +26,36 @@ func init_saver():
 func save(save_game: Resource):
 	save_game.data[SAVE_KEY] = {
 		place_data_key: place_path,
-		party_data_key: get_party_individuals()
 	}
 
 func load_save(save_game: Resource):
 	var save_data = save_game.data[SAVE_KEY]
-	load_allies(save_data)
 	load_place(save_data)
-
-func load_allies(save_data: Dictionary):
-	var allies = save_data[party_data_key]
-	var ally
-	for ind in allies:
-		ally = ally_scene.instance()
-		ally.name = ind.name
-		ally.individual = ind
-		party.append(ally)
+	load_party(save_data)
 
 func load_place(save_data: Dictionary):
 	place_path = save_data[place_data_key]
 	var place_scene = load(place_path)
 	place = place_scene.instance()
-	place.party_arr = party
 	add_child(place)
+
+func load_party(save_data: Dictionary):
+	var ally_dict = save_data[party_data_key]
+	var ally
+	var content
+	var visuals
+	for ally_name in ally_dict.keys():
+		content = ally_dict[ally_name]
+		ally = ally_scene.instance()
+		ally.name = ally_name
+		ally.aspect = content["aspect"]
+		ally.lvl = content["level"]
+		visuals = content["visuals"]
+		place.party.add_child(ally)
+		ally.hair.frames = visuals["hair"]
+		ally.body.frames = visuals["body"]
+		ally.accessories.frames = visuals["accessories"]
+		party.append(ally)
 
 func _on_Events_save_game():
 	var save_game = SaveGame.new()
@@ -69,7 +75,7 @@ func _on_Events_save_game():
 	if err != OK:
 		print("Error %s saving to %s" % [err, save_path])
 
-func _on_NPC_load_battle(battle: Resource):
+func _on_NPC_load_battle(battle_scene: PackedScene):
 	var battle_mode = battle_scene.instance()
 	add_child(battle_mode)
 	var party_list = place.party.get_children()
@@ -77,23 +83,6 @@ func _on_NPC_load_battle(battle: Resource):
 	for i in party_list.size():
 		place.party.remove_child(party_list[i])
 		battle_mode.allies.get_node(ally_pos_list[i].name).add_child(party_list[i])
-	_load_battle_npc_helper(battle.get_opponents(), battle_mode.opponents)
-	_load_battle_npc_helper(battle.spectators, battle_mode.spectators)
 	battle_mode.commence_battle()
 	place.queue_free()
 	place = battle_mode
-
-func _load_battle_npc_helper(battle_role, battle_mode_list):
-	var npc
-	var pos_list = battle_mode_list.get_children()
-	for i in battle_role.size():
-		npc = npc_scene.instance()
-		npc.individual = battle_role[i]
-		npc.name = battle_role[i].name
-		battle_mode_list.get_node(pos_list[i].name).add_child(npc)
-
-func get_party_individuals():
-	var inds = []
-	for ally in party:
-		inds.append(ally.individual)
-	return inds

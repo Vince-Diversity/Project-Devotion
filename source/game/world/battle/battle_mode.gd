@@ -1,7 +1,7 @@
 extends GameWorld
 
 enum States {ASPECT}
-var state_dict := {} # {Individual.name: {0: Individual.aspect,...}}
+var state_dict := {} # {name: {0: aspect,...}}
 var turn_order := [null, null]
 var turn := 0
 onready var rng := RandomNumberGenerator.new()
@@ -22,13 +22,11 @@ func ready_characters():
 	_ready_character_helper(spectators, Kw.anim[Kw.Anims.IDLE_DOWN])
 
 func _ready_character_helper(role, anim):
-	var ind
 	for ch in get_characters(role):
 		for sprite in ch.get_sprites():
 			sprite.set_animation(anim)
-		ind = ch.individual
-		state_dict[ind.name] = {States.ASPECT: ind.aspect.duplicate()}
-		scale_stats(ind)
+		state_dict[ch.name] = {States.ASPECT: ch.aspect.duplicate()}
+		scale_stats(ch)
 
 func init_turn_order():
 	var ally_max_spd = _init_turn_order_helper(allies)
@@ -46,14 +44,14 @@ func init_turn_order():
 func _init_turn_order_helper(role):
 	var spd_arr := []
 	for ch in get_characters(role):
-		spd_arr.append(state_dict[ch.individual.name][States.ASPECT].spd)
+		spd_arr.append(state_dict[ch.name][States.ASPECT].spd)
 	return Utils.array_max(spd_arr)
 
-func scale_stats(ind: Individual):
-	var state = state_dict[ind.name][States.ASPECT]
-	state.spd = state.spd + ind.lvl
-	state.pwr = state.pwr + ind.lvl
-	state.hp = state.hp + ind.lvl
+func scale_stats(ch: Character):
+	var state = state_dict[ch.name][States.ASPECT]
+	state.spd = state.spd + ch.lvl
+	state.pwr = state.pwr + ch.lvl
+	state.hp = state.hp + ch.lvl
 
 func play_turn():
 	var our_allies = get_characters(turn_order[turn % 2])

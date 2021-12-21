@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://source/game/character/npc/npc.tscn" type="PackedScene" id=1]
+[ext_resource path="res://source/resources/aspect/terrian/terrian.tres" type="Resource" id=2]
+
+[node name="Misa" instance=ExtResource( 1 )]
+aspect = ExtResource( 2 )
+lvl = 1

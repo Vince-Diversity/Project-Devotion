@@ -1,10 +1,12 @@
 extends Node2D
 class_name Character
 
-export var individual: Resource
+export var aspect: Resource
+export var lvl := 0
 var mind: Mind
-onready var body = $CharacterVisual/BodySprite
+onready var mind_scene = preload("res://source/game/character/mind.tscn")
 onready var hair = $CharacterVisual/HairSprite
+onready var body = $CharacterVisual/BodySprite
 onready var accessories = $CharacterVisual/AccessoriesSprite
 onready var battle_actions = $BattleActions
 onready var mind_node = $MindNode
@@ -13,12 +15,12 @@ func _ready():
 	init_character()
 
 func init_character():
-	body.frames = individual.body
-	hair.frames = individual.hair
-	accessories.frames = individual.accessories
-	if mind_node.get_child_count() != 1:
-		print("Error, character Mind is not set up correctly!")
+	if mind_node.get_child_count() > 1:
+		print("Error, %s Mind is not set up correctly!" % name)
 		return
+	elif mind_node.get_child_count() == 0:
+		mind = mind_scene.instance()
+		mind_node.add_child(mind)
 	mind = mind_node.get_children()[0]
 
 func get_sprites():
