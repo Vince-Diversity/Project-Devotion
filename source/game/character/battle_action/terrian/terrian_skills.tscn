@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://source/game/character/battle_action/aspect_skills.tscn" type="PackedScene" id=1]
+[ext_resource path="res://source/game/character/battle_action/terrian/terrian_skills.gd" type="Script" id=2]
+[ext_resource path="res://source/resources/individual/aspects/terrian/share.tres" type="Resource" id=3]
+
+[node name="TerrianSkills" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+skill_list = [ ExtResource( 3 ) ]

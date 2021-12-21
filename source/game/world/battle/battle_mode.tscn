@@ -1,14 +1,60 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://source/game/world/world.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/game/world/battle/status_display.tscn" type="PackedScene" id=2]
 [ext_resource path="res://source/game/world/battle/narrative.gd" type="Script" id=3]
 [ext_resource path="res://source/game/world/battle/battle_mode.gd" type="Script" id=4]
+[ext_resource path="res://source/game/world/battle/battle_options.gd" type="Script" id=5]
 
 [node name="BattleMode" instance=ExtResource( 1 )]
 script = ExtResource( 4 )
 
-[node name="BattleUI" type="Control" parent="." index="0"]
+[node name="Spectators" type="Node2D" parent="." index="0"]
+
+[node name="SpecPos1" type="Position2D" parent="Spectators" index="0"]
+position = Vector2( 512, 60 )
+
+[node name="SpecPos2" type="Position2D" parent="Spectators" index="1"]
+position = Vector2( 462, 70 )
+
+[node name="SpecPos3" type="Position2D" parent="Spectators" index="2"]
+position = Vector2( 562, 70 )
+
+[node name="SpecPos4" type="Position2D" parent="Spectators" index="3"]
+position = Vector2( 412, 75 )
+
+[node name="SpecPos5" type="Position2D" parent="Spectators" index="4"]
+position = Vector2( 612, 75 )
+
+[node name="SpecPos6" type="Position2D" parent="Spectators" index="5"]
+position = Vector2( 362, 80 )
+
+[node name="SpecPos7" type="Position2D" parent="Spectators" index="6"]
+position = Vector2( 662, 80 )
+
+[node name="Opponents" type="Node2D" parent="." index="1"]
+
+[node name="FoePos1" type="Position2D" parent="Opponents" index="0"]
+position = Vector2( 250, 200 )
+
+[node name="FoePos2" type="Position2D" parent="Opponents" index="1"]
+position = Vector2( 230, 350 )
+
+[node name="FoePos3" type="Position2D" parent="Opponents" index="2"]
+position = Vector2( 200, 500 )
+
+[node name="Allies" type="Node2D" parent="." index="2"]
+
+[node name="AllyPos1" type="Position2D" parent="Allies" index="0"]
+position = Vector2( 774, 200 )
+
+[node name="AllyPos2" type="Position2D" parent="Allies" index="1"]
+position = Vector2( 794, 350 )
+
+[node name="AllyPos3" type="Position2D" parent="Allies" index="2"]
+position = Vector2( 824, 500 )
+
+[node name="BattleUI" type="Control" parent="." index="3"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 50.0
@@ -66,47 +112,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Spectators" type="Node2D" parent="." index="1"]
+[node name="OptionList" type="ItemList" parent="BattleUI" index="3"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -90.0
+margin_top = -121.0
+margin_bottom = -81.0
+auto_height = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="SpecPos1" type="Position2D" parent="Spectators" index="0"]
-position = Vector2( 512, 60 )
-
-[node name="SpecPos2" type="Position2D" parent="Spectators" index="1"]
-position = Vector2( 462, 70 )
-
-[node name="SpecPos3" type="Position2D" parent="Spectators" index="2"]
-position = Vector2( 562, 70 )
-
-[node name="SpecPos4" type="Position2D" parent="Spectators" index="3"]
-position = Vector2( 412, 75 )
-
-[node name="SpecPos5" type="Position2D" parent="Spectators" index="4"]
-position = Vector2( 612, 75 )
-
-[node name="SpecPos6" type="Position2D" parent="Spectators" index="5"]
-position = Vector2( 362, 80 )
-
-[node name="SpecPos7" type="Position2D" parent="Spectators" index="6"]
-position = Vector2( 662, 80 )
-
-[node name="Opponents" type="Node2D" parent="." index="2"]
-
-[node name="FoePos1" type="Position2D" parent="Opponents" index="0"]
-position = Vector2( 190, 250 )
-
-[node name="FoePos2" type="Position2D" parent="Opponents" index="1"]
-position = Vector2( 230, 400 )
-
-[node name="FoePos3" type="Position2D" parent="Opponents" index="2"]
-position = Vector2( 200, 550 )
-
-[node name="Allies" type="Node2D" parent="." index="3"]
-
-[node name="AllyPos1" type="Position2D" parent="Allies" index="0"]
-position = Vector2( 834, 250 )
-
-[node name="AllyPos2" type="Position2D" parent="Allies" index="1"]
-position = Vector2( 794, 400 )
-
-[node name="AllyPos3" type="Position2D" parent="Allies" index="2"]
-position = Vector2( 824, 550 )
+[connection signal="item_selected" from="BattleUI/OptionList" to="." method="_on_ItemList_item_selected"]

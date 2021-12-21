@@ -8,6 +8,7 @@ onready var rng := RandomNumberGenerator.new()
 onready var spectators = $Spectators
 onready var opponents = $Opponents
 onready var allies = $Allies
+onready var Options = $BattleUI/OptionList.Options
 
 func commence_battle():
 	rng.randomize()
@@ -55,14 +56,16 @@ func scale_stats(ind: Individual):
 	state.hp = state.hp + ind.lvl
 
 func play_turn():
-	var turn_index = turn % 2
-	var team = turn_order[turn_index]
+	var our_allies = get_characters(turn_order[turn % 2])
+	var our_foes = get_characters(turn_order[(turn + 1) % 2])
+	var target
+	var action
+	for ch in our_allies:
+		action = ch.mind.decide_action(rng, our_foes, our_allies)
+		target = ch.mind.decide_target(rng, action, our_foes, our_allies)
 	turn += 1
 	return
 	play_turn()
-
-func play_opponent():
-	return
 
 func get_characters(role) -> Array:
 	var characters = []
@@ -72,3 +75,6 @@ func get_characters(role) -> Array:
 		if i_pos.get_child_count() > 1:
 			print("Error, more than one node under the Position2D")
 	return characters
+
+func _on_ItemList_item_selected(index):
+	pass # Replace with function body.

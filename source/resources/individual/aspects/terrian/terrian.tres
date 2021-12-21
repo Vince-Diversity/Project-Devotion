@@ -8,3 +8,4 @@ name = "Terrian"
 spd = 5
 pwr = 5
 hp = 7
+skill_path = "res://source/game/character/battle_action/terrian/terrian_skills.tscn"

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://source/resources/individual/individual.gd" type="Script" id=1]
-[ext_resource path="res://source/resources/individual/aspects/terrian.tres" type="Resource" id=2]
+[ext_resource path="res://source/resources/individual/aspects/terrian/terrian.tres" type="Resource" id=2]
 [ext_resource path="res://source/resources/individual/frames/shade/shade.tres" type="SpriteFrames" id=3]
 
 [resource]
