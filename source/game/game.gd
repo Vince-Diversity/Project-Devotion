@@ -26,7 +26,22 @@ func init_saver():
 func save(save_game: Resource):
 	save_game.data[SAVE_KEY] = {
 		place_data_key: place_path,
+		party_data_key: make_party_save_entry()
 	}
+
+func make_party_save_entry():
+	var ally_dict
+	var content := {}
+	for ally in party:
+		content["aspect"] = ally.aspect
+		content["level"] = ally.lvl
+		content["visuals"] = {
+			"hair": ally.hair.frames,
+			"body": ally.body.frames,
+			"accessories": ally.accessories.frames
+		}
+		ally_dict[ally.name] = content
+	return ally_dict
 
 func load_save(save_game: Resource):
 	var save_data = save_game.data[SAVE_KEY]

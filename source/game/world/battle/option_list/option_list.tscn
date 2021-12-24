@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://source/game/world/battle/option_list/option_list.gd" type="Script" id=1]
+
+[node name="OptionList" type="ItemList"]
+margin_right = 90.0
+margin_bottom = 9.0
+auto_height = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="item_selected" from="." to="." method="_on_OptionList_item_selected"]

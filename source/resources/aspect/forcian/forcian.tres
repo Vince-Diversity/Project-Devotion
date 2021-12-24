@@ -8,4 +8,4 @@ name = "Forcian"
 spd = 5
 pwr = 7
 hp = 5
-skill_path = ""
+skill_path = "res://source/game/character/battle_action/forcian/forcian_skills.tscn"

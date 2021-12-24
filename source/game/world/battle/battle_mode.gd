@@ -1,4 +1,5 @@
 extends GameWorld
+class_name BattleMode
 
 enum States {ASPECT}
 var state_dict := {} # {name: {0: aspect,...}}
@@ -8,7 +9,7 @@ onready var rng := RandomNumberGenerator.new()
 onready var spectators = $Spectators
 onready var opponents = $Opponents
 onready var allies = $Allies
-onready var Options = $BattleUI/OptionList.Options
+onready var option_ui = $BattleUI/OptionUI
 
 func commence_battle():
 	rng.randomize()
@@ -26,19 +27,13 @@ func _ready_character_helper(role, anim):
 		for sprite in ch.get_sprites():
 			sprite.set_animation(anim)
 		state_dict[ch.name] = {States.ASPECT: ch.aspect.duplicate()}
-		scale_stats(ch)
 
 func init_turn_order():
 	var ally_max_spd = _init_turn_order_helper(allies)
 	var foe_max_spd = _init_turn_order_helper(opponents)
 	var roles = [opponents, allies]
-	if foe_max_spd > ally_max_spd:
-		turn_order[0] = roles.pop_at(0)
-	elif foe_max_spd < ally_max_spd:
-		turn_order[0] = roles.pop_at(1)
-	else:
-		var i = rng.randi_range(0, 1)
-		turn_order[0] = roles.pop_at(i)
+	# Allies go first
+	turn_order[0] = roles.pop_at(1)
 	turn_order[1] = roles.pop_at(0)
 
 func _init_turn_order_helper(role):
@@ -47,20 +42,15 @@ func _init_turn_order_helper(role):
 		spd_arr.append(state_dict[ch.name][States.ASPECT].spd)
 	return Utils.array_max(spd_arr)
 
-func scale_stats(ch: Character):
-	var state = state_dict[ch.name][States.ASPECT]
-	state.spd = state.spd + ch.lvl
-	state.pwr = state.pwr + ch.lvl
-	state.hp = state.hp + ch.lvl
-
 func play_turn():
 	var our_allies = get_characters(turn_order[turn % 2])
 	var our_foes = get_characters(turn_order[(turn + 1) % 2])
-	var target
 	var action
+	var target
 	for ch in our_allies:
-		action = ch.mind.decide_action(rng, our_foes, our_allies)
-		target = ch.mind.decide_target(rng, action, our_foes, our_allies)
+		action = yield(ch.mind.decide_action(option_ui, ch), "completed")
+		target = yield(ch.mind.decide_target(rng, option_ui, action, our_foes, our_allies), "completed")
+	var action_executed = action.execute_action(self, target)
 	turn += 1
 	return
 	play_turn()
@@ -74,5 +64,3 @@ func get_characters(role) -> Array:
 			print("Error, more than one node under the Position2D")
 	return characters
 
-func _on_ItemList_item_selected(index):
-	pass # Replace with function body.

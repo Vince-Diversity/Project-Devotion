@@ -1,10 +1,12 @@
 extends Node2D
 class_name Mind
 
-func decide_action(rng: RandomNumberGenerator, foes: Array, allies: Array):
-	# default action is attack
-	pass
+var character
 
-func decide_target(rng: RandomNumberGenerator, action: BattleAction, foes: Array, allies: Array):
+func decide_action(_option_ui, user):
+	# default action is first skill
+	return user.aspect_skills.get_children()[0]
+
+func decide_targets(rng: RandomNumberGenerator, _option_ui, _action: BattleAction, foes: Array, _allies: Array):
 	# default target is random
-	pass
+	return foes[rng.randi() % foes.size()]

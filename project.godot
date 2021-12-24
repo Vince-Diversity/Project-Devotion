@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/game/character/battle_action/battle_action.gd"
 }, {
+"base": "GameWorld",
+"class": "BattleMode",
+"language": "GDScript",
+"path": "res://source/game/world/battle/battle_mode.gd"
+}, {
 "base": "Node2D",
 "class": "Character",
 "language": "GDScript",
@@ -74,6 +79,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/game/world/world.gd"
 }, {
+"base": "Object",
+"class": "Hit",
+"language": "GDScript",
+"path": "res://source/game/character/battle_action/hit.gd"
+}, {
 "base": "Control",
 "class": "MainMenu",
 "language": "GDScript",
@@ -89,6 +99,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/game/character/npc/npc.gd"
 }, {
+"base": "ItemList",
+"class": "OptionList",
+"language": "GDScript",
+"path": "res://source/game/world/battle/option_list/option_list.gd"
+}, {
 "base": "GameWorld",
 "class": "Overworld",
 "language": "GDScript",
@@ -98,17 +113,13 @@ _global_script_classes=[ {
 "class": "SaveGame",
 "language": "GDScript",
 "path": "res://source/resources/save_game.gd"
-}, {
-"base": "Resource",
-"class": "Skill",
-"language": "GDScript",
-"path": "res://source/resources/aspect/skill.gd"
 } ]
 _global_script_class_icons={
 "Ally": "",
 "Aspect": "",
 "AspectSkills": "",
 "BattleAction": "",
+"BattleMode": "",
 "Character": "",
 "DTS": "",
 "Dialogic": "",
@@ -118,12 +129,13 @@ _global_script_class_icons={
 "DialogicUtil": "",
 "Game": "",
 "GameWorld": "",
+"Hit": "",
 "MainMenu": "",
 "Mind": "",
 "NPC": "",
+"OptionList": "",
 "Overworld": "",
-"SaveGame": "",
-"Skill": ""
+"SaveGame": ""
 }
 
 [application]

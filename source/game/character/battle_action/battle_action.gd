@@ -1,7 +1,9 @@
 extends Node2D
 class_name BattleAction
 
-var target
+const hp_pwr_ratio = 5
+export var targets_allies := false
+var character
 
-func execute_action():
+func execute_action(battle, targets):
 	pass
