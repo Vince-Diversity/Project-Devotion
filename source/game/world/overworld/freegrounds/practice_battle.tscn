@@ -22,5 +22,7 @@
 [node name="Miranda" parent="Opponents/FoePos1" index="0" instance=ExtResource( 2 )]
 
 [node name="Kamo" parent="Opponents/FoePos2" index="0" instance=ExtResource( 3 )]
+battle_order = 1
 
 [node name="Misa" parent="Opponents/FoePos3" index="0" instance=ExtResource( 4 )]
+battle_order = 2

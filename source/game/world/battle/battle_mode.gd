@@ -43,13 +43,14 @@ func _init_turn_order_helper(role):
 	return Utils.array_max(spd_arr)
 
 func play_turn():
-	var our_allies = get_characters(turn_order[turn % 2])
-	var our_foes = get_characters(turn_order[(turn + 1) % 2])
+	var our_allies = get_characters_ordered(turn_order[turn % 2])
+	var our_foes = get_characters_ordered(turn_order[(turn + 1) % 2])
 	var action
 	var target
 	for ch in our_allies:
 		action = yield(ch.mind.decide_action(option_ui, ch), "completed")
-		target = yield(ch.mind.decide_target(rng, option_ui, action, our_foes, our_allies), "completed")
+		if action.needs_target:
+			target = yield(ch.mind.decide_target(rng, option_ui, action, our_foes, our_allies), "completed")
 	var action_executed = action.execute_action(self, target)
 	turn += 1
 	return
@@ -64,3 +65,12 @@ func get_characters(role) -> Array:
 			print("Error, more than one node under the Position2D")
 	return characters
 
+func get_characters_ordered(role) -> Array:
+	var characters = get_characters(role)
+	var size = characters.size()
+	var ordered := Utils.Array(size)
+	var ch
+	for i in range(size):
+		ch = characters[i]
+		ordered[ch.battle_order] = ch
+	return ordered

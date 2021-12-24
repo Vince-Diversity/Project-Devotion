@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://source/game/character/battle_action/battle_action.tscn" type="PackedScene" id=1]
+[ext_resource path="res://source/game/character/battle_action/wait.gd" type="Script" id=2]
+
+[node name="Wait" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+needs_target = false

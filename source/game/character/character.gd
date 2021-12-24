@@ -3,6 +3,7 @@ class_name Character
 
 export var aspect: Resource
 export var lvl := 0
+export var battle_order: int
 var mind: Mind
 var aspect_skills
 onready var mind_scene = preload("res://source/game/character/mind.tscn")

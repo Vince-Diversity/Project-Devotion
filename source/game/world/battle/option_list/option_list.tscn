@@ -11,4 +11,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="item_selected" from="." to="." method="_on_OptionList_item_selected"]
+[connection signal="item_activated" from="." to="." method="_on_OptionList_item_activated"]

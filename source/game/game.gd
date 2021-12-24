@@ -30,11 +30,13 @@ func save(save_game: Resource):
 	}
 
 func make_party_save_entry():
-	var ally_dict
+	var ally_dict := {}
 	var content := {}
 	for ally in party:
 		content["aspect"] = ally.aspect
 		content["level"] = ally.lvl
+		content["party_order"] = ally.party_order
+		content["battle_order"] = ally.battle_order
 		content["visuals"] = {
 			"hair": ally.hair.frames,
 			"body": ally.body.frames,
@@ -56,21 +58,27 @@ func load_place(save_data: Dictionary):
 
 func load_party(save_data: Dictionary):
 	var ally_dict = save_data[party_data_key]
-	var ally
 	var content
 	var visuals
-	for ally_name in ally_dict.keys():
+	var ally_names = ally_dict.keys()
+	var allies := Utils.Array(ally_names.size())
+	var ally
+	for ally_name in ally_names:
 		content = ally_dict[ally_name]
 		ally = ally_scene.instance()
 		ally.name = ally_name
 		ally.aspect = content["aspect"]
 		ally.lvl = content["level"]
 		visuals = content["visuals"]
-		place.party.add_child(ally)
-		ally.hair.frames = visuals["hair"]
-		ally.body.frames = visuals["body"]
-		ally.accessories.frames = visuals["accessories"]
-		party.append(ally)
+		ally.party_order = content["party_order"]
+		ally.battle_order = content["battle_order"]
+		allies[ally.party_order] = ally
+	for allyo in allies:
+		party.append(allyo)
+		place.party.add_child(allyo)
+		allyo.hair.frames = visuals["hair"]
+		allyo.body.frames = visuals["body"]
+		allyo.accessories.frames = visuals["accessories"]
 
 func _on_Events_save_game():
 	var save_game = SaveGame.new()
@@ -98,6 +106,6 @@ func _on_NPC_load_battle(battle_scene: PackedScene):
 	for i in party_list.size():
 		place.party.remove_child(party_list[i])
 		battle_mode.allies.get_node(ally_pos_list[i].name).add_child(party_list[i])
-	battle_mode.commence_battle()
 	place.queue_free()
 	place = battle_mode
+	battle_mode.commence_battle()

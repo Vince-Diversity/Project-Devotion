@@ -15,3 +15,9 @@ func array_max(arr: Array):
 	for i in arr.size()-1:
 		m = max(m, arr[i+1])
 	return m
+
+func Array(size: int) -> Array:
+	var arr = []
+	for _i in range(size):
+		arr.append(0)
+	return arr
