@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://source/game/character/npc/npcs/miranda.tscn" type="PackedScene" id=1]
-[ext_resource path="res://source/game/character/npc/minds/fixated/fixated.tscn" type="PackedScene" id=2]
+[ext_resource path="res://source/game/character/npc/minds/fixated/mind_fixated.tscn" type="PackedScene" id=2]
 [ext_resource path="res://source/resources/aspect/dashian/dashian.tres" type="Resource" id=3]
 
 [node name="Miranda" instance=ExtResource( 1 )]

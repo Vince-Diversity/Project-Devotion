@@ -21,6 +21,8 @@ func init_skills():
 	var aspect_skills_scene = load(aspect.skill_path)
 	aspect_skills = load(aspect.skill_path).instance()
 	battle_actions.add_child(aspect_skills)
+	for skill in aspect_skills.get_children():
+		skill.user = self
 
 func init_mind():
 	if mind_node.get_child_count() > 1:

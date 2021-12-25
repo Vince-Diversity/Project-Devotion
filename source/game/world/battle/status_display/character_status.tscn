@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://source/game/world/battle/status_display/character_status.gd" type="Script" id=1]
+[ext_resource path="res://assets/visuals/world/battle/bar.png" type="Texture" id=2]
+
+[node name="CharacterStatus" type="HBoxContainer"]
+margin_right = 300.0
+margin_bottom = 14.0
+alignment = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CharacterLabel" type="Label" parent="."]
+margin_left = 82.0
+margin_right = 142.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 325, 154 )
+text = "Character"
+
+[node name="HPLabel" type="Label" parent="."]
+margin_left = 146.0
+margin_right = 146.0
+margin_bottom = 14.0
+
+[node name="HPBar" type="TextureProgress" parent="."]
+margin_left = 150.0
+margin_right = 300.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 150, 0 )
+rect_pivot_offset = Vector2( 17, 132 )
+value = 100.0
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 2 )
+tint_under = Color( 0, 0, 0, 1 )
+nine_patch_stretch = true

@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Dashian"
-spd = 7
-pwr = 5
-hp = 5
+spd = 200
+pwr = 100
+hp = 100
 skill_path = "res://source/game/character/battle_action/dashian/dashian_skills.tscn"

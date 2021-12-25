@@ -10,7 +10,7 @@ onready var ally_label = $AllyLabel
 func request_battle_action(character):
 	var battle_options = battle_option_scene.instance()
 	battle_options.character = character
-	battle_options.battle_ui = self
+	battle_options.option_ui = self
 	add_child(battle_options)
 	ally_label.text = character.name
 

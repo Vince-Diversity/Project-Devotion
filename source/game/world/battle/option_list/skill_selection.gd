@@ -14,6 +14,11 @@ func add_skills():
 		add_item(skill.name)
 
 func _on_OptionList_item_activated(index: int):
-	if index < skills.size():
-		emit_signal("action_decided", skills[index])
 	._on_OptionList_item_activated(index)
+	var size = skills.size()
+	if index < size:
+		emit_signal("action_decided", skills[index])
+	match index:
+		size:
+			option_ui.request_battle_action(character)
+	queue_free()

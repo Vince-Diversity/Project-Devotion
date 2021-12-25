@@ -4,6 +4,8 @@ enum Aspect {SPACE, ENERGY, MATTER, TIME}
 
 enum Anims {IDLE_DOWN, TENSE}
 
+enum Stats {HP, POWER, SPEED}
+
 const aspect_descr = {
 	Aspect.SPACE: "spatial",
 	Aspect.ENERGY: "dynamical",

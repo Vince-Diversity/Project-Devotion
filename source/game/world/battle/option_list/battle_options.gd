@@ -6,7 +6,6 @@ const item_dict = {
 	Options.WAIT: "Wait",
 }
 var item_names: Array
-var character: Character
 onready var skill_selection_scene = preload("res://source/game/world/battle/option_list/skill_selection.tscn")
 
 func _ready():
@@ -25,12 +24,14 @@ func init_items():
 		add_item(n)
 
 func _on_OptionList_item_activated(index: int):
+	._on_OptionList_item_activated(index)
 	match index:
 		Options.SKILLS:
 			var skill_selection = skill_selection_scene.instance()
 			skill_selection.aspect_skills = character.aspect_skills
-			skill_selection.battle_ui = battle_ui
+			skill_selection.character = character
+			skill_selection.option_ui = option_ui
 			get_parent().add_child(skill_selection)
 		Options.WAIT:
 			emit_signal("action_decided", character.wait_action)
-	._on_OptionList_item_activated(index)
+	queue_free()

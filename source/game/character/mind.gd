@@ -3,10 +3,9 @@ class_name Mind
 
 var character
 
-func decide_action(_option_ui, user):
-	# default action is first skill
-	return user.aspect_skills.get_children()[0]
+func decide_action(_battle_ui, _user):
+	pass
 
-func decide_targets(rng: RandomNumberGenerator, _option_ui, _action: BattleAction, foes: Array, _allies: Array):
-	# default target is random
-	return foes[rng.randi() % foes.size()]
+func decide_target(_rng: RandomNumberGenerator, _battle_ui, _action: BattleAction,
+					_our_foes: Array, _our_allies: Array):
+	pass

@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://source/game/character/npc/minds/fixated/fixated.gd" type="Script" id=1]
-[ext_resource path="res://source/game/character/mind.tscn" type="PackedScene" id=2]
-
-[node name="MindFixated" instance=ExtResource( 2 )]
-script = ExtResource( 1 )

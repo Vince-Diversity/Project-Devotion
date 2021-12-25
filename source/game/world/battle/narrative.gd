@@ -1,9 +1,9 @@
 extends RichTextLabel
 
-var content: Dialogic
+func tell(content):
+	text = content
 
-func _ready():
-	init_narrate()
-
-func init_narrate():
-	pass
+func _on_Aspect_stat_changed(stat, val):
+	match stat:
+		Kw.Stats.HP:
+			tell("Dealt %s hp!" % [val])
