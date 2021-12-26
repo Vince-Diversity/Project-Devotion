@@ -1,8 +1,6 @@
 extends Node2D
 class_name Mind
 
-var character
-
 func decide_action(_battle_ui, _user):
 	pass
 

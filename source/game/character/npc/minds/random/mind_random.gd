@@ -11,7 +11,7 @@ func decide_target(rng: RandomNumberGenerator, battle_ui, action: BattleAction,
 					foes: Array, allies: Array):
 	var target = .decide_target(rng, battle_ui, action, foes, allies)
 	battle_ui.narrative.tell(
-		"%s improvises a %s on %s!" % [action.user.name, action.name, target.name]
+		"%s improvises %s on %s!" % [action.user.name, action.true_name, target.name]
 		)
 	yield(get_tree().create_timer(decision_time), "timeout")
 	return target

@@ -5,3 +5,4 @@
 
 [node name="MindFixated" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+fixated_skill_name = "Strike"

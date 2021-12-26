@@ -11,5 +11,7 @@ func add_targets():
 
 func _on_OptionList_item_activated(index: int):
 	._on_OptionList_item_activated(index)
-	emit_signal("target_decided", targets[index])
+	var size = targets.size()
+	if index < size:
+		emit_signal("target_decided", targets[index])
 	queue_free()

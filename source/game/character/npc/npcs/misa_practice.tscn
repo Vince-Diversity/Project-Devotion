@@ -6,6 +6,7 @@
 [ext_resource path="res://source/resources/individual/frames/shade/shade.tres" type="SpriteFrames" id=4]
 
 [node name="Misa" instance=ExtResource( 1 )]
+battle_path = "Share"
 
 [node name="BodySprite" parent="CharacterVisual" index="0"]
 frames = ExtResource( 4 )
@@ -18,4 +19,4 @@ frames = ExtResource( 4 )
 
 [node name="MindFixated" parent="MindNode" index="0" instance=ExtResource( 2 )]
 fixated_aspect = ExtResource( 3 )
-fixated_at_allies = true
+fixated_skill_name = "Share"

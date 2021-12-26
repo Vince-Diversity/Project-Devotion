@@ -17,12 +17,10 @@ func request_battle_action(character):
 func _on_OptionList_action_decided(action: BattleAction):
 	emit_signal("action_given", action)
 
-func request_battle_target(action: BattleAction, foes: Array, allies: Array):
+func request_battle_target(action: BattleAction, targets: Array):
 	var target_list = target_selection_scene.instance()
-	if action.targets_allies:
-		target_list.targets = allies
-	else:
-		target_list.targets = foes
+	target_list.targets = targets
+	target_list.option_ui = self
 	add_child(target_list)
 	var target: Character = yield(target_list, "target_decided")
 	emit_signal("target_given", target)

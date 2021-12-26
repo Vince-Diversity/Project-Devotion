@@ -14,11 +14,12 @@ onready var battle_actions = $BattleActions
 onready var mind_node = $MindNode
 
 func _ready():
-	init_skills()
+	init_actions()
 	init_mind()
 
-func init_skills():
-	var aspect_skills_scene = load(aspect.skill_path)
+func init_actions():
+	for action in battle_actions.get_children():
+		action.user = self
 	aspect_skills = load(aspect.skill_path).instance()
 	battle_actions.add_child(aspect_skills)
 	for skill in aspect_skills.get_children():
@@ -32,7 +33,6 @@ func init_mind():
 		mind = mind_scene.instance()
 		mind_node.add_child(mind)
 	mind = mind_node.get_children()[0]
-	mind.character = self
 
 func get_sprites():
 	return [body, hair, accessories]

@@ -12,6 +12,7 @@ export var skill_path: String
 func get_stats():
 	return [hp, pwr, spd]
 
-func take_damage(hit: Hit):
-	hp = clamp(hp - hit.damage, 0, hp)
+func change_hp(hit: Hit):
+	var diff = hp - hit.damage
+	hp = clamp(diff, 0, max(hp, diff))
 	emit_signal("stat_changed", Kw.Stats.HP, hp)

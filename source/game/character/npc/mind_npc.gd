@@ -1,10 +1,10 @@
 extends Mind
 class_name MindNPC
 
-const decision_time = 1.0
+const decision_time = 2.0
 
 func decide_action(battle_ui, user):
-	.decide_action(battle_ui, character)
+	.decide_action(battle_ui, user)
 	# default action is first skill
 	return user.aspect_skills.get_children()[0]
 

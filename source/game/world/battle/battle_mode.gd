@@ -1,11 +1,14 @@
 extends GameWorld
 class_name BattleMode
 
+signal accept_pressed
+
 enum Roles {FOES, ALLIES, SPECTATORS}
-enum States {ASPECT}
+enum States {CHARACTER, ASPECT}
 var state_dict := {} # {name: {0: aspect,...}}
 var turn_order := [null, null]
 var turn := 0
+var has_next_turn = true
 var role_dict := {}
 var display_dict := {}
 onready var rng := RandomNumberGenerator.new()
@@ -15,12 +18,16 @@ onready var allies = $Allies
 onready var battle_ui = $BattleUI
 onready var option_ui = $BattleUI/OptionUI
 
+func _input(event):
+	if event.is_action_pressed("ui_accept"):
+		emit_signal("accept_pressed")
+
 func commence_battle():
 	rng.randomize()
 	ready_characters()
 	ready_ui()
 	init_turn_order()
-	tell_turn_order()
+	yield(tell_turn_order(), "completed")
 	play_turn()
 
 func ready_characters():
@@ -33,7 +40,9 @@ func _ready_character_helper(role, anim, role_id):
 	var battle_aspect: Aspect
 	for ch in get_characters(role):
 		battle_aspect = ch.aspect.duplicate()
-		state_dict[ch.name] = {States.ASPECT: battle_aspect}
+		state_dict[ch.name] = {}
+		state_dict[ch.name][States.CHARACTER] = ch
+		state_dict[ch.name][States.ASPECT] = battle_aspect
 		for sprite in ch.get_sprites():
 			sprite.set_animation(anim)
 
@@ -71,29 +80,75 @@ func _init_turn_order_helper(role):
 	return {"spd": Utils.array_max(spd_arr), "lvl": Utils.array_max(lvl_arr)}
 
 func tell_turn_order():
-	var leader = get_characters(turn_order[0])[0].name
-	battle_ui.narrative.tell("%s's team are the quickest to act!" % leader)
+	var leader = get_leader(turn_order[0])
+	battle_ui.narrative.tell("%s's team are the quickest to act!" % leader.name)
+	yield(self, "accept_pressed")
 
 func play_turn():
-	var our_allies = get_characters_ordered(turn_order[turn % 2])
-	var our_foes = get_characters_ordered(turn_order[(turn + 1) % 2])
+	var playing_side = turn_order[turn % 2]
+	var our_allies_ordered_initial = get_characters_ordered(playing_side)
+	var our_allies
+	var our_foes
 	var action
 	var target
-	for ch in our_allies:
+	for ch in our_allies_ordered_initial:
+		our_allies = get_characters(playing_side)
+		our_foes = get_characters(turn_order[(turn + 1) % 2])
 		action = yield(ch.mind.decide_action(battle_ui, ch), "completed")
 		if action == null: print("Error: action missing on %s!" % ch.name)
 		if action.needs_target:
 			target = yield(ch.mind.decide_target(rng, battle_ui, action, our_foes, our_allies), "completed")
 			if target == null: print("Error: target missing for %s!" % ch.name)
 		yield(commence_action(action, target), "completed")
+		yield(check_standing(playing_side), "completed")
+		if !has_next_turn:
+			break
 	turn += 1
-	play_turn()
+	if has_next_turn:
+		play_turn()
 
 func commence_action(action, target):
 	option_ui.ally_label.text = ""
 	var action_executed = yield(action.execute_action(self, target), "completed")
 	if !action_executed:
 		print("Error, %s not executed!" % action.name)
+
+func check_standing(playing_side):
+	var aspect
+	for role in role_dict.values():
+		for ch in get_characters(role):
+			if is_fallen(ch):
+				fall(ch)
+				battle_ui.narrative.tell(
+					"%s has shattered!" % [ch.name]
+				)
+				yield(get_tree().create_timer(1.0), "timeout")
+			else:
+				yield(get_tree(), "idle_frame")
+		if role.name != spectators.name:
+			if get_characters(role).empty():
+				has_next_turn = false
+				if role.name == playing_side.name:
+					var leader = get_leader(playing_side)
+					battle_ui.narrative.tell(
+						"%s's team caused their loss!" % [leader.name]
+					)
+				else:
+					var leader = get_leader(playing_side)
+					battle_ui.narrative.tell(
+						"%s's team wins!" % [leader.name]
+					)
+				yield(get_tree().create_timer(1.0), "timeout")
+
+func is_fallen(character):
+	var aspect = state_dict[character.name][States.ASPECT]
+	return aspect.hp == 0
+
+func fall(character):
+	character.get_parent().remove_child(character)
+
+func get_leader(role):
+	return get_characters(role)[0]
 
 func get_characters(role) -> Array:
 	var characters = []
@@ -106,10 +161,11 @@ func get_characters(role) -> Array:
 
 func get_characters_ordered(role) -> Array:
 	var characters = get_characters(role)
-	var size = characters.size()
-	var ordered := Utils.Array(size)
-	var ch
-	for i in range(size):
-		ch = characters[i]
-		ordered[ch.battle_order] = ch
-	return ordered
+	characters.sort_custom(BattleSorter, "ascending_battle_order")
+	return characters
+
+class BattleSorter:
+	static func ascending_battle_order(ch_a, ch_b):
+		if ch_a.battle_order < ch_b.battle_order:
+			return true
+		return false

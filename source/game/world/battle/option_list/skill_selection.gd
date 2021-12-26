@@ -11,7 +11,7 @@ func _ready():
 func add_skills():
 	skills = aspect_skills.get_children()
 	for skill in skills:
-		add_item(skill.name)
+		add_item(skill.true_name)
 
 func _on_OptionList_item_activated(index: int):
 	._on_OptionList_item_activated(index)
