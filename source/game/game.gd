@@ -39,6 +39,7 @@ func make_party_save_entry():
 		content["battle_order"] = ally.battle_order
 		content["visuals"] = {
 			"hair": ally.hair.frames,
+			"skin": ally.skin.frames,
 			"body": ally.body.frames,
 			"accessories": ally.accessories.frames
 		}
@@ -69,16 +70,18 @@ func load_party(save_data: Dictionary):
 		ally.name = ally_name
 		ally.aspect = content["aspect"]
 		ally.lvl = content["level"]
-		visuals = content["visuals"]
 		ally.party_order = content["party_order"]
 		ally.battle_order = content["battle_order"]
 		allies[ally.party_order] = ally
 	for allyo in allies:
 		party.append(allyo)
 		place.party.add_child(allyo)
-		allyo.hair.frames = visuals["hair"]
-		allyo.body.frames = visuals["body"]
+		content = ally_dict[allyo.name]
+		visuals = content["visuals"]
 		allyo.accessories.frames = visuals["accessories"]
+		allyo.hair.frames = visuals["hair"]
+		allyo.skin.frames = visuals["skin"]
+		allyo.body.frames = visuals["body"]
 
 func _on_Events_save_game():
 	var save_game = SaveGame.new()

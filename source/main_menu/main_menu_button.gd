@@ -1,7 +1,6 @@
 extends TextureButton
 
 export(String) var text
-#export(int) var focus_margin := 100
 onready var label = $PointerMargin/LabelMargin/Label
 onready var focus = $PointerMargin/TextureRect
 
@@ -11,15 +10,10 @@ func _ready():
 	set_focus_mode(true)
 
 func init_text():
-#	label.bbcode_text = "[center] %s [/center]" % [text]
 	label.text = text
 
 func show_focus_visual():
 	focus.visible = true
-#	focus.global_position.y = rect_global_position.y +\
-#		focus.get_rect().size.y/4
-#	focus.global_position.x = rect_global_position.x +\
-#		(rect_size.x/2) - focus_margin
 
 func hide_focus_visual():
 	focus.visible = false

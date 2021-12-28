@@ -3,8 +3,7 @@
 [ext_resource path="res://source/game/world/battle/status_display/status_display.gd" type="Script" id=1]
 
 [node name="StatusDisplay" type="VBoxContainer"]
-margin_right = 300.0
-margin_bottom = 100.0
+alignment = 1
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

@@ -1,18 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://source/game/character/npc/npc.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/resources/aspect/dashian/dashian.tres" type="Resource" id=2]
-[ext_resource path="res://source/resources/individual/frames/shade/shade.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://source/resources/character/frames/hair/yellow_ruffed_hair.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://source/resources/character/frames/body/brown_clothes.tres" type="SpriteFrames" id=4]
+[ext_resource path="res://source/resources/character/frames/skin/dark_skin.tres" type="SpriteFrames" id=5]
 
 [node name="Ken" instance=ExtResource( 1 )]
 aspect = ExtResource( 2 )
 lvl = 1
 
 [node name="BodySprite" parent="CharacterVisual" index="0"]
-frames = ExtResource( 3 )
+frames = ExtResource( 4 )
 
-[node name="HairSprite" parent="CharacterVisual" index="1"]
-frames = ExtResource( 3 )
+[node name="SkinSprite" parent="CharacterVisual" index="1"]
+frames = ExtResource( 5 )
 
-[node name="AccessoriesSprite" parent="CharacterVisual" index="2"]
+[node name="HairSprite" parent="CharacterVisual" index="2"]
 frames = ExtResource( 3 )

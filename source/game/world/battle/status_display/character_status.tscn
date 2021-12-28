@@ -4,8 +4,8 @@
 [ext_resource path="res://assets/visuals/world/battle/bar.png" type="Texture" id=2]
 
 [node name="CharacterStatus" type="HBoxContainer"]
-margin_right = 300.0
-margin_bottom = 14.0
+margin_right = 104.0
+margin_bottom = 13.0
 alignment = 2
 script = ExtResource( 1 )
 __meta__ = {
@@ -13,22 +13,23 @@ __meta__ = {
 }
 
 [node name="CharacterLabel" type="Label" parent="."]
-margin_left = 82.0
-margin_right = 142.0
-margin_bottom = 14.0
+margin_right = 36.0
+margin_bottom = 13.0
 rect_pivot_offset = Vector2( 325, 154 )
 text = "Character"
 
 [node name="HPLabel" type="Label" parent="."]
-margin_left = 146.0
-margin_right = 146.0
-margin_bottom = 14.0
+margin_left = 40.0
+margin_right = 68.0
+margin_bottom = 13.0
+text = "999/999"
+align = 2
 
 [node name="HPBar" type="TextureProgress" parent="."]
-margin_left = 150.0
-margin_right = 300.0
-margin_bottom = 14.0
-rect_min_size = Vector2( 150, 0 )
+margin_left = 72.0
+margin_right = 104.0
+margin_bottom = 13.0
+rect_min_size = Vector2( 32, 8 )
 rect_pivot_offset = Vector2( 17, 132 )
 value = 100.0
 texture_under = ExtResource( 2 )

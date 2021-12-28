@@ -12,24 +12,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="VBoxContainer" parent="."]
+[node name="Title" type="CenterContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_bottom = -300.0
-alignment = 1
+margin_bottom = -127.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="Title"]
-position = Vector2( 0, 150 )
+[node name="TitleText" type="TextureRect" parent="Title"]
+margin_left = 88.0
+margin_top = 33.0
+margin_right = 168.0
+margin_bottom = 63.0
 texture = ExtResource( 3 )
-offset = Vector2( 512, 0 )
+stretch_mode = 1
 
 [node name="Options" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 300.0
+margin_top = 127.0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -38,18 +40,18 @@ __meta__ = {
 [node name="LoadDevMode" parent="Options" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 98.0
-margin_right = 1024.0
-margin_bottom = 148.0
+margin_top = 26.0
+margin_right = 256.0
+margin_bottom = 46.0
 focus_neighbour_bottom = NodePath("../LoadGame")
 text = "Load Dev Mode"
 
 [node name="LoadGame" parent="Options" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 152.0
-margin_right = 1024.0
-margin_bottom = 202.0
+margin_top = 50.0
+margin_right = 256.0
+margin_bottom = 70.0
 focus_neighbour_top = NodePath("../LoadDevMode")
 text = "Load Game"
 

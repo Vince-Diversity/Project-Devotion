@@ -7,9 +7,10 @@ export var battle_order: int
 var mind: Mind
 var aspect_skills
 onready var mind_scene = preload("res://source/game/character/mind.tscn")
-onready var hair = $CharacterVisual/HairSprite
-onready var body = $CharacterVisual/BodySprite
 onready var accessories = $CharacterVisual/AccessoriesSprite
+onready var hair = $CharacterVisual/HairSprite
+onready var skin = $CharacterVisual/SkinSprite
+onready var body = $CharacterVisual/BodySprite
 onready var battle_actions = $BattleActions
 onready var mind_node = $MindNode
 
@@ -34,5 +35,9 @@ func init_mind():
 		mind_node.add_child(mind)
 	mind = mind_node.get_children()[0]
 
+func flip_sprite():
+	for sprite in get_sprites():
+		sprite.set_flip_h(true)
+
 func get_sprites():
-	return [body, hair, accessories]
+	return [body, skin, hair, accessories]

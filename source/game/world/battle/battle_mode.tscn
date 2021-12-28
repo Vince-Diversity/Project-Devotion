@@ -1,129 +1,164 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://source/game/world/world.tscn" type="PackedScene" id=1]
+[ext_resource path="res://source/resources/map/training_grounds.tres" type="TileSet" id=1]
 [ext_resource path="res://source/game/world/battle/status_display/status_display.tscn" type="PackedScene" id=2]
 [ext_resource path="res://source/game/world/battle/narrative.gd" type="Script" id=3]
 [ext_resource path="res://source/game/world/battle/battle_mode.gd" type="Script" id=4]
 [ext_resource path="res://source/game/world/battle/option_ui.gd" type="Script" id=5]
 [ext_resource path="res://source/game/world/battle/battle_ui.gd" type="Script" id=6]
 
-[node name="BattleMode" instance=ExtResource( 1 )]
+[node name="BattleMode" type="Node"]
 script = ExtResource( 4 )
 
-[node name="Spectators" type="Node2D" parent="." index="0"]
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 320, 224 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0 )
 
-[node name="SpecPos1" type="Position2D" parent="Spectators" index="0"]
-position = Vector2( 512, 60 )
+[node name="Spectators" type="YSort" parent="."]
 
-[node name="SpecPos2" type="Position2D" parent="Spectators" index="1"]
-position = Vector2( 462, 70 )
+[node name="SpecPos1" type="Position2D" parent="Spectators"]
+position = Vector2( 160, 63 )
 
-[node name="SpecPos3" type="Position2D" parent="Spectators" index="2"]
-position = Vector2( 562, 70 )
+[node name="SpecPos2" type="Position2D" parent="Spectators"]
+position = Vector2( 144, 60 )
 
-[node name="SpecPos4" type="Position2D" parent="Spectators" index="3"]
-position = Vector2( 412, 75 )
+[node name="SpecPos3" type="Position2D" parent="Spectators"]
+position = Vector2( 176, 60 )
 
-[node name="SpecPos5" type="Position2D" parent="Spectators" index="4"]
-position = Vector2( 612, 75 )
+[node name="SpecPos4" type="Position2D" parent="Spectators"]
+position = Vector2( 128, 62 )
 
-[node name="SpecPos6" type="Position2D" parent="Spectators" index="5"]
-position = Vector2( 362, 80 )
+[node name="SpecPos5" type="Position2D" parent="Spectators"]
+position = Vector2( 192, 62 )
 
-[node name="SpecPos7" type="Position2D" parent="Spectators" index="6"]
-position = Vector2( 662, 80 )
+[node name="SpecPos6" type="Position2D" parent="Spectators"]
+position = Vector2( 112, 56 )
 
-[node name="Opponents" type="Node2D" parent="." index="1"]
+[node name="SpecPos7" type="Position2D" parent="Spectators"]
+position = Vector2( 208, 56 )
 
-[node name="FoePos1" type="Position2D" parent="Opponents" index="0"]
-position = Vector2( 250, 200 )
+[node name="Opponents" type="YSort" parent="."]
 
-[node name="FoePos2" type="Position2D" parent="Opponents" index="1"]
-position = Vector2( 230, 350 )
+[node name="FoePos1" type="Position2D" parent="Opponents"]
+position = Vector2( 80, 112 )
 
-[node name="FoePos3" type="Position2D" parent="Opponents" index="2"]
-position = Vector2( 200, 500 )
+[node name="FoePos2" type="Position2D" parent="Opponents"]
+position = Vector2( 90, 144 )
 
-[node name="Allies" type="Node2D" parent="." index="2"]
+[node name="FoePos3" type="Position2D" parent="Opponents"]
+position = Vector2( 70, 176 )
 
-[node name="AllyPos1" type="Position2D" parent="Allies" index="0"]
-position = Vector2( 774, 200 )
+[node name="Allies" type="YSort" parent="."]
 
-[node name="AllyPos2" type="Position2D" parent="Allies" index="1"]
-position = Vector2( 794, 350 )
+[node name="AllyPos1" type="Position2D" parent="Allies"]
+position = Vector2( 240, 112 )
 
-[node name="AllyPos3" type="Position2D" parent="Allies" index="2"]
-position = Vector2( 824, 500 )
+[node name="AllyPos2" type="Position2D" parent="Allies"]
+position = Vector2( 230, 144 )
 
-[node name="BattleUI" type="Control" parent="." index="3"]
+[node name="AllyPos3" type="Position2D" parent="Allies"]
+position = Vector2( 250, 176 )
+
+[node name="BattleUI" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 50.0
-margin_top = 50.0
-margin_right = -50.0
+margin_left = 10.0
+margin_top = 20.0
+margin_right = -10.0
 script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LeftStatusDisplay" parent="BattleUI" index="0" instance=ExtResource( 2 )]
+[node name="LeftContainer" type="CenterContainer" parent="BattleUI"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="RightStatusDisplay" parent="BattleUI" index="1" instance=ExtResource( 2 )]
+[node name="LeftStatusDisplay" parent="BattleUI/LeftContainer" instance=ExtResource( 2 )]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="RightContainer" type="CenterContainer" parent="BattleUI"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -300.0
-margin_right = 0.0
+margin_left = -40.0
+margin_bottom = 40.0
+grow_horizontal = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="NarrativeDisplay" type="CenterContainer" parent="BattleUI" index="2"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+[node name="RightStatusDisplay" parent="BattleUI/RightContainer" instance=ExtResource( 2 )]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="NarrativeDisplay" type="CenterContainer" parent="BattleUI"]
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -462.0
-margin_top = -150.0
-margin_right = 462.0
-rect_pivot_offset = Vector2( 1127, -252 )
+margin_top = 128.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NarrativeBackground" type="Panel" parent="BattleUI/NarrativeDisplay" index="0"]
-margin_left = 302.0
-margin_top = 15.0
-margin_right = 622.0
-margin_bottom = 135.0
-rect_min_size = Vector2( 320, 120 )
-rect_pivot_offset = Vector2( 758, -63 )
+[node name="NarrativeBackground" type="Panel" parent="BattleUI/NarrativeDisplay"]
+margin_left = 86.0
+margin_top = 6.0
+margin_right = 214.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 128, 64 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Narrative" type="RichTextLabel" parent="BattleUI/NarrativeDisplay/NarrativeBackground" index="0"]
+[node name="NarrativeTextContainer" type="CenterContainer" parent="BattleUI/NarrativeDisplay/NarrativeBackground"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -150.0
-margin_top = -50.0
-margin_right = 150.0
-margin_bottom = 50.0
-rect_pivot_offset = Vector2( 307, -100 )
+margin_left = -56.0
+margin_top = -28.0
+margin_right = 56.0
+margin_bottom = 28.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Narrative" type="RichTextLabel" parent="BattleUI/NarrativeDisplay/NarrativeBackground/NarrativeTextContainer"]
+margin_right = 112.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 112, 56 )
 text = "The opponents are not devoted to the battle!"
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="OptionUI" type="VBoxContainer" parent="BattleUI" index="3"]
-margin_left = 834.0
-margin_top = 154.0
-margin_right = 924.0
-margin_bottom = 194.0
+[node name="OptionUI" type="VBoxContainer" parent="BattleUI"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -64.0
+margin_top = -32.0
+margin_bottom = 32.0
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AllyLabel" type="Label" parent="BattleUI/OptionUI" index="0"]
-margin_right = 90.0
-margin_bottom = 14.0
+[node name="AllyLabel" type="Label" parent="BattleUI/OptionUI"]
+margin_right = 64.0
+margin_bottom = 13.0
+
+[node name="BattleMusic" type="AudioStreamPlayer" parent="."]
+autoplay = true
+bus = "Bgm"

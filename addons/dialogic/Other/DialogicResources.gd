@@ -7,8 +7,8 @@ class_name DialogicResources
 ## It is also used by the DialogicUtil class
 
 const RESOURCES_DIR: String = "res://dialogic" # Readonly, used for static data
+#const RESOURCES_DIR: String = "user://dialogic_readonly" # Can use if needed
 const WORKING_DIR: String = "user://dialogic" # Readwrite, used for saves
-
 
 ## *****************************************************************************
 ##							BASIC JSON FUNCTION

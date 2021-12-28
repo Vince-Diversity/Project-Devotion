@@ -5,6 +5,7 @@ signal accept_pressed
 
 enum Roles {FOES, ALLIES, SPECTATORS}
 enum States {CHARACTER, ASPECT}
+export(String, "TimelineDropdown") var starting_dialog: String
 var state_dict := {} # {name: {0: aspect,...}}
 var turn_order := [null, null]
 var turn := 0
@@ -17,6 +18,8 @@ onready var opponents = $Opponents
 onready var allies = $Allies
 onready var battle_ui = $BattleUI
 onready var option_ui = $BattleUI/OptionUI
+onready var left_status_display = $BattleUI/LeftContainer/LeftStatusDisplay
+onready var right_status_display = $BattleUI/RightContainer/RightStatusDisplay
 
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
@@ -27,7 +30,8 @@ func commence_battle():
 	ready_characters()
 	ready_ui()
 	init_turn_order()
-	yield(tell_turn_order(), "completed")
+	yield(starting_talk(), "completed")
+	yield(init_narrative(), "completed")
 	play_turn()
 
 func ready_characters():
@@ -45,10 +49,12 @@ func _ready_character_helper(role, anim, role_id):
 		state_dict[ch.name][States.ASPECT] = battle_aspect
 		for sprite in ch.get_sprites():
 			sprite.set_animation(anim)
+		if role_id == Roles.FOES:
+			ch.flip_sprite()
 
 func ready_ui():
-	display_dict[Roles.FOES] = $BattleUI/LeftStatusDisplay
-	display_dict[Roles.ALLIES] = $BattleUI/RightStatusDisplay
+	display_dict[Roles.FOES] = left_status_display
+	display_dict[Roles.ALLIES] = right_status_display
 	var display
 	var ch_status
 	var aspect
@@ -79,9 +85,17 @@ func _init_turn_order_helper(role):
 		spd_arr.append(state_dict[ch.name][States.ASPECT].spd)
 	return {"spd": Utils.array_max(spd_arr), "lvl": Utils.array_max(lvl_arr)}
 
-func tell_turn_order():
+func starting_talk():
+	battle_ui.narrative_background.set_visible(false)
+	var d = Dialogic.start(starting_dialog)
+	add_child(d)
+	yield(d, "dialogic_signal")
+	yield(self, "accept_pressed")
+
+func init_narrative():
 	var leader = get_leader(turn_order[0])
 	battle_ui.narrative.tell("%s's team are the quickest to act!" % leader.name)
+	battle_ui.narrative_background.set_visible(true)
 	yield(self, "accept_pressed")
 
 func play_turn():
@@ -114,7 +128,6 @@ func commence_action(action, target):
 		print("Error, %s not executed!" % action.name)
 
 func check_standing(playing_side):
-	var aspect
 	for role in role_dict.values():
 		for ch in get_characters(role):
 			if is_fallen(ch):

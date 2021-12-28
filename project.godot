@@ -161,6 +161,14 @@ Kw="*res://source/autoloads/keywords.gd"
 Events="*res://source/autoloads/events.gd"
 Utils="*res://source/autoloads/utils.gd"
 
+[display]
+
+window/size/width=320
+window/size/height=224
+window/size/fullscreen=true
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/dialogic/plugin.cfg" )
@@ -173,6 +181,12 @@ warning=false
 warnings=false
 version=""
 Version=""
+oversam=false
+render=false
+
+[gui]
+
+theme/custom_font="res://source/resources/project/font/m3x6.tres"
 
 [input]
 
@@ -195,3 +209,4 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 environment/default_environment="res://source/resources/project/default_env.tres"
+quality/dynamic_fonts/use_oversampling=false
