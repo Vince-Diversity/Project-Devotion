@@ -8,9 +8,10 @@ func execute_action(battle, target):
 	var share = min(target_lost_hp, user_hhp)
 	if share == 0:
 		battle.battle_ui.narrative.tell(
-			"%s attempts %s with %s.\nBut %s's hp is already full!"
+			"%s attempts %s on %s.\nBut %s's hp is already full!"
 			% [user.name, true_name, target.name, target.name]
 		)
+		emit_signal("notable_event", "share_cancelled_full_hp", target)
 		yield(get_tree().create_timer(2*use_duration), "timeout")
 	else:
 		user_aspect.change_hp(Hit.new(share))

@@ -1,0 +1,53 @@
+{
+	"events": [
+		{
+			"action": "join",
+			"character": "character-1640556125.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		},
+		{
+			"action": "join",
+			"character": "character-1640556212.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		},
+		{
+			"character": "character-1640556125.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Misa, what are you doing? Attack them!"
+		},
+		{
+			"character": "character-1640556212.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "I can't."
+		},
+		{
+			"emit_signal": "done",
+			"event_id": "dialogic_040"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1640762586.json",
+		"name": "pratice_battle_misa_miranda"
+	}
+}

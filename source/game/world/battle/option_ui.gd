@@ -17,7 +17,7 @@ func request_battle_action(character):
 func _on_OptionList_action_decided(action: BattleAction):
 	emit_signal("action_given", action)
 
-func request_battle_target(action: BattleAction, targets: Array):
+func request_battle_target(_action: BattleAction, targets: Array):
 	var target_list = target_selection_scene.instance()
 	target_list.targets = targets
 	target_list.option_ui = self

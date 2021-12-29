@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://source/resources/map/training_grounds.tres" type="TileSet" id=1]
 [ext_resource path="res://source/game/world/battle/status_display/status_display.tscn" type="PackedScene" id=2]
 [ext_resource path="res://source/game/world/battle/narrative.gd" type="Script" id=3]
 [ext_resource path="res://source/game/world/battle/battle_mode.gd" type="Script" id=4]
@@ -10,11 +9,9 @@
 [node name="BattleMode" type="Node"]
 script = ExtResource( 4 )
 
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 1 )
+[node name="Building" type="TileMap" parent="."]
 cell_size = Vector2( 320, 224 )
 format = 1
-tile_data = PoolIntArray( 0, 0, 0 )
 
 [node name="Spectators" type="YSort" parent="."]
 

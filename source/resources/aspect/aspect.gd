@@ -14,5 +14,5 @@ func get_stats():
 
 func change_hp(hit: Hit):
 	var diff = hp - hit.damage
-	hp = clamp(diff, 0, max(hp, diff))
+	hp = int(clamp(diff, 0, max(hp, diff)))
 	emit_signal("stat_changed", Kw.Stats.HP, hp)

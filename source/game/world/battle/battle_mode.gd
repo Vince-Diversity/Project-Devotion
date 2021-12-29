@@ -1,17 +1,17 @@
 extends GameWorld
 class_name BattleMode
 
-signal accept_pressed
-
 enum Roles {FOES, ALLIES, SPECTATORS}
 enum States {CHARACTER, ASPECT}
 export(String, "TimelineDropdown") var starting_dialog: String
+export(Array, Resource) var end_action_dialogs: Array
 var state_dict := {} # {name: {0: aspect,...}}
 var turn_order := [null, null]
 var turn := 0
 var has_next_turn = true
 var role_dict := {}
 var display_dict := {}
+var end_action_dict := {}
 onready var rng := RandomNumberGenerator.new()
 onready var spectators = $Spectators
 onready var opponents = $Opponents
@@ -21,10 +21,6 @@ onready var option_ui = $BattleUI/OptionUI
 onready var left_status_display = $BattleUI/LeftContainer/LeftStatusDisplay
 onready var right_status_display = $BattleUI/RightContainer/RightStatusDisplay
 
-func _input(event):
-	if event.is_action_pressed("ui_accept"):
-		emit_signal("accept_pressed")
-
 func commence_battle():
 	rng.randomize()
 	ready_characters()
@@ -32,6 +28,7 @@ func commence_battle():
 	init_turn_order()
 	yield(starting_talk(), "completed")
 	yield(init_narrative(), "completed")
+	init_end_actions()
 	play_turn()
 
 func ready_characters():
@@ -51,6 +48,10 @@ func _ready_character_helper(role, anim, role_id):
 			sprite.set_animation(anim)
 		if role_id == Roles.FOES:
 			ch.flip_sprite()
+		for action in ch.get_actions():
+			var err = action.connect("notable_event", self, "_on_BattleAction_notable_event")
+			if err != OK:
+				print("Error %s when connecting from action %s from %s" % [err, action, ch])
 
 func ready_ui():
 	display_dict[Roles.FOES] = left_status_display
@@ -86,17 +87,18 @@ func _init_turn_order_helper(role):
 	return {"spd": Utils.array_max(spd_arr), "lvl": Utils.array_max(lvl_arr)}
 
 func starting_talk():
-	battle_ui.narrative_background.set_visible(false)
-	var d = Dialogic.start(starting_dialog)
-	add_child(d)
-	yield(d, "dialogic_signal")
-	yield(self, "accept_pressed")
+	if starting_dialog:
+		yield(battle_ui.interject_dialog(starting_dialog), "completed")
+	yield(get_tree(), "idle_frame")
 
 func init_narrative():
 	var leader = get_leader(turn_order[0])
 	battle_ui.narrative.tell("%s's team are the quickest to act!" % leader.name)
-	battle_ui.narrative_background.set_visible(true)
-	yield(self, "accept_pressed")
+	yield(battle_ui, "accept_pressed")
+
+func init_end_actions():
+	for dialog in end_action_dialogs:
+		end_action_dict[dialog.event_id] = dialog
 
 func play_turn():
 	var playing_side = turn_order[turn % 2]
@@ -111,9 +113,11 @@ func play_turn():
 		action = yield(ch.mind.decide_action(battle_ui, ch), "completed")
 		if action == null: print("Error: action missing on %s!" % ch.name)
 		if action.needs_target:
-			target = yield(ch.mind.decide_target(rng, battle_ui, action, our_foes, our_allies), "completed")
+			target = yield(ch.mind.decide_target(rng, self, action, our_foes, our_allies), "completed")
 			if target == null: print("Error: target missing for %s!" % ch.name)
+		else: target = ch
 		yield(commence_action(action, target), "completed")
+		yield(battle_ui.end_action_dialog(), "completed")
 		yield(check_standing(playing_side), "completed")
 		if !has_next_turn:
 			break
@@ -182,3 +186,12 @@ class BattleSorter:
 		if ch_a.battle_order < ch_b.battle_order:
 			return true
 		return false
+
+func _on_BattleAction_notable_event(event_id, target) -> bool:
+	var dialog: BattleDialog
+	if end_action_dict.has(event_id):
+		dialog = end_action_dict[event_id]
+		if dialog.event_target_name == target.name:
+			battle_ui.next_timelines.append(dialog.timeline)
+			return end_action_dict.erase(event_id)
+	return false

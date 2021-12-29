@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://source/resources/world/battle_dialog.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+timeline = "timeline-1640767572.json"
+event_id = "target_fainted"
+event_target_name = "Kamo"

@@ -41,3 +41,17 @@ func flip_sprite():
 
 func get_sprites():
 	return [body, skin, hair, accessories]
+
+func get_actions():
+	var all = battle_actions.get_children()
+	var aspect_type
+	for i in all.size():
+		if all[i] is AspectSkills:
+			aspect_type = all.pop_at(i)
+			break
+	var actions = []
+	for action in all:
+		actions.append(action)
+	for skill in aspect_type.get_children():
+		actions.append(skill)
+	return actions
