@@ -1,9 +1,9 @@
 extends BattleAction
 
 func execute_action(battle, target):
-	var user_aspect = battle.state_dict[user.name][battle.States.ASPECT]
+	var user_aspect = battle.state_dict[user.name]
 	var user_hhp = user_aspect.hp / 2
-	var target_aspect = battle.state_dict[target.name][battle.States.ASPECT]
+	var target_aspect = battle.state_dict[target.name]
 	var target_lost_hp = target.aspect.hp - target_aspect.hp
 	var share = min(target_lost_hp, user_hhp)
 	if share == 0:

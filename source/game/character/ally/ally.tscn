@@ -6,7 +6,16 @@
 [ext_resource path="res://source/game/character/battle_action/wait.tscn" type="PackedScene" id=4]
 
 [node name="Ally" instance=ExtResource( 1 )]
+collision_mask = 6
 script = ExtResource( 2 )
+
+[node name="CollisionBox" parent="." index="0"]
+disabled = true
+
+[node name="LeaderCam" type="Camera2D" parent="." index="1"]
+
+[node name="InteractionArea" parent="." index="3"]
+collision_mask = 6
 
 [node name="AccessoriesSprite" parent="CharacterVisual" index="3"]
 animation = "default"

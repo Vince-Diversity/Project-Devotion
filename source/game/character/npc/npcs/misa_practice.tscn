@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://source/game/character/npc/npcs/misa.tscn" type="PackedScene" id=1]
-[ext_resource path="res://source/game/character/npc/minds/single_skill/single_skill.tscn" type="PackedScene" id=2]
+[ext_resource path="res://source/game/character/npc/minds/single_skill/mind_single_skill.tscn" type="PackedScene" id=2]
 
 [node name="Misa" instance=ExtResource( 1 )]
 battle_path = "Share"

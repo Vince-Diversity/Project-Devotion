@@ -4,11 +4,26 @@
 animations = [ {
 "frames": [  ],
 "loop": true,
+"name": "left",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
 "name": "default",
 "speed": 5.0
 }, {
 "frames": [  ],
 "loop": true,
+"name": "up",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
 "name": "tense",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "down",
 "speed": 5.0
 } ]

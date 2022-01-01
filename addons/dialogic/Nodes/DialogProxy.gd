@@ -1,5 +1,5 @@
 extends Control
-
+class_name DialogProxy
 
 ## The timeline to load when starting the scene
 export(String, "TimelineDropdown") var timeline: String

@@ -9,7 +9,11 @@
 [node name="BattleMode" type="Node"]
 script = ExtResource( 4 )
 
-[node name="Building" type="TileMap" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+
+[node name="Place" type="TileMap" parent="."]
 cell_size = Vector2( 320, 224 )
 format = 1
 
@@ -39,24 +43,24 @@ position = Vector2( 208, 56 )
 [node name="Opponents" type="YSort" parent="."]
 
 [node name="FoePos1" type="Position2D" parent="Opponents"]
-position = Vector2( 80, 112 )
+position = Vector2( 80, 96 )
 
 [node name="FoePos2" type="Position2D" parent="Opponents"]
-position = Vector2( 90, 144 )
+position = Vector2( 90, 128 )
 
 [node name="FoePos3" type="Position2D" parent="Opponents"]
-position = Vector2( 70, 176 )
+position = Vector2( 70, 160 )
 
 [node name="Allies" type="YSort" parent="."]
 
 [node name="AllyPos1" type="Position2D" parent="Allies"]
-position = Vector2( 240, 112 )
+position = Vector2( 240, 96 )
 
 [node name="AllyPos2" type="Position2D" parent="Allies"]
-position = Vector2( 230, 144 )
+position = Vector2( 230, 128 )
 
 [node name="AllyPos3" type="Position2D" parent="Allies"]
-position = Vector2( 250, 176 )
+position = Vector2( 250, 160 )
 
 [node name="BattleUI" type="Control" parent="."]
 anchor_right = 1.0
@@ -156,6 +160,5 @@ __meta__ = {
 margin_right = 64.0
 margin_bottom = 13.0
 
-[node name="BattleMusic" type="AudioStreamPlayer" parent="."]
+[node name="bgm" type="AudioStreamPlayer" parent="."]
 autoplay = true
-bus = "Bgm"

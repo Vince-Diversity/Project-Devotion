@@ -2,7 +2,7 @@ extends MindNPC
 
 export var fixated_skill_name: String
 
-func decide_action(_battle_ui, character):
+func decide_action(_battle, character):
 	yield(get_tree(), "idle_frame")
 	var action
 	for skill in character.aspect_skills.get_children():
@@ -11,7 +11,7 @@ func decide_action(_battle_ui, character):
 			break
 	return action
 
-func decide_target(_rng: RandomNumberGenerator, battle, action: BattleAction,
+func decide_target(battle, action: BattleAction,
 					foes: Array, allies: Array):
 	var target
 	if action.targets_allies:

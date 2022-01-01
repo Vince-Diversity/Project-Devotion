@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bar.png-b3c67db5d7ac90e2a9c577eb16e37679.stex"
+path="res://.import/walk_down_bright_yellow_ruffed.png-fc5bc6fe88dc5c89bacc1215058a0d08.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/visuals/world/battle/bar.png"
-dest_files=[ "res://.import/bar.png-b3c67db5d7ac90e2a9c577eb16e37679.stex" ]
+source_file="res://assets/visuals/character/walk_down_bright_yellow_ruffed.png"
+dest_files=[ "res://.import/walk_down_bright_yellow_ruffed.png-fc5bc6fe88dc5c89bacc1215058a0d08.stex" ]
 
 [params]
 

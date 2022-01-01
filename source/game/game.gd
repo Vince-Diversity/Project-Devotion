@@ -73,9 +73,11 @@ func load_party(save_data: Dictionary):
 		ally.party_order = content["party_order"]
 		ally.battle_order = content["battle_order"]
 		allies[ally.party_order] = ally
+	allies.invert()
 	for allyo in allies:
 		party.append(allyo)
 		place.party.add_child(allyo)
+		allyo.ready_party()
 		content = ally_dict[allyo.name]
 		visuals = content["visuals"]
 		allyo.accessories.frames = visuals["accessories"]
@@ -105,7 +107,10 @@ func _on_NPC_load_battle(battle_scene: PackedScene):
 	var battle_mode = battle_scene.instance()
 	add_child(battle_mode)
 	var party_list = place.party.get_children()
+	party_list.invert()
 	var ally_pos_list = battle_mode.allies.get_children()
+	for i in party_list.size():
+		party_list[i].prepare_battle()
 	for i in party_list.size():
 		place.party.remove_child(party_list[i])
 		battle_mode.allies.get_node(ally_pos_list[i].name).add_child(party_list[i])

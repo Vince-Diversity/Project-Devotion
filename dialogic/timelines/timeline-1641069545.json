@@ -1,0 +1,69 @@
+{
+	"events": [
+		{
+			"action": "join",
+			"character": "character-1640556125.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		},
+		{
+			"character": "character-1640556125.json",
+			"event_id": "dialogic_010",
+			"options": [
+
+			],
+			"portrait": "",
+			"question": "What do you want?"
+		},
+		{
+			"choice": "nothing",
+			"condition": "",
+			"definition": "",
+			"event_id": "dialogic_011",
+			"value": ""
+		},
+		{
+			"character": "character-1640556125.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Then begone!"
+		},
+		{
+			"emit_signal": "done",
+			"event_id": "dialogic_040"
+		},
+		{
+			"choice": "Battle!",
+			"condition": "",
+			"definition": "",
+			"event_id": "dialogic_011",
+			"value": ""
+		},
+		{
+			"character": "character-1640556125.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "You'd better show some skill."
+		},
+		{
+			"emit_signal": "battle",
+			"event_id": "dialogic_040"
+		},
+		{
+			"event_id": "dialogic_013"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1641069545.json",
+		"name": "miranda_start_practice_battle"
+	}
+}

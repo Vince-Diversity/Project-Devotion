@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/shadow.png-9a4da816f6c0f61ce4277c4c53384c1e.stex"
+path="res://.import/idle_up_green_short_hair.png-356658edd2475f8fd5cef11f277621e9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/visuals/world/battle/shadow.png"
-dest_files=[ "res://.import/shadow.png-9a4da816f6c0f61ce4277c4c53384c1e.stex" ]
+source_file="res://assets/visuals/character/idle_up_green_short_hair.png"
+dest_files=[ "res://.import/idle_up_green_short_hair.png-356658edd2475f8fd5cef11f277621e9.stex" ]
 
 [params]
 

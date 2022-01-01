@@ -12,6 +12,6 @@ export var targets_allies := false
 var user
 
 func execute_action(battle, target):
-	var target_state = battle.state_dict[target.name][battle.States.ASPECT]
+	var target_state = battle.state_dict[target.name]
 	if target_state.hp == 0:
 		emit_signal("notable_event", "target_fainted", target)

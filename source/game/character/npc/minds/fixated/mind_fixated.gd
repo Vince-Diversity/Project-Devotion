@@ -3,7 +3,7 @@ extends MindNPC
 export var fixated_aspect: Resource
 export var fixated_skill_name: String
 
-func decide_action(_battle_ui, character):
+func decide_action(_battle, character):
 	yield(get_tree(), "idle_frame")
 	var action
 	for skill in character.aspect_skills.get_children():
@@ -12,7 +12,7 @@ func decide_action(_battle_ui, character):
 			break
 	return action
 
-func decide_target(rng: RandomNumberGenerator, battle, action: BattleAction,
+func decide_target(battle, action: BattleAction,
 					foes: Array, allies: Array):
 	var target
 	var target_found = false	
@@ -37,7 +37,7 @@ func decide_target(rng: RandomNumberGenerator, battle, action: BattleAction,
 					)
 				break
 	if !target_found:
-		target = .decide_target(rng, battle, action, foes, allies)
+		target = .decide_target(battle, action, foes, allies)
 		battle.battle_ui.narrative.tell(
 			"%s performs %s on %s!"
 			% [action.user.name, action.true_name, target.name]

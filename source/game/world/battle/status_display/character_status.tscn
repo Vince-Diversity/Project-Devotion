@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://source/game/world/battle/status_display/character_status.gd" type="Script" id=1]
-[ext_resource path="res://assets/visuals/world/battle/bar.png" type="Texture" id=2]
+[ext_resource path="res://assets/visuals/game/battle/bar.png" type="Texture" id=2]
 
 [node name="CharacterStatus" type="HBoxContainer"]
 margin_right = 104.0

@@ -2,10 +2,9 @@ extends GameWorld
 class_name BattleMode
 
 enum Roles {FOES, ALLIES, SPECTATORS}
-enum States {CHARACTER, ASPECT}
 export(String, "TimelineDropdown") var starting_dialog: String
 export(Array, Resource) var end_action_dialogs: Array
-var state_dict := {} # {name: {0: aspect,...}}
+var state_dict := {} # {name: aspect,...}
 var turn_order := [null, null]
 var turn := 0
 var has_next_turn = true
@@ -41,9 +40,7 @@ func _ready_character_helper(role, anim, role_id):
 	var battle_aspect: Aspect
 	for ch in get_characters(role):
 		battle_aspect = ch.aspect.duplicate()
-		state_dict[ch.name] = {}
-		state_dict[ch.name][States.CHARACTER] = ch
-		state_dict[ch.name][States.ASPECT] = battle_aspect
+		state_dict[ch.name] = battle_aspect
 		for sprite in ch.get_sprites():
 			sprite.set_animation(anim)
 		if role_id == Roles.FOES:
@@ -63,7 +60,7 @@ func ready_ui():
 		display = display_dict[role_id]
 		for battler in get_characters(role_dict[role_id]):
 			ch_status = display.add_character(battler)
-			aspect = state_dict[battler.name][States.ASPECT]
+			aspect = state_dict[battler.name]
 			aspect.connect("stat_changed", ch_status, "_on_Aspect_stat_changed")
 			aspect.connect("stat_changed", battle_ui.narrative, "_on_Aspect_stat_changed")
 
@@ -83,7 +80,7 @@ func _init_turn_order_helper(role):
 	var spd_arr := []
 	for ch in get_characters(role):
 		lvl_arr.append(ch.lvl)
-		spd_arr.append(state_dict[ch.name][States.ASPECT].spd)
+		spd_arr.append(state_dict[ch.name].spd)
 	return {"spd": Utils.array_max(spd_arr), "lvl": Utils.array_max(lvl_arr)}
 
 func starting_talk():
@@ -110,10 +107,10 @@ func play_turn():
 	for ch in our_allies_ordered_initial:
 		our_allies = get_characters(playing_side)
 		our_foes = get_characters(turn_order[(turn + 1) % 2])
-		action = yield(ch.mind.decide_action(battle_ui, ch), "completed")
+		action = yield(ch.mind.decide_action(self, ch), "completed")
 		if action == null: print("Error: action missing on %s!" % ch.name)
 		if action.needs_target:
-			target = yield(ch.mind.decide_target(rng, self, action, our_foes, our_allies), "completed")
+			target = yield(ch.mind.decide_target(self, action, our_foes, our_allies), "completed")
 			if target == null: print("Error: target missing for %s!" % ch.name)
 		else: target = ch
 		yield(commence_action(action, target), "completed")
@@ -158,7 +155,7 @@ func check_standing(playing_side):
 				yield(get_tree().create_timer(1.0), "timeout")
 
 func is_fallen(character):
-	var aspect = state_dict[character.name][States.ASPECT]
+	var aspect = state_dict[character.name]
 	return aspect.hp == 0
 
 func fall(character):
