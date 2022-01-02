@@ -24,10 +24,10 @@ func commence_battle():
 	rng.randomize()
 	ready_characters()
 	ready_ui()
-	init_turn_order()
+	ready_turn_order()
 	yield(starting_talk(), "completed")
-	yield(init_narrative(), "completed")
-	init_end_actions()
+	yield(ready_narrative(), "completed")
+	ready_end_actions()
 	play_turn()
 
 func ready_characters():
@@ -41,10 +41,10 @@ func _ready_character_helper(role, anim, role_id):
 	for ch in get_characters(role):
 		battle_aspect = ch.aspect.duplicate()
 		state_dict[ch.name] = battle_aspect
-		for sprite in ch.get_sprites():
+		for sprite in ch.character_visual.get_sprites():
 			sprite.set_animation(anim)
 		if role_id == Roles.FOES:
-			ch.flip_sprite()
+			ch.character_visual.flip_sprite()
 		for action in ch.get_actions():
 			var err = action.connect("notable_event", self, "_on_BattleAction_notable_event")
 			if err != OK:
@@ -64,10 +64,10 @@ func ready_ui():
 			aspect.connect("stat_changed", ch_status, "_on_Aspect_stat_changed")
 			aspect.connect("stat_changed", battle_ui.narrative, "_on_Aspect_stat_changed")
 
-func init_turn_order():
+func ready_turn_order():
 	var roles = [opponents, allies]
-	var ally_maxes = _init_turn_order_helper(allies)
-	var foe_maxes = _init_turn_order_helper(opponents)
+	var ally_maxes = _ready_turn_order_helper(allies)
+	var foe_maxes = _ready_turn_order_helper(opponents)
 	if foe_maxes["lvl"] > ally_maxes["lvl"]:
 		if foe_maxes["spd"] >= ally_maxes["spd"]:
 			turn_order[0] = roles.pop_at(0)
@@ -75,7 +75,7 @@ func init_turn_order():
 		turn_order[0] = roles.pop_at(1)
 	turn_order[1] = roles.pop_at(0)
 
-func _init_turn_order_helper(role):
+func _ready_turn_order_helper(role):
 	var lvl_arr := []
 	var spd_arr := []
 	for ch in get_characters(role):
@@ -88,12 +88,12 @@ func starting_talk():
 		yield(battle_ui.interject_dialog(starting_dialog), "completed")
 	yield(get_tree(), "idle_frame")
 
-func init_narrative():
+func ready_narrative():
 	var leader = get_leader(turn_order[0])
 	battle_ui.narrative.tell("%s's team are the quickest to act!" % leader.name)
 	yield(battle_ui, "accept_pressed")
 
-func init_end_actions():
+func ready_end_actions():
 	for dialog in end_action_dialogs:
 		end_action_dict[dialog.event_id] = dialog
 

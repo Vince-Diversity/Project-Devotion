@@ -16,9 +16,9 @@ var save_names = {
 }
 
 func _ready():
-	init_main_menu()
+	ready_main_menu()
 
-func init_main_menu():
+func ready_main_menu():
 	main_menu = main_menu_scene.instance()
 	var err
 	err = main_menu.connect("enter_dev_mode", self, "_on_MainMenu_enter_dev_mode")

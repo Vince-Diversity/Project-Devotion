@@ -1,14 +1,14 @@
 extends KinematicBody2D
 class_name Character
 
-enum States {ROAMING, BATTLING, TALKING}
-
+enum States {ROAMING, INTERACTING, BATTLING}
 export var aspect: Resource
 export var lvl := 0
 export var battle_order: int
 export var party_order: int
+export(String, "default", "down", "left", "up", "right") var facing_direction = "default"
 var state = States.ROAMING
-var party_node: Party
+var party: Party
 var next_ally
 var outside_following_area: bool
 var outside_interaction_area: bool
@@ -23,6 +23,7 @@ onready var mind_scene = preload("res://source/game/character/mind.tscn")
 onready var collision_box = $CollisionBox
 onready var following_area = $FollowingArea
 onready var interaction_area = $InteractionArea
+onready var character_visual = $CharacterVisual
 onready var accessories = $CharacterVisual/AccessoriesSprite
 onready var hair = $CharacterVisual/HairSprite
 onready var skin = $CharacterVisual/SkinSprite
@@ -31,24 +32,16 @@ onready var battle_actions = $BattleActions
 onready var mind_node = $MindNode
 
 func _ready():
-	init_areas()
-	init_actions()
-	init_mind()
+	ready_areas()
+	ready_actions()
+	ready_mind()
+	turn_to_default()
 
-func _physics_process(_delta):
-	match state:
-		States.ROAMING:
-			roam()
-		States.BATTLING:
-			pass
-		States.TALKING:
-			pass
-
-func init_areas():
+func ready_areas():
 	following_area.character = self
 	interaction_area.character = self
 
-func init_actions():
+func ready_actions():
 	for action in battle_actions.get_children():
 		action.user = self
 	aspect_skills = load(aspect.skill_path).instance()
@@ -56,7 +49,7 @@ func init_actions():
 	for skill in aspect_skills.get_children():
 		skill.user = self
 
-func init_mind():
+func ready_mind():
 	if mind_node.get_child_count() > 1:
 		print("Error, %s Mind is not set up correctly!" % name)
 		return
@@ -65,8 +58,8 @@ func init_mind():
 		mind_node.add_child(mind)
 	mind = mind_node.get_children()[0]
 
-func ready_party():
-	party_node = get_parent()
+func input_direction():
+	pass
 
 func is_leader():
 	return party_order == 0
@@ -74,76 +67,62 @@ func is_leader():
 func roam():
 	if is_leader():
 		input_direction()
-		if direction == Vector2.ZERO:
+		if should_idle():
 			idle()
 		else:
-			move(self.direction, self.speed)
+			move(self.direction)
 	else:
 		follow_next_ally()
+
+func should_idle():
+	if direction == Vector2.ZERO: return true
+	if state == States.INTERACTING: return true
+	return false
 
 func follow_next_ally():
 	if is_leader():
 		print("Error: leader %s trying to follow!" % self)
 	next_ally = get_next_ally()
 	if outside_following_area:
-		var next_direction = next_ally.velocity.normalized()
-		if next_direction != Vector2.ZERO:
-			move(next_direction, next_ally.speed)
+		var next_direction = (next_ally.global_position - global_position)
+		next_direction = next_direction.normalized()
+		move(next_direction)
 	else:
 		idle()
 
-func move(target_direction, target_speed):
-		animate_movement(target_direction)
-		velocity = target_direction * target_speed
+func move(target_direction):
+		velocity = target_direction * speed
 		velocity = move_and_slide(velocity)
+		animate_movement(target_direction)
 
 func idle():
-	animate_idle()
-
-func input_direction():
-	pass
-
-func animate_idle():
-	for sprite in get_sprites():
-		sprite.stop()
-		sprite.set_frame(0)
+	character_visual.animate_idle()
 
 func animate_movement(target_direction):
 	var anim_name = parse_move_direction(target_direction)
-	for sprite in get_sprites():
-		sprite.play(anim_name)
+	character_visual.animate_movement(anim_name)
+
+func turn_face(asker):
+	var asker_direction = asker.global_position - global_position
+	var anim_name = parse_move_direction(asker_direction)
+	character_visual.set_animation(anim_name)
+
+func turn_to_default():
+	character_visual.set_animation(facing_direction)
 
 func parse_move_direction(target_direction) -> String:
 	snapped_direction = Utils.snap_to_compass(target_direction)
 	anim_id = Kw.anim_map[snapped_direction]
 	if anim_id == Kw.Anims.RIGHT:
 		anim_id = Kw.Anims.LEFT
-		flip_sprite()
+		character_visual.flip_sprite()
 	else:
-		reset_sprite()
+		character_visual.reset_sprite()
 	return Kw.anim[anim_id]
 
-func reset_sprite():
-	for sprite in get_sprites():
-		sprite.set_flip_h(false)
-
-func prepare_roaming():
-	state = States.ROAMING
-
 func prepare_battle():
-	state = States.BATTLING
 	position = Vector2.ZERO
-	reset_sprite()
-
-func prepare_talking():
-	state = States.TALKING
-
-func flip_sprite():
-	for sprite in get_sprites():
-		sprite.set_flip_h(true)
-
-func get_sprites():
-	return [body, skin, hair, accessories]
+	character_visual.reset_sprite()
 
 func get_actions():
 	var all = battle_actions.get_children()
@@ -162,12 +141,7 @@ func get_actions():
 func get_next_ally():
 	if is_leader():
 		return self
-	return get_party_ordered()[party_order - 1]
-
-func get_party_ordered() -> Array:
-	var list = party_node.get_children()
-	list.invert()
-	return list
+	return party.get_party_ordered()[party_order - 1]
 
 func _on_FollowingArea_area_exited(area):
 	if state == States.ROAMING:
@@ -178,7 +152,3 @@ func _on_FollowingArea_area_entered(area):
 	if state == States.ROAMING:
 		if area.character.name == get_next_ally().name:
 			outside_following_area = false
-
-func _on_InteractionArea_area_entered(_area):
-	if state == States.ROAMING:
-		pass

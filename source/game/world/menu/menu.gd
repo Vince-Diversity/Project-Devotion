@@ -7,9 +7,9 @@ func _ready():
 	get_popup().popup_exclusive = true
 	var err = get_popup().connect("id_pressed", self, "_on_Menu_id_pressed")
 	if err != OK: print("Error %s when pressing menu button"%err)
-	init_items()
+	ready_items()
 
-func init_items():
+func ready_items():
 	for opt in Options:
 		var id = Options[opt]
 		get_popup().add_item(label_dict[id], id)

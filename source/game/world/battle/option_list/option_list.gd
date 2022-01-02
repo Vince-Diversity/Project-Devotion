@@ -12,7 +12,7 @@ var option_ui
 func _ready():
 	grab_focus()
 
-func init_battle_ui_connection():
+func ready_battle_ui_connection():
 	var err = connect("action_decided", option_ui, "_on_OptionList_action_decided")
 	if err != OK: print("Error %s connecting option list" % err)
 

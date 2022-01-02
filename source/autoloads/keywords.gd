@@ -21,7 +21,7 @@ const anim = {
 	Anims.UP: "up",
 }
 
-var anim_map = {
+const anim_map = {
 	Vector2.DOWN: Anims.DOWN,
 	Vector2.LEFT: Anims.LEFT, 
 	Vector2.UP: Anims.UP,

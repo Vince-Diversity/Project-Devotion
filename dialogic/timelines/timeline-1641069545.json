@@ -1,6 +1,10 @@
 {
 	"events": [
 		{
+			"event_id": "dialogic_024",
+			"set_theme": "default-theme.cfg"
+		},
+		{
 			"action": "join",
 			"character": "character-1640556125.json",
 			"event_id": "dialogic_002",
@@ -34,7 +38,7 @@
 			"character": "character-1640556125.json",
 			"event_id": "dialogic_001",
 			"portrait": "",
-			"text": "Then begone!"
+			"text": "Then begone."
 		},
 		{
 			"emit_signal": "done",

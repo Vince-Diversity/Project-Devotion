@@ -9,17 +9,17 @@ var item_names: Array
 onready var skill_selection_scene = preload("res://source/game/world/battle/option_list/skill_selection.tscn")
 
 func _ready():
-	init_battle_ui_connection()
-	init_item_list()
-	init_items()
+	ready_battle_ui_connection()
+	ready_item_list()
+	ready_items()
 
-func init_item_list():
+func ready_item_list():
 	var item_index
 	for opt in Options:
 		item_index = Options[opt]
 		item_names.append(item_dict[item_index])
 
-func init_items():
+func ready_items():
 	for n in item_names:
 		add_item(n)
 
