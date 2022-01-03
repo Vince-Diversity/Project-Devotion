@@ -4,7 +4,7 @@
 [ext_resource path="res://source/resources/aspect/forcian/forcian.tres" type="Resource" id=2]
 [ext_resource path="res://source/resources/character/frames/body/purple_clothes.tres" type="SpriteFrames" id=3]
 [ext_resource path="res://source/resources/character/frames/hair/red_medium_hair.tres" type="SpriteFrames" id=4]
-[ext_resource path="res://source/resources/character/frames/skin/black_skin.tres" type="SpriteFrames" id=5]
+[ext_resource path="res://source/resources/character/frames/skin/dark_skin.tres" type="SpriteFrames" id=5]
 
 [node name="Hephenea" instance=ExtResource( 1 )]
 aspect = ExtResource( 2 )

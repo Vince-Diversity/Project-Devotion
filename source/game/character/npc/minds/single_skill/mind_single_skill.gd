@@ -15,7 +15,11 @@ func decide_target(battle, action: BattleAction,
 					foes: Array, allies: Array):
 	var target
 	if action.targets_allies:
-		target = get_first_lowest_hp(battle, exclude_user(action.user, allies))
+		var other_allies = exclude_user(action.user, allies)
+		if other_allies.empty():
+			target = action.user
+		else:
+			target = get_first_lowest_hp(battle, other_allies)
 		battle.battle_ui.narrative.tell(
 			"%s is supporting %s!\n%s performs %s!"
 			% [action.user.name, target.name, action.user.name, action.true_name]

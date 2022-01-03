@@ -7,3 +7,4 @@ script = ExtResource( 1 )
 timeline = "timeline-1640767572.json"
 event_id = "target_fainted"
 event_target_name = "Kamo"
+required_names = [ "Miranda" ]

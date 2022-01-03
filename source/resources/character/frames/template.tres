@@ -19,11 +19,11 @@ animations = [ {
 }, {
 "frames": [  ],
 "loop": true,
-"name": "tense",
+"name": "down",
 "speed": 5.0
 }, {
 "frames": [  ],
 "loop": true,
-"name": "down",
+"name": "tense",
 "speed": 5.0
 } ]

@@ -178,17 +178,33 @@ func get_characters_ordered(role) -> Array:
 	characters.sort_custom(BattleSorter, "ascending_battle_order")
 	return characters
 
-class BattleSorter:
-	static func ascending_battle_order(ch_a, ch_b):
-		if ch_a.battle_order < ch_b.battle_order:
-			return true
-		return false
+func get_all_character_names() -> Array:
+	var names = []
+	for role in role_dict.values():
+		for ch in get_characters(role):
+			names.append(ch.name)
+	return names
 
 func _on_BattleAction_notable_event(event_id, target) -> bool:
 	var dialog: BattleDialog
 	if end_action_dict.has(event_id):
 		dialog = end_action_dict[event_id]
-		if dialog.event_target_name == target.name:
+		if _has_notable_event_conditions(dialog, target):
 			battle_ui.next_timelines.append(dialog.timeline)
 			return end_action_dict.erase(event_id)
 	return false
+
+func _has_notable_event_conditions(dialog: BattleDialog, target):
+	if dialog.event_target_name != target.name:
+		return false
+	var existing = get_all_character_names()
+	for required in dialog.required_names:
+		if not required in existing:
+			return false
+	return true
+
+class BattleSorter:
+	static func ascending_battle_order(ch_a, ch_b):
+		if ch_a.battle_order < ch_b.battle_order:
+			return true
+		return false
