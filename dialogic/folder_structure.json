@@ -10,7 +10,20 @@
 				"character-1640600163.json"
 			],
 			"folders": {
+				"Kies": {
+					"files": [
+						"character-1641237318.json",
+						"character-1641237547.json",
+						"character-1641237558.json"
+					],
+					"folders": {
 
+					},
+					"metadata": {
+						"color": null,
+						"folded": false
+					}
+				}
 			},
 			"metadata": {
 				"color": null,
@@ -19,7 +32,8 @@
 		},
 		"Definitions": {
 			"files": [
-				"1640601388-648"
+				"1640601388-648",
+				"1641240284-648"
 			],
 			"folders": {
 
@@ -57,6 +71,21 @@
 					"metadata": {
 						"color": null,
 						"folded": true
+					}
+				},
+				"battle_kies": {
+					"files": [
+						"timeline-1641237236.json",
+						"timeline-1641237613.json",
+						"timeline-1641237686.json",
+						"timeline-1641237790.json"
+					],
+					"folders": {
+
+					},
+					"metadata": {
+						"color": null,
+						"folded": false
 					}
 				},
 				"practice_battle": {

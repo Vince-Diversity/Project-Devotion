@@ -130,6 +130,8 @@ func commence_action(action, target):
 
 func check_standing(playing_side):
 	for role in role_dict.values():
+		if !has_next_turn:
+			break
 		for ch in get_characters(role):
 			if is_fallen(ch):
 				fall(ch)
@@ -147,12 +149,16 @@ func check_standing(playing_side):
 					battle_ui.narrative.tell(
 						"%s's team caused their loss!" % [leader.name]
 					)
+					yield(get_tree().create_timer(1.0), "timeout")
 				else:
 					var leader = get_leader(playing_side)
 					battle_ui.narrative.tell(
 						"%s's team wins!" % [leader.name]
 					)
-				yield(get_tree().create_timer(1.0), "timeout")
+					yield(battle_ui, "accept_pressed")
+					Events.emit_signal("load_overworld")
+					has_next_turn = false
+					break
 
 func is_fallen(character):
 	var aspect = state_dict[character.name]
@@ -160,6 +166,11 @@ func is_fallen(character):
 
 func fall(character):
 	character.get_parent().remove_child(character)
+
+func remove_all_allies():
+	for i_pos in allies.get_children():
+		for node in i_pos.get_children():
+			i_pos.remove_child(node)
 
 func get_leader(role):
 	return get_characters(role)[0]

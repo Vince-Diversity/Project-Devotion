@@ -9,6 +9,9 @@ func set_state(st):
 	for member in get_children():
 		member.state = st
 
+func set_cam_to(ally):
+	ally.leader_cam.current = true
+
 func get_state():
 	return get_leader().state
 

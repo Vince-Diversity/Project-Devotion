@@ -6,7 +6,7 @@ export var aspect: Resource
 export var lvl := 0
 export var battle_order: int
 export var party_order: int
-export(String, "default", "down", "left", "up", "right") var facing_direction = "default"
+export(String, "default", "down", "left", "up", "right") var default_anim_name = "default"
 var state = States.ROAMING
 var party: Party
 var next_ally
@@ -14,7 +14,7 @@ var outside_following_area: bool
 var outside_interaction_area: bool
 var mind: Mind
 var aspect_skills
-var direction := Vector2.ZERO
+var inputted_direction := Vector2.ZERO
 var snapped_direction := Vector2.ZERO
 var speed := 100
 var velocity := Vector2()
@@ -70,12 +70,12 @@ func roam():
 		if should_idle():
 			idle()
 		else:
-			move(self.direction)
+			move(self.inputted_direction)
 	else:
 		follow_next_ally()
 
 func should_idle():
-	if direction == Vector2.ZERO: return true
+	if inputted_direction == Vector2.ZERO: return true
 	if state == States.INTERACTING: return true
 	return false
 
@@ -108,16 +108,24 @@ func turn_face(asker):
 	character_visual.set_animation(anim_name)
 
 func turn_to_default():
-	character_visual.set_animation(facing_direction)
+	character_visual.set_animation(default_anim_name)
+
+func turn_to_direction(given_direction):
+	var anim_name = parse_move_direction(given_direction)
+	character_visual.set_animation(anim_name)
 
 func parse_move_direction(target_direction) -> String:
 	snapped_direction = Utils.snap_to_compass(target_direction)
-	anim_id = Kw.anim_map[snapped_direction]
-	if anim_id == Kw.Anims.RIGHT:
+	var true_anim_id = Kw.anim_map[snapped_direction]
+	return parse_anim_id(true_anim_id)
+
+func parse_anim_id(true_anim_id):
+	if true_anim_id == Kw.Anims.RIGHT:
 		anim_id = Kw.Anims.LEFT
 		character_visual.flip_sprite()
 	else:
 		character_visual.reset_sprite()
+		anim_id = true_anim_id
 	return Kw.anim[anim_id]
 
 func prepare_battle():
@@ -142,6 +150,12 @@ func get_next_ally():
 	if is_leader():
 		return self
 	return party.get_party_ordered()[party_order - 1]
+
+func get_true_anim_id() -> int:
+	if character_visual.is_flipped():
+		return Kw.Anims.RIGHT
+	else:
+		return anim_id
 
 func _on_FollowingArea_area_exited(area):
 	if state == States.ROAMING:

@@ -1,0 +1,33 @@
+{
+	"events": [
+		{
+			"action": "join",
+			"character": "character-1641237558.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		},
+		{
+			"character": "character-1641237558.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "We get furious real easy. You know that?!"
+		},
+		{
+			"emit_signal": "done",
+			"event_id": "dialogic_040"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1641237686.json",
+		"name": "iwazaru_practice"
+	}
+}

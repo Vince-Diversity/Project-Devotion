@@ -11,4 +11,4 @@ func _ready():
 
 func input_direction():
 	.input_direction()
-	direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	inputted_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")

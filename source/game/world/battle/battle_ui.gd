@@ -7,7 +7,7 @@ onready var option_ui = $OptionUI
 onready var narrative_background = $NarrativeDisplay/NarrativeBackground
 onready var narrative = $NarrativeDisplay/NarrativeBackground/NarrativeTextContainer/Narrative
 
-func _input(event):
+func _unhandled_input(event):
 	if event.is_action_pressed("ui_accept"):
 		emit_signal("accept_pressed")
 

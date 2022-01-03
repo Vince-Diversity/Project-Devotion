@@ -8,6 +8,12 @@
 			"name": "Player1",
 			"type": 0,
 			"value": "Yellow"
+		},
+		{
+			"id": "1641240284-648",
+			"name": "RedTag",
+			"type": 0,
+			"value": "#"
 		}
 	]
 }

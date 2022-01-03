@@ -23,3 +23,8 @@ func flip_sprite():
 
 func get_sprites():
 	return get_children()
+
+func is_flipped() -> bool:
+	if get_sprites()[0].is_flipped_h():
+		return true
+	return false

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://source/game/character/npc/npcs/WiseMonkey/WiseMonkey.tscn" type="PackedScene" id=1]
+
+[node name="Kikazaru" instance=ExtResource( 1 )]
+battle_order = 1
+interaction_dialog = "timeline-1641237613.json"
