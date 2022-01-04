@@ -75,8 +75,8 @@ func roam():
 		follow_next_ally()
 
 func should_idle():
-	if inputted_direction == Vector2.ZERO: return true
 	if state == States.INTERACTING: return true
+	if inputted_direction == Vector2.ZERO: return true
 	return false
 
 func follow_next_ally():

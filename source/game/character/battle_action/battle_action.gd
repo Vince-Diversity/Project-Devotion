@@ -5,7 +5,6 @@ signal notable_event(event_id, target)
 
 export var true_name: String
 
-const hp_pwr_ratio := 5
 export var use_duration := 1.0
 export var needs_target := true
 export var targets_allies := false

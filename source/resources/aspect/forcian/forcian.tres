@@ -6,6 +6,6 @@
 script = ExtResource( 1 )
 name = "Forcian"
 spd = 100
-pwr = 1000
-hp = 100
+pwr = 150
+hp = 150
 skill_path = "res://source/game/character/battle_action/forcian/forcian_skills.tscn"

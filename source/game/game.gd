@@ -111,14 +111,6 @@ func _on_NPC_load_battle(battle_scene: PackedScene, foe_party: Party):
 	add_child(battle_mode)
 	_load_battle_helper(place.allies, battle_mode.allies)
 	_load_battle_helper(foe_party, battle_mode.opponents)
-#	place.allies.set_state(place.allies.get_leader().States.BATTLING)
-#	var party_list = place.allies.get_party_ordered()
-#	var ally_pos_list = battle_mode.allies.get_children()
-#	for i in party_list.size():
-#		party_list[i].prepare_battle()
-#	for i in party_list.size():
-#		place.allies.remove_child(party_list[i])
-#		battle_mode.allies.get_node(ally_pos_list[i].name).add_child(party_list[i])
 	place.queue_free()
 	place = battle_mode
 	battle_mode.commence_battle()

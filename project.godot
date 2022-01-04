@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/game/character/battle_action/aspect_skills.gd"
 }, {
+"base": "BattleAction",
+"class": "AttackAction",
+"language": "GDScript",
+"path": "res://source/game/character/battle_action/attack_action.gd"
+}, {
 "base": "Node2D",
 "class": "BattleAction",
 "language": "GDScript",
@@ -38,6 +43,11 @@ _global_script_classes=[ {
 "class": "BattleMode",
 "language": "GDScript",
 "path": "res://source/game/world/battle/battle_mode.gd"
+}, {
+"base": "Control",
+"class": "BattleUI",
+"language": "GDScript",
+"path": "res://source/game/world/battle/battle_ui.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Character",
@@ -143,9 +153,11 @@ _global_script_class_icons={
 "Ally": "",
 "Aspect": "",
 "AspectSkills": "",
+"AttackAction": "",
 "BattleAction": "",
 "BattleDialog": "",
 "BattleMode": "",
+"BattleUI": "",
 "Character": "",
 "DTS": "",
 "DialogProxy": "",

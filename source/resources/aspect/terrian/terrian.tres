@@ -6,6 +6,6 @@
 script = ExtResource( 1 )
 name = "Terrian"
 spd = 100
-pwr = 500
+pwr = 100
 hp = 200
 skill_path = "res://source/game/character/battle_action/terrian/terrian_skills.tscn"

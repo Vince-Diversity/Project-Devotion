@@ -14,8 +14,8 @@ func execute_action(battle, target):
 		emit_signal("notable_event", "share_cancelled_full_hp", target)
 		yield(get_tree().create_timer(2*use_duration), "timeout")
 	else:
-		user_aspect.change_hp(Hit.new(share))
-		target_aspect.change_hp(Hit.new(-share))
+		user_aspect.change_hp(share)
+		target_aspect.change_hp(-share)
 		if user.name == target.name:
 			battle.battle_ui.narrative.tell(
 				"%s shares %d hp with... themselves!" % [user.name, share]

@@ -24,9 +24,8 @@ func commence_battle():
 	rng.randomize()
 	ready_characters()
 	ready_ui()
-	ready_turn_order()
 	yield(starting_talk(), "completed")
-	yield(ready_narrative(), "completed")
+	yield(ready_turn_order(), "completed")
 	ready_end_actions()
 	play_turn()
 
@@ -64,34 +63,49 @@ func ready_ui():
 			aspect.connect("stat_changed", ch_status, "_on_Aspect_stat_changed")
 			aspect.connect("stat_changed", battle_ui.narrative, "_on_Aspect_stat_changed")
 
-func ready_turn_order():
-	var roles = [opponents, allies]
-	var ally_maxes = _ready_turn_order_helper(allies)
-	var foe_maxes = _ready_turn_order_helper(opponents)
-	if foe_maxes["lvl"] > ally_maxes["lvl"]:
-		if foe_maxes["spd"] >= ally_maxes["spd"]:
-			turn_order[0] = roles.pop_at(0)
-	else: # Otherwise, allies go first
-		turn_order[0] = roles.pop_at(1)
-	turn_order[1] = roles.pop_at(0)
-
-func _ready_turn_order_helper(role):
-	var lvl_arr := []
-	var spd_arr := []
-	for ch in get_characters(role):
-		lvl_arr.append(ch.lvl)
-		spd_arr.append(state_dict[ch.name].spd)
-	return {"spd": Utils.array_max(spd_arr), "lvl": Utils.array_max(lvl_arr)}
-
 func starting_talk():
 	if starting_dialog:
 		yield(battle_ui.interject_dialog(starting_dialog), "completed")
 	yield(get_tree(), "idle_frame")
 
-func ready_narrative():
-	var leader = get_leader(turn_order[0])
-	battle_ui.narrative.tell("%s's team are the quickest to act!" % leader.name)
+func ready_turn_order():
+	var roles = [opponents, allies]
+	var ally_maxes = _ready_turn_order_helper(allies)
+	var foe_maxes = _ready_turn_order_helper(opponents)
+	if foe_maxes["lvl"] > ally_maxes["lvl"]:
+		var max_spd_ch
+		if foe_maxes["spd"] >= ally_maxes["spd"]:
+			turn_order[0] = roles.pop_at(0)
+			max_spd_ch = foe_maxes["lead_ch"]
+		else:
+			turn_order[0] = roles.pop_at(1)
+			max_spd_ch = ally_maxes["lead_ch"]
+		battle_ui.narrative.tell(
+			"%s's spd boosts their team to act first!" % max_spd_ch.name
+		)
+	else: # Otherwise, allies go first
+		turn_order[0] = roles.pop_at(1)
+		var lead = get_leader(turn_order[0])
+		battle_ui.narrative.tell(
+			"%s's team are most devoted and act first!" % lead.name
+		)
+	turn_order[1] = roles.pop_at(0)
 	yield(battle_ui, "accept_pressed")
+
+func _ready_turn_order_helper(role):
+	var max_lvl := 0
+	var max_spd := 0
+	var lead_ch
+	for ch in get_characters(role):
+		if ch.lvl > max_lvl:
+			max_lvl = ch.lvl
+			lead_ch = ch
+		var ch_spd = state_dict[ch.name].spd
+		if ch_spd > max_spd: max_spd = ch_spd
+	return {
+		"spd": max_spd,
+		"lvl": max_lvl,
+		"lead_ch": lead_ch}
 
 func ready_end_actions():
 	for dialog in end_action_dialogs:

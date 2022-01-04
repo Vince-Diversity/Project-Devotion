@@ -15,6 +15,12 @@
 			"event_id": "dialogic_001",
 			"portrait": "",
 			"text": "And... I wish I could thank the ones who saved me."
+		},
+		{
+			"character": "",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Fulfil their dreams too."
 		}
 	],
 	"metadata": {

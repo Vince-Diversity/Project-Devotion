@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://source/game/world/overworld/overworld.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/game/character/npc/npcs/miranda_practice.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://source/game/character/npc/npcs/WiseMonkey/Mizaru.tscn" type="PackedScene" id=7]
 [ext_resource path="res://source/game/character/npc/npcs/WiseMonkey/Iwazaru.tscn" type="PackedScene" id=8]
 [ext_resource path="res://source/game/character/npc/npc.gd" type="Script" id=9]
+[ext_resource path="res://source/game/character/npc/npcs/kamo.tscn" type="PackedScene" id=10]
+[ext_resource path="res://source/game/character/npc/npcs/misa_practice.tscn" type="PackedScene" id=11]
 
 [node name="TrainingGrounds" instance=ExtResource( 1 )]
 
@@ -21,7 +23,23 @@ collision_mask = 1
 [node name="PracticeParty" parent="Characters/NPCs" index="0" instance=ExtResource( 5 )]
 position = Vector2( -1, 0 )
 
-[node name="Miranda" parent="Characters/NPCs/PracticeParty" index="0" instance=ExtResource( 2 )]
+[node name="Misa" parent="Characters/NPCs/PracticeParty" index="0" instance=ExtResource( 11 )]
+position = Vector2( 148, 87 )
+collision_layer = 2
+collision_mask = 5
+script = ExtResource( 9 )
+battle_order = 2
+party_order = 2
+default_anim_name = "left"
+interaction_dialog = "timeline-1641310514.json"
+
+[node name="Kamo" parent="Characters/NPCs/PracticeParty" index="1" instance=ExtResource( 10 )]
+position = Vector2( 228, 88 )
+battle_order = 1
+party_order = 1
+interaction_dialog = "timeline-1641309679.json"
+
+[node name="Miranda" parent="Characters/NPCs/PracticeParty" index="2" instance=ExtResource( 2 )]
 position = Vector2( 186, 123 )
 collision_layer = 1
 collision_mask = 1
@@ -32,25 +50,13 @@ position = Vector2( 419, 105 )
 
 [node name="Mizaru" parent="Characters/NPCs/Kies" index="0" instance=ExtResource( 7 )]
 position = Vector2( 8, -18 )
-collision_layer = 2
-collision_mask = 5
-script = ExtResource( 9 )
-lvl = 0
 battle_path = "res://source/game/world/overworld/freegrounds/battle_training_grounds/battle_kies.tscn"
 
 [node name="Iwazaru" parent="Characters/NPCs/Kies" index="1" instance=ExtResource( 8 )]
 position = Vector2( 14, 5 )
-collision_layer = 2
-collision_mask = 5
-script = ExtResource( 9 )
-lvl = 0
 
 [node name="Kikazaru" parent="Characters/NPCs/Kies" index="2" instance=ExtResource( 4 )]
 position = Vector2( -17, -2 )
-collision_layer = 2
-collision_mask = 5
-script = ExtResource( 9 )
-lvl = 0
 
 [node name="Party" parent="Characters" index="1"]
 position = Vector2( 213, 170 )

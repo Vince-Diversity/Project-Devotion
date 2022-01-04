@@ -17,6 +17,9 @@ func _physics_process(_delta):
 					interact(allies)
 				for ally in get_party_ordered(allies):
 					ally.roam()
+			leader.States.INTERACTING:
+				for ally in get_party_ordered(allies):
+					ally.idle()
 
 func ready_party():
 	for ally in party_arr:

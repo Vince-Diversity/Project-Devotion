@@ -1,14 +1,10 @@
-extends BattleAction
+extends AttackAction
 
 func execute_action(battle, target):
-	var attack_damage: int
-# warning-ignore:narrowing_conversion
-	attack_damage = max(1, user.aspect.pwr / hp_pwr_ratio)
-	var hit = Hit.new(attack_damage)
-	battle.state_dict[target.name].change_hp(hit)
-	battle.battle_ui.narrative.tell(
-		"%s lost %d hp!" % [target.name, attack_damage]
-	)
-	yield(get_tree().create_timer(use_duration), "timeout")
+	var user_state = battle.state_dict[user.name]
+	var target_state = battle.state_dict[target.name]
+	var hit = Hit.new(battle.rng, potency, user_state, target_state)
+	battle.state_dict[target.name].change_hp(hit.damage)
+	yield(announce_damage(battle.battle_ui, hit, target), "completed")
 	.execute_action(battle, target)
 	return true
