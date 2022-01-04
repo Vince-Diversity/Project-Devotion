@@ -22,6 +22,7 @@ const anim = {
 }
 
 const anim_map = {
+	Vector2.ZERO: Anims.IDLE_DOWN,
 	Vector2.DOWN: Anims.DOWN,
 	Vector2.LEFT: Anims.LEFT, 
 	Vector2.UP: Anims.UP,

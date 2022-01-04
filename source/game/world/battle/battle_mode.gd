@@ -4,6 +4,7 @@ class_name BattleMode
 enum Roles {FOES, ALLIES, SPECTATORS}
 export(String, "TimelineDropdown") var starting_dialog: String
 export(Array, Resource) var end_action_dialogs: Array
+var npc_party: Party
 var state_dict := {} # {name: aspect,...}
 var turn_order := [null, null]
 var turn := 0
@@ -170,7 +171,7 @@ func check_standing(playing_side):
 						"%s's team wins!" % [leader.name]
 					)
 					yield(battle_ui, "accept_pressed")
-					Events.emit_signal("load_overworld")
+					Events.emit_signal("load_overworld", npc_party)
 					has_next_turn = false
 					break
 

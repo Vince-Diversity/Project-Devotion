@@ -60,6 +60,23 @@ func interact_with_npc(party: Party, asker: Character, npc: NPC):
 	if switch_to_battle:
 		npc.confirm_battle()
 
+func after_battle_interaction(asker: Character, foe_party: Party):
+	var npc = foe_party.get_leader()
+	allies.set_state(asker.States.INTERACTING)
+	asker.turn_face(npc)
+	npc.turn_face(asker)
+	var d = Dialogic.start(npc.after_battle_dialog)
+	add_child(d)
+	var keep_talk = true
+	while keep_talk:
+		var response = yield(d, "dialogic_signal")
+		match response:
+			"done":
+				keep_talk = false
+	yield(get_tree(), "idle_frame")
+	npc.turn_to_default()
+	allies.set_state(asker.States.ROAMING)
+
 func get_party_ordered(party_node) -> Array:
 	var list = party_node.get_children()
 	list.invert()

@@ -38,25 +38,31 @@ position = Vector2( 228, 88 )
 battle_order = 1
 party_order = 1
 interaction_dialog = "timeline-1641309679.json"
+after_battle_dialog = ""
 
 [node name="Miranda" parent="Characters/NPCs/PracticeParty" index="2" instance=ExtResource( 2 )]
 position = Vector2( 186, 123 )
 collision_layer = 1
 collision_mask = 1
 interaction_dialog = "timeline-1641069545.json"
+after_battle_dialog = "timeline-1641312310.json"
 
 [node name="Kies" parent="Characters/NPCs" index="1" instance=ExtResource( 5 )]
 position = Vector2( 419, 105 )
 
-[node name="Mizaru" parent="Characters/NPCs/Kies" index="0" instance=ExtResource( 7 )]
-position = Vector2( 8, -18 )
-battle_path = "res://source/game/world/overworld/freegrounds/battle_training_grounds/battle_kies.tscn"
+[node name="Kikazaru" parent="Characters/NPCs/Kies" index="0" instance=ExtResource( 4 )]
+position = Vector2( -17, -2 )
+party_order = 2
+after_battle_dialog = ""
 
 [node name="Iwazaru" parent="Characters/NPCs/Kies" index="1" instance=ExtResource( 8 )]
 position = Vector2( 14, 5 )
+party_order = 1
+after_battle_dialog = ""
 
-[node name="Kikazaru" parent="Characters/NPCs/Kies" index="2" instance=ExtResource( 4 )]
-position = Vector2( -17, -2 )
+[node name="Mizaru" parent="Characters/NPCs/Kies" index="2" instance=ExtResource( 7 )]
+position = Vector2( 8, -18 )
+battle_path = "res://source/game/world/overworld/freegrounds/battle_training_grounds/battle_kies.tscn"
 
 [node name="Party" parent="Characters" index="1"]
 position = Vector2( 213, 170 )

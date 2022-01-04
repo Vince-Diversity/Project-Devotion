@@ -6,8 +6,10 @@ const party_data_key := "party"
 var save_dir: String
 var save_name: String
 var overworld_path: String
-var place: GameWorld
+var current_overworld: Overworld
+var current_battle: BattleMode
 var party_dict := {"node": [], "position": [], "direction": []}
+var opponents_dict := {"node": [], "position": [], "direction": []}
 onready var SAVE_KEY := name
 onready var save_path := save_dir.plus_file(save_name)
 onready var ally_scene := preload("res://source/game/character/ally/ally.tscn")
@@ -56,8 +58,8 @@ func load_save(save_game: Resource):
 func load_place(save_data: Dictionary):
 	overworld_path = save_data[place_data_key]
 	var place_scene = load(overworld_path)
-	place = place_scene.instance()
-	add_child(place)
+	current_overworld = place_scene.instance()
+	add_child(current_overworld)
 
 func load_party(save_data: Dictionary):
 	var ally_dict = save_data[party_data_key]
@@ -78,14 +80,14 @@ func load_party(save_data: Dictionary):
 	allies.invert()
 	for allyo in allies:
 		party_dict["node"].append(allyo)
-		place.allies.add_child(allyo)
+		current_overworld.allies.add_child(allyo)
 		content = ally_dict[allyo.name]
 		visuals = content["visuals"]
 		allyo.accessories.frames = visuals["accessories"]
 		allyo.hair.frames = visuals["hair"]
 		allyo.skin.frames = visuals["skin"]
 		allyo.body.frames = visuals["body"]
-	place.allies.assign_members()
+	current_overworld.allies.assign_members()
 
 func _on_Events_save_game():
 	var save_game = SaveGame.new()
@@ -106,19 +108,22 @@ func _on_Events_save_game():
 		print("Error %s saving to %s" % [err, save_path])
 
 func _on_NPC_load_battle(battle_scene: PackedScene, foe_party: Party):
-	_store_party_props()
+	_store_party_props(party_dict)
+	opponents_dict["node"] = foe_party.get_party_ordered()
+	_store_party_props(opponents_dict)
 	var battle_mode = battle_scene.instance()
+	battle_mode.npc_party = foe_party
 	add_child(battle_mode)
-	_load_battle_helper(place.allies, battle_mode.allies)
+	_load_battle_helper(current_overworld.allies, battle_mode.allies)
 	_load_battle_helper(foe_party, battle_mode.opponents)
-	place.queue_free()
-	place = battle_mode
-	battle_mode.commence_battle()
+	remove_child(current_overworld)
+	current_battle = battle_mode
+	current_battle.commence_battle()
 
-func _store_party_props():
-	for ally in party_dict["node"]:
-		party_dict["position"].append(ally.get_global_position())
-		party_dict["direction"].append(ally.snapped_direction)
+func _store_party_props(ch_dict):
+	for ch in ch_dict["node"]:
+		ch_dict["position"].append(ch.get_global_position())
+		ch_dict["direction"].append(ch.snapped_direction)
 
 func _load_battle_helper(our_party: Party, battle_role):
 	our_party.set_state(our_party.get_leader().States.BATTLING)
@@ -130,22 +135,25 @@ func _load_battle_helper(our_party: Party, battle_role):
 		our_party.remove_child(party_list[i])
 		battle_role.get_node(pos_list[i].name).add_child(party_list[i])
 
-func _on_Battle_load_overworld():
-	place.remove_all_allies()
-	place.queue_free()
-	var place_scene = load(overworld_path)
-	place = place_scene.instance()
-	add_child(place)
-	_restore_party()
+func _on_Battle_load_overworld(foe_party):
+	current_battle.remove_all_allies()
+	current_battle.queue_free()
+	add_child(current_overworld)
+	_restore_party(party_dict, current_overworld.allies)
+	_restore_party(opponents_dict, foe_party)
+	_after_battle_preps(current_overworld, foe_party)
+
+func _restore_party(dict, overworld_party: Party):
+	var ch
+	for i in dict["node"].size():
+		ch = dict["node"][i]
+		overworld_party.add_child(ch)
+		ch.set_global_position(dict["position"][i])
+		ch.turn_to_direction(dict["direction"][i])
+
+func _after_battle_preps(place: Overworld, foe_party):
 	var leader = place.allies.get_leader()
 	place.allies.set_cam_to(leader)
 	place.allies.assign_members()
 	place.allies.set_state(leader.States.ROAMING)
-
-func _restore_party():
-	var ally
-	for i in party_dict["node"].size():
-		ally = party_dict["node"][i]
-		place.allies.add_child(ally)
-		ally.set_global_position(party_dict["position"][i])
-		ally.turn_to_direction(party_dict["direction"][i])
+	place.after_battle_interaction(leader, foe_party)
