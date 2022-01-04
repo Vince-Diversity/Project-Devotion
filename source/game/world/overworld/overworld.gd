@@ -54,6 +54,9 @@ func interact_with_npc(party: Party, asker: Character, npc: NPC):
 				switch_to_battle = true
 			"done":
 				keep_talk = false
+			"":
+				print("Error! Dialogic signal name not specified.")
+				null.crash()
 	yield(get_tree(), "idle_frame")
 	npc.turn_to_default()
 	party.set_state(asker.States.ROAMING)

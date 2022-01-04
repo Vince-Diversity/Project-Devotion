@@ -1,0 +1,89 @@
+{
+	"events": [
+		{
+			"action": "join",
+			"character": "character-1641320933.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		},
+		{
+			"character": "character-1641320933.json",
+			"event_id": "dialogic_010",
+			"options": [
+
+			],
+			"portrait": "",
+			"question": "I can crash the game if you want."
+		},
+		{
+			"choice": "ok",
+			"condition": "",
+			"definition": "",
+			"event_id": "dialogic_011",
+			"value": ""
+		},
+		{
+			"choice": "do it!",
+			"condition": "",
+			"definition": "",
+			"event_id": "dialogic_011",
+			"value": ""
+		},
+		{
+			"character": "character-1641320933.json",
+			"event_id": "dialogic_010",
+			"options": [
+
+			],
+			"portrait": "",
+			"question": "Just to make sure, your progress will be lost.\nSure you want to crash the game?"
+		},
+		{
+			"choice": "no",
+			"condition": "",
+			"definition": "",
+			"event_id": "dialogic_011",
+			"value": ""
+		},
+		{
+			"choice": "yes",
+			"condition": "",
+			"definition": "",
+			"event_id": "dialogic_011",
+			"value": ""
+		},
+		{
+			"character": "character-1641320933.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "No regrets!"
+		},
+		{
+			"emit_signal": "",
+			"event_id": "dialogic_040"
+		},
+		{
+			"event_id": "dialogic_013"
+		},
+		{
+			"event_id": "dialogic_013"
+		},
+		{
+			"emit_signal": "done",
+			"event_id": "dialogic_040"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1641320903.json",
+		"name": "kir_crash"
+	}
+}

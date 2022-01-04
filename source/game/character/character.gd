@@ -117,16 +117,8 @@ func turn_to_direction(given_direction):
 func parse_move_direction(target_direction) -> String:
 	snapped_direction = Utils.snap_to_compass(target_direction)
 	var true_anim_id = Kw.anim_map[snapped_direction]
-	return parse_anim_id(true_anim_id)
-
-func parse_anim_id(true_anim_id):
-	if true_anim_id == Kw.Anims.RIGHT:
-		anim_id = Kw.Anims.LEFT
-		character_visual.flip_sprite()
-	else:
-		character_visual.reset_sprite()
-		anim_id = true_anim_id
-	return Kw.anim[anim_id]
+	var true_anim_name = Kw.anim[true_anim_id]
+	return character_visual.parse_anim_name(true_anim_name)
 
 func prepare_battle():
 	position = Vector2.ZERO

@@ -7,7 +7,8 @@
 			"files": [
 				"character-1640556212.json",
 				"character-1640556125.json",
-				"character-1640600163.json"
+				"character-1640600163.json",
+				"character-1641320933.json"
 			],
 			"folders": {
 				"Kies": {
@@ -21,7 +22,7 @@
 					},
 					"metadata": {
 						"color": null,
-						"folded": false
+						"folded": true
 					}
 				}
 			},
@@ -73,34 +74,57 @@
 						"folded": false
 					}
 				},
-				"battle_kies": {
+				"TrainingGrounds": {
 					"files": [
-						"timeline-1641237236.json",
-						"timeline-1641237613.json",
-						"timeline-1641237686.json",
-						"timeline-1641237790.json",
-						"timeline-1641313003.json"
+
 					],
 					"folders": {
+						"battle_kies": {
+							"files": [
+								"timeline-1641237236.json",
+								"timeline-1641237613.json",
+								"timeline-1641237686.json",
+								"timeline-1641237790.json",
+								"timeline-1641313003.json"
+							],
+							"folders": {
 
-					},
-					"metadata": {
-						"color": null,
-						"folded": false
-					}
-				},
-				"practice_battle": {
-					"files": [
-						"timeline-1639592199.json",
-						"timeline-1640762586.json",
-						"timeline-1640767572.json",
-						"timeline-1641069545.json",
-						"timeline-1641309679.json",
-						"timeline-1641310514.json",
-						"timeline-1641312310.json"
-					],
-					"folders": {
+							},
+							"metadata": {
+								"color": null,
+								"folded": true
+							}
+						},
+						"npcs": {
+							"files": [
+								"timeline-1641320903.json"
+							],
+							"folders": {
 
+							},
+							"metadata": {
+								"color": null,
+								"folded": false
+							}
+						},
+						"practice_battle": {
+							"files": [
+								"timeline-1639592199.json",
+								"timeline-1640762586.json",
+								"timeline-1640767572.json",
+								"timeline-1641069545.json",
+								"timeline-1641309679.json",
+								"timeline-1641310514.json",
+								"timeline-1641312310.json"
+							],
+							"folders": {
+
+							},
+							"metadata": {
+								"color": null,
+								"folded": false
+							}
+						}
 					},
 					"metadata": {
 						"color": null,

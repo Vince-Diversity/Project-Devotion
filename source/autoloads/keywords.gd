@@ -19,6 +19,7 @@ const anim = {
 	Anims.DOWN: "down",
 	Anims.LEFT: "left",
 	Anims.UP: "up",
+	Anims.RIGHT: "right",
 }
 
 const anim_map = {

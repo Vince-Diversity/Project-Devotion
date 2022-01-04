@@ -3,5 +3,4 @@
 [ext_resource path="res://source/game/world/party.gd" type="Script" id=1]
 
 [node name="Party" type="YSort"]
-position = Vector2( 232, 157 )
 script = ExtResource( 1 )
