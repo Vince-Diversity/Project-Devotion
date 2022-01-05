@@ -8,7 +8,10 @@
 				"character-1640556212.json",
 				"character-1640556125.json",
 				"character-1640600163.json",
-				"character-1641320933.json"
+				"character-1641320933.json",
+				"character-1641332025.json",
+				"character-1641333086.json",
+				"character-1641399097.json"
 			],
 			"folders": {
 				"Kies": {
@@ -23,6 +26,18 @@
 					"metadata": {
 						"color": null,
 						"folded": true
+					}
+				},
+				"Teachers": {
+					"files": [
+						"character-1641334022.json"
+					],
+					"folders": {
+
+					},
+					"metadata": {
+						"color": null,
+						"folded": false
 					}
 				}
 			},
@@ -71,7 +86,7 @@
 					},
 					"metadata": {
 						"color": null,
-						"folded": false
+						"folded": true
 					}
 				},
 				"TrainingGrounds": {
@@ -95,9 +110,24 @@
 								"folded": true
 							}
 						},
+						"final_battle": {
+							"files": [
+								"timeline-1641333067.json"
+							],
+							"folders": {
+
+							},
+							"metadata": {
+								"color": null,
+								"folded": false
+							}
+						},
 						"npcs": {
 							"files": [
-								"timeline-1641320903.json"
+								"timeline-1641320903.json",
+								"timeline-1641332082.json",
+								"timeline-1641333976.json",
+								"timeline-1641399112.json"
 							],
 							"folders": {
 

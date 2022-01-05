@@ -19,7 +19,6 @@ var snapped_direction := Vector2.ZERO
 var speed := 100
 var velocity := Vector2()
 var anim_id: int
-onready var mind_scene = preload("res://source/game/character/mind.tscn")
 onready var collision_box = $CollisionBox
 onready var following_area = $FollowingArea
 onready var interaction_area = $InteractionArea
@@ -51,12 +50,9 @@ func ready_actions():
 
 func ready_mind():
 	if mind_node.get_child_count() > 1:
-		print("Error, %s Mind is not set up correctly!" % name)
-		return
-	elif mind_node.get_child_count() == 0:
-		mind = mind_scene.instance()
-		mind_node.add_child(mind)
+		print("Error, %s's Mind is not set up correctly!" % name)
 	mind = mind_node.get_children()[0]
+	mind.user = self
 
 func input_direction():
 	pass
@@ -99,32 +95,31 @@ func idle():
 	character_visual.animate_idle()
 
 func animate_movement(target_direction):
-	var anim_name = parse_move_direction(target_direction)
-	character_visual.animate_movement(anim_name)
+	var true_anim_name = parse_move_direction(target_direction)
+	character_visual.animate_movement(true_anim_name)
 
 func turn_face(asker):
 	var asker_direction = asker.global_position - global_position
-	var anim_name = parse_move_direction(asker_direction)
-	character_visual.set_animation(anim_name)
+	var true_anim_name = parse_move_direction(asker_direction)
+	character_visual.set_animation(true_anim_name)
 
 func turn_to_default():
 	character_visual.set_animation(default_anim_name)
 
 func turn_to_direction(given_direction):
-	var anim_name = parse_move_direction(given_direction)
-	character_visual.set_animation(anim_name)
+	var true_anim_name = parse_move_direction(given_direction)
+	character_visual.set_animation(true_anim_name)
 
 func parse_move_direction(target_direction) -> String:
 	snapped_direction = Utils.snap_to_compass(target_direction)
 	var true_anim_id = Kw.anim_map[snapped_direction]
-	var true_anim_name = Kw.anim[true_anim_id]
-	return character_visual.parse_anim_name(true_anim_name)
+	return Kw.anim[true_anim_id]
 
 func prepare_battle():
 	position = Vector2.ZERO
 	character_visual.reset_sprite()
 
-func get_actions():
+func get_actions() -> Array:
 	var all = battle_actions.get_children()
 	var aspect_type
 	for i in all.size():
@@ -150,11 +145,11 @@ func get_true_anim_id() -> int:
 		return anim_id
 
 func _on_FollowingArea_area_exited(area):
-	if state == States.ROAMING:
+	if state != States.BATTLING:
 		if area.character.name == get_next_ally().name:
 			outside_following_area = true
 
 func _on_FollowingArea_area_entered(area):
-	if state == States.ROAMING:
+	if state != States.BATTLING:
 		if area.character.name == get_next_ally().name:
 			outside_following_area = false

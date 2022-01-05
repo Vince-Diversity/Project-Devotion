@@ -1,15 +1,16 @@
 extends OptionList
 
-enum Options {SKILLS, WAIT}
+enum Options {SKILLS, STATS, WAIT}
 const item_dict = {
 	Options.SKILLS: "Skills",
+	Options.STATS: "Stats",
 	Options.WAIT: "Wait",
 }
 var item_names: Array
 onready var skill_selection_scene = preload("res://source/game/world/battle/option_list/skill_selection.tscn")
+onready var stats_selection_scene = preload("res://source/game/world/battle/option_list/stats_selection.tscn")
 
 func _ready():
-	ready_battle_ui_connection()
 	ready_item_list()
 	ready_items()
 
@@ -28,10 +29,18 @@ func _on_OptionList_item_activated(index: int):
 	match index:
 		Options.SKILLS:
 			var skill_selection = skill_selection_scene.instance()
+			_propagate_props(skill_selection)
 			skill_selection.aspect_skills = character.aspect_skills
-			skill_selection.character = character
-			skill_selection.option_ui = option_ui
 			get_parent().add_child(skill_selection)
+		Options.STATS:
+			var stats_selection = stats_selection_scene.instance()
+			_propagate_props(stats_selection)
+			stats_selection.battlers = battlers
+			get_parent().add_child(stats_selection)
 		Options.WAIT:
 			emit_signal("action_decided", character.wait_action)
 	queue_free()
+
+func _propagate_props(inst):
+	inst.character = character
+	inst.option_ui = option_ui

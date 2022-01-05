@@ -6,4 +6,4 @@
 [node name="Misa" instance=ExtResource( 1 )]
 
 [node name="SingleSkill" parent="MindNode" index="0" instance=ExtResource( 2 )]
-fixated_skill_name = "Share"
+preferred_skill_name = "Share"

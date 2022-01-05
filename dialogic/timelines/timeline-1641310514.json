@@ -18,7 +18,7 @@
 			"character": "character-1640556212.json",
 			"event_id": "dialogic_001",
 			"portrait": "",
-			"text": "I haven't seen you three around here before. Are you new?"
+			"text": "I haven't seen you around here before. Are you new?"
 		},
 		{
 			"emit_signal": "done",

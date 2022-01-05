@@ -9,7 +9,7 @@
 
 [node name="Kir" instance=ExtResource( 1 )]
 aspect = ExtResource( 2 )
-lvl = 1
+lvl = 2
 
 [node name="BodySprite" parent="CharacterVisual" index="0"]
 frames = ExtResource( 4 )

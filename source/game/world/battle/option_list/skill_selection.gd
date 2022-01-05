@@ -4,7 +4,6 @@ var aspect_skills: AspectSkills
 var skills: Array
 
 func _ready():
-	ready_battle_ui_connection()
 	add_skills()
 	add_item("Back")
 

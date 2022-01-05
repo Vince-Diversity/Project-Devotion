@@ -137,7 +137,6 @@ __meta__ = {
 margin_right = 112.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 112, 56 )
-text = "The opponents are not devoted to the battle!"
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -162,3 +161,5 @@ margin_bottom = 13.0
 
 [node name="bgm" type="AudioStreamPlayer" parent="."]
 autoplay = true
+
+[connection signal="stats_requested" from="BattleUI/OptionUI" to="." method="_on_OptionUI_stats_requested"]

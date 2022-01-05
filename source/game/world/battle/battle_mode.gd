@@ -51,6 +51,7 @@ func _ready_character_helper(role, anim, role_id):
 				print("Error %s when connecting from action %s from %s" % [err, action, ch])
 
 func ready_ui():
+	battle_ui.option_ui.battle = self
 	display_dict[Roles.FOES] = left_status_display
 	display_dict[Roles.ALLIES] = right_status_display
 	var display
@@ -78,12 +79,16 @@ func ready_turn_order():
 		if foe_maxes["spd"] >= ally_maxes["spd"]:
 			turn_order[0] = roles.pop_at(0)
 			max_spd_ch = foe_maxes["lead_ch"]
+			var lead = get_leader(turn_order[0])
+			battle_ui.narrative.tell(
+				"%s's team max lvl lets them be the quickest to act!" % lead.name
+			)
 		else:
 			turn_order[0] = roles.pop_at(1)
 			max_spd_ch = ally_maxes["lead_ch"]
-		battle_ui.narrative.tell(
-			"%s's spd boosts their team to act first!" % max_spd_ch.name
-		)
+			battle_ui.narrative.tell(
+				"%s's spd mastery accelerates their team to act first!" % max_spd_ch.name
+			)
 	else: # Otherwise, allies go first
 		turn_order[0] = roles.pop_at(1)
 		var lead = get_leader(turn_order[0])
@@ -100,9 +105,10 @@ func _ready_turn_order_helper(role):
 	for ch in get_characters(role):
 		if ch.lvl > max_lvl:
 			max_lvl = ch.lvl
-			lead_ch = ch
 		var ch_spd = state_dict[ch.name].spd
-		if ch_spd > max_spd: max_spd = ch_spd
+		if ch_spd > max_spd:
+			max_spd = ch_spd
+			lead_ch = ch
 	return {
 		"spd": max_spd,
 		"lvl": max_lvl,
@@ -117,18 +123,14 @@ func play_turn():
 	var our_allies_ordered_initial = get_characters_ordered(playing_side)
 	var our_allies
 	var our_foes
-	var action
-	var target
+	var act: BattleDecision
 	for ch in our_allies_ordered_initial:
 		our_allies = get_characters(playing_side)
 		our_foes = get_characters(turn_order[(turn + 1) % 2])
-		action = yield(ch.mind.decide_action(self, ch), "completed")
-		if action == null: print("Error: action missing on %s!" % ch.name)
-		if action.needs_target:
-			target = yield(ch.mind.decide_target(self, action, our_foes, our_allies), "completed")
-			if target == null: print("Error: target missing for %s!" % ch.name)
-		else: target = ch
-		yield(commence_action(action, target), "completed")
+		act = yield(ch.mind.decide_action(self, our_foes, our_allies), "completed")
+		if act.action == null: print("Error: action missing on %s!" % ch.name)
+		if act.target == null: print("Error: target missing for %s!" % ch.name)
+		yield(commence_action(act.action, act.target), "completed")
 		yield(battle_ui.end_action_dialog(), "completed")
 		yield(check_standing(playing_side), "completed")
 		if !has_next_turn:
@@ -211,6 +213,19 @@ func get_all_character_names() -> Array:
 			names.append(ch.name)
 	return names
 
+func get_battlers() -> Array:
+	var battlers = []
+	for role in [role_dict[Roles.FOES], role_dict[Roles.ALLIES]]:
+		for ch in get_characters_ordered(role):
+			battlers.append(ch)
+	return battlers
+
+class BattleSorter:
+	static func ascending_battle_order(ch_a, ch_b):
+		if ch_a.battle_order < ch_b.battle_order:
+			return true
+		return false
+
 func _on_BattleAction_notable_event(event_id, target) -> bool:
 	var dialog: BattleDialog
 	if end_action_dict.has(event_id):
@@ -229,8 +244,6 @@ func _has_notable_event_conditions(dialog: BattleDialog, target):
 			return false
 	return true
 
-class BattleSorter:
-	static func ascending_battle_order(ch_a, ch_b):
-		if ch_a.battle_order < ch_b.battle_order:
-			return true
-		return false
+func _on_OptionUI_stats_requested(character):
+	var state = state_dict[character.name]
+	battle_ui.narrative.display_stats(character, state)

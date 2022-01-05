@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://source/game/character/npc/minds/adaptive_single_skill/mind_adaptive_single_skill.gd" type="Script" id=1]
+[ext_resource path="res://source/game/character/npc/minds/single_skill/mind_single_skill.tscn" type="PackedScene" id=2]
+
+[node name="MindAdaptiveSingleSkill" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
