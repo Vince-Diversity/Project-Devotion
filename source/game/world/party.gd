@@ -16,11 +16,11 @@ func get_state():
 	return get_leader().state
 
 func get_leader():
-	var leader
 	for member in get_children():
 		if member.party_order == 0:
-			leader = member
-	return leader
+			return member
+	print("Error! can not find leader of party")
+	return get_children()[0]
 
 func get_party_ordered() -> Array:
 	var list = get_children()

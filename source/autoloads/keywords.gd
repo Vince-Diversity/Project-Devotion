@@ -1,16 +1,18 @@
 extends Node
 
-enum Aspect {SPACE, ENERGY, MATTER, TIME}
+enum Aspects {SPACE, ENERGY, MATTER, TIME}
 
 enum Anims {IDLE_DOWN, TENSE, DOWN, LEFT, UP, RIGHT}
 
 enum Stats {HP, POWER, SPEED}
 
+enum OwStates {ROAMING, INTERACTING, BATTLING}
+
 const aspect_descr = {
-	Aspect.SPACE: "spatial",
-	Aspect.ENERGY: "dynamical",
-	Aspect.MATTER: "material",
-	Aspect.TIME: "temporal",
+	Aspects.SPACE: "spatial",
+	Aspects.ENERGY: "dynamical",
+	Aspects.MATTER: "material",
+	Aspects.TIME: "temporal",
 }
 
 const anim = {

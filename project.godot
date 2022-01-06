@@ -64,6 +64,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/dialogic/Localization/translation_service.gd"
 }, {
+"base": "Object",
+"class": "DerivedStats",
+"language": "GDScript",
+"path": "res://source/game/character/battle_action/derived_stats.gd"
+}, {
 "base": "Control",
 "class": "DialogProxy",
 "language": "GDScript",
@@ -186,6 +191,7 @@ _global_script_class_icons={
 "BattleUI": "",
 "Character": "",
 "DTS": "",
+"DerivedStats": "",
 "DialogProxy": "",
 "Dialogic": "",
 "DialogicBackgroundMusic": "",
@@ -215,7 +221,7 @@ _global_script_class_icons={
 config/name="ProjectDevotion"
 run/main_scene="res://source/loader.tscn"
 config/icon="res://icon.png"
-config/version="0"
+config/version="0.1"
 
 [audio]
 
@@ -226,6 +232,7 @@ default_bus_layout="res://source/resources/project/default_bus_layout.tres"
 Kw="*res://source/autoloads/keywords.gd"
 Events="*res://source/autoloads/events.gd"
 Utils="*res://source/autoloads/utils.gd"
+Transitions="*res://source/autoloads/transitions/transitions.tscn"
 
 [display]
 
@@ -244,7 +251,7 @@ icon=false
 main=false
 warning=false
 warnings=false
-version=""
+version=false
 Version=""
 oversam=false
 render=false

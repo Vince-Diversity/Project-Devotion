@@ -24,14 +24,14 @@
 			"question": "I can crash the game if you want."
 		},
 		{
-			"choice": "ok",
+			"choice": "Ok...",
 			"condition": "",
 			"definition": "",
 			"event_id": "dialogic_011",
 			"value": ""
 		},
 		{
-			"choice": "do it!",
+			"choice": "Crash!",
 			"condition": "",
 			"definition": "",
 			"event_id": "dialogic_011",
@@ -47,14 +47,14 @@
 			"question": "Just to make sure, your progress will be lost.\nSure you want to crash the game?"
 		},
 		{
-			"choice": "no",
+			"choice": "No",
 			"condition": "",
 			"definition": "",
 			"event_id": "dialogic_011",
 			"value": ""
 		},
 		{
-			"choice": "yes",
+			"choice": "Yes",
 			"condition": "",
 			"definition": "",
 			"event_id": "dialogic_011",
@@ -67,8 +67,14 @@
 			"text": "No regrets!"
 		},
 		{
-			"emit_signal": "",
-			"event_id": "dialogic_040"
+			"call_node": {
+				"arguments": [
+
+				],
+				"method_name": "crash",
+				"target_node_path": "../../Characters/NPCs/Spectators/Kir"
+			},
+			"event_id": "dialogic_042"
 		},
 		{
 			"event_id": "dialogic_013"
@@ -84,6 +90,6 @@
 	"metadata": {
 		"dialogic-version": "1.3",
 		"file": "timeline-1641320903.json",
-		"name": "kir_crash"
+		"name": "kir-crash"
 	}
 }

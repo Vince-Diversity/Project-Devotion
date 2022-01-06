@@ -4,6 +4,7 @@ class_name BattleMode
 enum Roles {FOES, ALLIES, SPECTATORS}
 export(String, "TimelineDropdown") var starting_dialog: String
 export(Array, Resource) var end_action_dialogs: Array
+export(String) var new_overworld_path := ""
 var npc_party: Party
 var state_dict := {} # {name: aspect,...}
 var turn_order := [null, null]
@@ -20,12 +21,14 @@ onready var battle_ui = $BattleUI
 onready var option_ui = $BattleUI/OptionUI
 onready var left_status_display = $BattleUI/LeftContainer/LeftStatusDisplay
 onready var right_status_display = $BattleUI/RightContainer/RightStatusDisplay
+onready var bgm = $Bgm
 
 func commence_battle():
 	rng.randomize()
 	ready_characters()
 	ready_ui()
 	yield(starting_talk(), "completed")
+	bgm.play()
 	yield(ready_turn_order(), "completed")
 	ready_end_actions()
 	play_turn()
@@ -76,9 +79,11 @@ func ready_turn_order():
 	var foe_maxes = _ready_turn_order_helper(opponents)
 	if foe_maxes["lvl"] > ally_maxes["lvl"]:
 		var max_spd_ch
+		var max_spd
 		if foe_maxes["spd"] >= ally_maxes["spd"]:
 			turn_order[0] = roles.pop_at(0)
 			max_spd_ch = foe_maxes["lead_ch"]
+			max_spd = foe_maxes["spd"]
 			var lead = get_leader(turn_order[0])
 			battle_ui.narrative.tell(
 				"%s's team max lvl lets them be the quickest to act!" % lead.name
@@ -86,8 +91,10 @@ func ready_turn_order():
 		else:
 			turn_order[0] = roles.pop_at(1)
 			max_spd_ch = ally_maxes["lead_ch"]
+			max_spd = ally_maxes["spd"]
 			battle_ui.narrative.tell(
-				"%s's spd mastery accelerates their team to act first!" % max_spd_ch.name
+				"%s's spd stat (%d) accelerates their team to act first!" \
+				% [max_spd_ch.name, max_spd]
 			)
 	else: # Otherwise, allies go first
 		turn_order[0] = roles.pop_at(1)
@@ -161,21 +168,38 @@ func check_standing(playing_side):
 		if role.name != spectators.name:
 			if get_characters(role).empty():
 				has_next_turn = false
+				bgm.stop()
 				if role.name == playing_side.name:
 					var leader = get_leader(playing_side)
 					battle_ui.narrative.tell(
 						"%s's team caused their loss!" % [leader.name]
 					)
-					yield(get_tree().create_timer(1.0), "timeout")
+					yield(battle_ui, "accept_pressed")
 				else:
 					var leader = get_leader(playing_side)
 					battle_ui.narrative.tell(
 						"%s's team wins!" % [leader.name]
 					)
 					yield(battle_ui, "accept_pressed")
-					Events.emit_signal("load_overworld", npc_party)
+					if playing_side == role_dict[Roles.ALLIES]:
+						yield(player_victory(playing_side), "completed")
+					Events.emit_signal("load_overworld", npc_party, new_overworld_path)
 					has_next_turn = false
 					break
+
+func player_victory(player_role):
+	for ally in get_characters(player_role):
+		var new_skill = ally.set_lvl(ally.lvl + 1)
+		battle_ui.narrative.tell(
+			"%s levels up to lvl %d!" % [ally.name, ally.lvl]
+		)
+		yield(battle_ui, "accept_pressed")
+		if new_skill != null:
+			battle_ui.narrative.tell(
+				"The skill %s awakenes within %s!" \
+				% [new_skill.true_name, ally.name]
+			)
+			yield(battle_ui, "accept_pressed")
 
 func is_fallen(character):
 	var aspect = state_dict[character.name]
@@ -184,10 +208,11 @@ func is_fallen(character):
 func fall(character):
 	character.get_parent().remove_child(character)
 
-func remove_all_allies():
-	for i_pos in allies.get_children():
-		for node in i_pos.get_children():
-			i_pos.remove_child(node)
+func remove_all_battlers():
+	for role in [role_dict[Roles.FOES], role_dict[Roles.ALLIES]]:
+		for i_pos in role.get_children():
+			for node in i_pos.get_children():
+				i_pos.remove_child(node)
 
 func get_leader(role):
 	return get_characters(role)[0]

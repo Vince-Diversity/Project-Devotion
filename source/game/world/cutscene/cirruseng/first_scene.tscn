@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://source/clouds.tscn" type="PackedScene" id=1]
+[ext_resource path="res://source/game/world/cutscene/cutscene_mode.tscn" type="PackedScene" id=2]
+[ext_resource path="res://source/game/world/cutscene/cirruseng/first_scene.gd" type="Script" id=3]
+
+[node name="FirstScene" instance=ExtResource( 2 )]
+script = ExtResource( 3 )
+
+[node name="Dialogic" parent="." index="0"]
+timeline = "timeline-1641479061.json"
+
+[node name="Clouds" parent="." index="3" instance=ExtResource( 1 )]

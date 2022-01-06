@@ -22,4 +22,5 @@ frames = ExtResource( 2 )
 frames = ExtResource( 4 )
 
 [node name="MindFixated" parent="MindNode" index="0" instance=ExtResource( 6 )]
-fixated_aspect = ExtResource( 5 )
+default_fixated_aspect = ExtResource( 5 )
+default_skill_name = "Strike"

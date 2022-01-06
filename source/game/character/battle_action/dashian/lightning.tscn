@@ -6,3 +6,4 @@
 [node name="Lightning" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 true_name = "Lightning"
+lvl_requirement = 2

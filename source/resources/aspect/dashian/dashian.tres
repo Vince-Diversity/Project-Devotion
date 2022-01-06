@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Dashian"
+symbol = "+"
 spd = 200
 pwr = 100
 hp = 100

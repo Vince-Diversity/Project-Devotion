@@ -55,6 +55,7 @@ data = {
 }
 }
 },
-"place": "res://source/game/world/overworld/freegrounds/training_grounds.tscn"
+"place": "res://source/game/world/overworld/freegrounds/training_grounds/old_training_grounds.tscn",
+"position": Vector2( 120, 180 )
 }
 }

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://source/game/world/overworld/freegrounds/training_grounds/battle_training_grounds/battle_training_grounds.tscn" type="PackedScene" id=1]
+
+[node name="BattleKies" instance=ExtResource( 1 )]
+starting_dialog = "timeline-1641237790.json"

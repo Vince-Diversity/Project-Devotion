@@ -15,7 +15,7 @@ func request_battle_action(character):
 	battle_options.option_ui = self
 	battle_options.battlers = battle.get_battlers()
 	add_child(battle_options)
-	ally_label.text = character.name
+	ally_label.text = "%s[%s]" % [character.name, character.aspect.symbol]
 
 func _on_OptionList_action_decided(action: BattleAction):
 	emit_signal("action_given", action)

@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://source/main_menu/main_menu_button.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/main_menu/main_menu.gd" type="Script" id=2]
-[ext_resource path="res://assets/visuals/main_menu/title.png" type="Texture" id=3]
+[ext_resource path="res://source/resources/project/font/m5x7.tres" type="DynamicFont" id=3]
+[ext_resource path="res://source/clouds.tscn" type="PackedScene" id=4]
+[ext_resource path="res://source/resources/character/frames/hollow_wishmaker.tres" type="SpriteFrames" id=7]
+[ext_resource path="res://assets/bgm/title.ogg" type="AudioStream" id=8]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -12,6 +15,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Clouds" parent="." instance=ExtResource( 4 )]
+
+[node name="Wishmaker" type="AnimatedSprite" parent="."]
+position = Vector2( 160, 64 )
+frames = ExtResource( 7 )
+frame = 4
+playing = true
+
 [node name="Title" type="CenterContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,13 +31,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TitleText" type="TextureRect" parent="Title"]
-margin_left = 88.0
-margin_top = 33.0
-margin_right = 168.0
-margin_bottom = 63.0
-texture = ExtResource( 3 )
-stretch_mode = 1
+[node name="TitleText" type="Label" parent="Title"]
+modulate = Color( 0.0267029, 0, 0.488281, 1 )
+margin_left = 135.0
+margin_top = 42.0
+margin_right = 184.0
+margin_bottom = 55.0
+custom_fonts/font = ExtResource( 3 )
+text = "Cirruseng"
+align = 1
 
 [node name="Options" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -37,23 +50,59 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LoadDevMode" parent="Options" instance=ExtResource( 1 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 26.0
-margin_right = 256.0
-margin_bottom = 46.0
-focus_neighbour_bottom = NodePath("../LoadGame")
-text = "Load Dev Mode"
-
 [node name="LoadGame" parent="Options" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 50.0
-margin_right = 256.0
-margin_bottom = 70.0
-focus_neighbour_top = NodePath("../LoadDevMode")
+margin_top = 14.0
+margin_right = 320.0
+margin_bottom = 34.0
+focus_neighbour_bottom = NodePath("../NewGame")
 text = "Load Game"
 
-[connection signal="pressed" from="Options/LoadDevMode" to="." method="_on_LoadDevMode_pressed"]
+[node name="NewGame" parent="Options" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 38.0
+margin_right = 320.0
+margin_bottom = 58.0
+focus_neighbour_top = NodePath("../LoadGame")
+focus_neighbour_right = NodePath("../LoadDevMode")
+focus_neighbour_bottom = NodePath("../LoadDevMode")
+text = "New Game"
+
+[node name="LoadDevMode" parent="Options" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 62.0
+margin_right = 320.0
+margin_bottom = 82.0
+focus_neighbour_top = NodePath("../NewGame")
+text = "Load Dev Mode"
+
+[node name="Controls" type="CenterContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -68.0
+margin_top = -45.0
+grow_horizontal = 0
+grow_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ControlDescription" type="Label" parent="Controls"]
+modulate = Color( 0, 0.0196078, 0.478431, 1 )
+margin_top = 8.0
+margin_right = 68.0
+margin_bottom = 37.0
+text = "Move: Arrow keys
+Select: X"
+
+[node name="Bgm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
 [connection signal="pressed" from="Options/LoadGame" to="." method="_on_LoadGame_pressed"]
+[connection signal="pressed" from="Options/NewGame" to="." method="_on_NewGame_pressed"]
+[connection signal="pressed" from="Options/LoadDevMode" to="." method="_on_LoadDevMode_pressed"]

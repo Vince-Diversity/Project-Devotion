@@ -3,10 +3,11 @@ class_name Game
 
 const place_data_key := "place"
 const party_data_key := "party"
+const position_data_key := "position"
 var save_dir: String
 var save_name: String
 var overworld_path: String
-var current_overworld: Overworld
+var current_overworld: GameWorld
 var current_battle: BattleMode
 var party_dict := {"node": [], "position": [], "direction": []}
 var opponents_dict := {"node": [], "position": [], "direction": []}
@@ -30,13 +31,14 @@ func ready_saver():
 func save(save_game: Resource):
 	save_game.data[SAVE_KEY] = {
 		place_data_key: overworld_path,
-		party_data_key: make_party_save_entry()
+		party_data_key: make_party_save_entry(),
+		position_data_key: current_overworld.allies.get_leader().global_position
 	}
 
 func make_party_save_entry():
 	var ally_dict := {}
-	var content := {}
 	for ally in party_dict["node"]:
+		var content := {}
 		content["aspect"] = ally.aspect
 		content["level"] = ally.lvl
 		content["party_order"] = ally.party_order
@@ -58,6 +60,9 @@ func load_save(save_game: Resource):
 func load_place(save_data: Dictionary):
 	overworld_path = save_data[place_data_key]
 	var place_scene = load(overworld_path)
+	load_scene(place_scene)
+
+func load_scene(place_scene: PackedScene):
 	current_overworld = place_scene.instance()
 	add_child(current_overworld)
 
@@ -81,6 +86,7 @@ func load_party(save_data: Dictionary):
 	for allyo in allies:
 		party_dict["node"].append(allyo)
 		current_overworld.allies.add_child(allyo)
+		allyo.global_position = current_overworld.allies.global_position
 		content = ally_dict[allyo.name]
 		visuals = content["visuals"]
 		allyo.accessories.frames = visuals["accessories"]
@@ -88,6 +94,7 @@ func load_party(save_data: Dictionary):
 		allyo.skin.frames = visuals["skin"]
 		allyo.body.frames = visuals["body"]
 	current_overworld.allies.assign_members()
+	current_overworld.allies.global_position = save_data[position_data_key]
 
 func _on_Events_save_game():
 	var save_game = SaveGame.new()
@@ -108,6 +115,8 @@ func _on_Events_save_game():
 		print("Error %s saving to %s" % [err, save_path])
 
 func _on_NPC_load_battle(battle_scene: PackedScene, foe_party: Party):
+	Transitions.fade_out()
+	yield(Transitions, "transition_done")
 	_store_party_props(party_dict)
 	opponents_dict["node"] = foe_party.get_party_ordered()
 	_store_party_props(opponents_dict)
@@ -119,6 +128,8 @@ func _on_NPC_load_battle(battle_scene: PackedScene, foe_party: Party):
 	remove_child(current_overworld)
 	current_battle = battle_mode
 	current_battle.commence_battle()
+	Transitions.fade_in()
+	yield(Transitions, "transition_done")
 
 func _store_party_props(ch_dict):
 	for ch in ch_dict["node"]:
@@ -126,7 +137,7 @@ func _store_party_props(ch_dict):
 		ch_dict["direction"].append(ch.snapped_direction)
 
 func _load_battle_helper(our_party: Party, battle_role):
-	our_party.set_state(our_party.get_leader().States.BATTLING)
+	our_party.set_state(Kw.OwStates.BATTLING)
 	var party_list = our_party.get_party_ordered()
 	var pos_list = battle_role.get_children()
 	for i in party_list.size():
@@ -135,10 +146,15 @@ func _load_battle_helper(our_party: Party, battle_role):
 		our_party.remove_child(party_list[i])
 		battle_role.get_node(pos_list[i].name).add_child(party_list[i])
 
-func _on_Battle_load_overworld(foe_party):
-	current_battle.remove_all_allies()
+func _on_Battle_load_overworld(foe_party, next_overworld_path):
+	current_battle.remove_all_battlers()
 	current_battle.queue_free()
-	add_child(current_overworld)
+	if next_overworld_path.empty():
+		add_child(current_overworld)
+	else:
+		current_overworld = load(next_overworld_path).instance()
+		add_child(current_overworld)
+		current_overworld.npcs.add_child(foe_party)
 	_restore_party(party_dict, current_overworld.allies)
 	_restore_party(opponents_dict, foe_party)
 	_after_battle_preps(current_overworld, foe_party)
@@ -151,9 +167,9 @@ func _restore_party(dict, overworld_party: Party):
 		ch.set_global_position(dict["position"][i])
 		ch.turn_to_direction(dict["direction"][i])
 
-func _after_battle_preps(place: Overworld, foe_party):
+func _after_battle_preps(place, foe_party):
 	var leader = place.allies.get_leader()
 	place.allies.set_cam_to(leader)
 	place.allies.assign_members()
-	place.allies.set_state(leader.States.ROAMING)
+	place.allies.set_state(Kw.OwStates.ROAMING)
 	place.after_battle_interaction(leader, foe_party)

@@ -18,7 +18,7 @@
 			"character": "character-1640600163.json",
 			"event_id": "dialogic_001",
 			"portrait": "",
-			"text": "Don't underestimate me!"
+			"text": "Aw yes! Battle class is my favourite."
 		},
 		{
 			"emit_signal": "done",
@@ -28,6 +28,6 @@
 	"metadata": {
 		"dialogic-version": "1.3",
 		"file": "timeline-1641309679.json",
-		"name": "kamo_before_practice_battle"
+		"name": "kamo-before-practice-battle"
 	}
 }

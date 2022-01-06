@@ -6,4 +6,5 @@
 [node name="Share" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 true_name = "Equilibrium"
+lvl_requirement = 1
 targets_allies = true

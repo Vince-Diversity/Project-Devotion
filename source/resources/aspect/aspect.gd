@@ -5,6 +5,7 @@ signal stat_changed(stat, value)
 
 const BASE := 100
 export var name: String
+export var symbol: String
 export(int) var spd := BASE
 export(int) var pwr := BASE
 export(int) var hp := BASE

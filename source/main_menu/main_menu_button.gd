@@ -2,7 +2,8 @@ extends TextureButton
 
 export(String) var text
 onready var label = $PointerMargin/LabelMargin/Label
-onready var focus = $PointerMargin/TextureRect
+onready var focus = $PointerMargin/Pointer
+onready var pointer = $PointerMargin/Pointer
 
 func _ready():
 	ready_text()

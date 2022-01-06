@@ -1,0 +1,65 @@
+{
+	"events": [
+		{
+			"event_id": "dialogic_024",
+			"set_theme": "theme-1641479358.cfg"
+		},
+		{
+			"character": "",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "... (Press X to continue.)"
+		},
+		{
+			"character": "",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "... (Use arrow keys to move in menus and walk around. Press X to select actions and interact with people. Press C to save.)"
+		},
+		{
+			"character": "",
+			"event_id": "dialogic_010",
+			"options": [
+
+			],
+			"portrait": "",
+			"question": "... (Continue?)"
+		},
+		{
+			"choice": "Repeat",
+			"condition": "",
+			"definition": "",
+			"event_id": "dialogic_011",
+			"value": ""
+		},
+		{
+			"change_timeline": "timeline-1641479061.json",
+			"event_id": "dialogic_020"
+		},
+		{
+			"choice": "Yes",
+			"condition": "",
+			"definition": "",
+			"event_id": "dialogic_011",
+			"value": ""
+		},
+		{
+			"call_node": {
+				"arguments": [
+					"res://source/game/world/overworld/freegrounds/training_grounds/practice/practice_training_grounds.tscn"
+				],
+				"method_name": "load_first_overworld",
+				"target_node_path": "/root/Loader"
+			},
+			"event_id": "dialogic_042"
+		},
+		{
+			"event_id": "dialogic_013"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1641479061.json",
+		"name": "first-wish"
+	}
+}

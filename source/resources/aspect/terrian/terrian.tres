@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Terrian"
+symbol = "<>"
 spd = 100
 pwr = 100
 hp = 200

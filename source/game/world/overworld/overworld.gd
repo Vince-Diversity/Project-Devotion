@@ -1,8 +1,8 @@
 extends GameWorld
 class_name Overworld
 
-onready var menu = $Menu
-onready var allies = $Characters/Party
+const save_timeline = "save-prompt"
+onready var allies = $Characters/Allies
 onready var npcs = $Characters/NPCs
 
 func _ready():
@@ -12,12 +12,14 @@ func _physics_process(_delta):
 	var leader = allies.get_leader()
 	if leader:
 		match leader.state:
-			leader.States.ROAMING:
+			Kw.OwStates.ROAMING:
 				if Input.is_action_just_pressed("ui_accept"):
 					interact(allies)
+				if Input.is_action_just_pressed("ui_menu"):
+					prompt_menu()
 				for ally in get_party_ordered(allies):
 					ally.roam()
-			leader.States.INTERACTING:
+			Kw.OwStates.INTERACTING:
 				for ally in get_party_ordered(allies):
 					ally.idle()
 
@@ -39,33 +41,26 @@ func interact(party):
 				break
 
 func interact_with_npc(party: Party, asker: Character, npc: NPC):
-	party.set_state(asker.States.INTERACTING)
+	party.set_state(Kw.OwStates.INTERACTING)
 	asker.turn_face(npc)
 	npc.turn_face(asker)
 	var d = Dialogic.start(npc.interaction_dialog)
-	add_child(d)
-	var keep_talk = true
-	var switch_to_battle = false
-	while keep_talk:
-		var response = yield(d, "dialogic_signal")
-		match response:
-			"battle":
-				keep_talk = false
-				switch_to_battle = true
-			"done":
-				keep_talk = false
-			"":
-				print("Error! Dialogic signal name not specified.")
-				null.crash()
-	yield(get_tree(), "idle_frame")
+	yield(_dialogic_helper(d, npc), "completed")
 	npc.turn_to_default()
-	party.set_state(asker.States.ROAMING)
-	if switch_to_battle:
-		npc.confirm_battle()
+	party.set_state(Kw.OwStates.ROAMING)
+
+func dialogic_turn_face(args: Array):
+	get_node(args[0]).turn_face(get_node(args[1]))
+
+func prompt_menu():
+	allies.set_state(Kw.OwStates.INTERACTING)
+	var d = Dialogic.start(save_timeline)
+	yield(_dialogic_helper(d), "completed")
+	allies.set_state(Kw.OwStates.ROAMING)
 
 func after_battle_interaction(asker: Character, foe_party: Party):
 	var npc = foe_party.get_leader()
-	allies.set_state(asker.States.INTERACTING)
+	allies.set_state(Kw.OwStates.INTERACTING)
 	asker.turn_face(npc)
 	npc.turn_face(asker)
 	var d = Dialogic.start(npc.after_battle_dialog)
@@ -78,9 +73,30 @@ func after_battle_interaction(asker: Character, foe_party: Party):
 				keep_talk = false
 	yield(get_tree(), "idle_frame")
 	npc.turn_to_default()
-	allies.set_state(asker.States.ROAMING)
+	allies.set_state(Kw.OwStates.ROAMING)
+
+func save_game():
+	Events.emit_signal("save_game")
 
 func get_party_ordered(party_node) -> Array:
 	var list = party_node.get_children()
 	list.invert()
 	return list
+
+func _dialogic_helper(d, npc=null):
+	add_child(d)
+	var switch_to_battle = false
+	var keep_talk = true
+	while keep_talk:
+		var response = yield(d, "dialogic_signal")
+		match response:
+			"battle":
+				keep_talk = false
+				switch_to_battle = true
+			"done":
+				keep_talk = false
+			"":
+				print("Error! Dialogic signal name not specified.")
+	yield(get_tree(), "idle_frame")
+	if switch_to_battle:
+		npc.confirm_battle()

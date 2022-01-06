@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://source/game/character/npc/npcs/night.tscn" type="PackedScene" id=1]
+[ext_resource path="res://source/game/character/npc/npcs/luna.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/game/character/npc/minds/adaptive_single_skill/mind_adaptive_single_skill.tscn" type="PackedScene" id=2]
 [ext_resource path="res://source/resources/aspect/forcian/forcian.tres" type="Resource" id=3]
 
-[node name="Night" instance=ExtResource( 1 )]
+[node name="Luna" instance=ExtResource( 1 )]
 lvl = 2
 
 [node name="MindAdaptiveSingleSkill" parent="MindNode" index="0" instance=ExtResource( 2 )]

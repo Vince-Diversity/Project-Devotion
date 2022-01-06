@@ -1,13 +1,12 @@
 extends KinematicBody2D
 class_name Character
 
-enum States {ROAMING, INTERACTING, BATTLING}
 export var aspect: Resource
 export var lvl := 0
 export var battle_order: int
 export var party_order: int
 export(String, "default", "down", "left", "up", "right") var default_anim_name = "default"
-var state = States.ROAMING
+var state = Kw.OwStates.ROAMING
 var party: Party
 var next_ally
 var outside_following_area: bool
@@ -29,6 +28,7 @@ onready var skin = $CharacterVisual/SkinSprite
 onready var body = $CharacterVisual/BodySprite
 onready var battle_actions = $BattleActions
 onready var mind_node = $MindNode
+onready var name_label = $NameLabel
 
 func _ready():
 	ready_areas()
@@ -51,8 +51,15 @@ func ready_actions():
 func ready_mind():
 	if mind_node.get_child_count() > 1:
 		print("Error, %s's Mind is not set up correctly!" % name)
-	mind = mind_node.get_children()[0]
-	mind.user = self
+	if mind_node.get_child_count() == 1:
+		mind = mind_node.get_children()[0]
+		mind.user = self
+
+func ready_name_label():
+	name_label.text = "%s[%s]" % [name, aspect.symbol]
+
+func set_lvl(new_lvl):
+	lvl = new_lvl
 
 func input_direction():
 	pass
@@ -71,7 +78,7 @@ func roam():
 		follow_next_ally()
 
 func should_idle():
-	if state == States.INTERACTING: return true
+	if state == Kw.OwStates.INTERACTING: return true
 	if inputted_direction == Vector2.ZERO: return true
 	return false
 
@@ -145,11 +152,11 @@ func get_true_anim_id() -> int:
 		return anim_id
 
 func _on_FollowingArea_area_exited(area):
-	if state != States.BATTLING:
+	if state != Kw.OwStates.BATTLING:
 		if area.character.name == get_next_ally().name:
 			outside_following_area = true
 
 func _on_FollowingArea_area_entered(area):
-	if state != States.BATTLING:
+	if state != Kw.OwStates.BATTLING:
 		if area.character.name == get_next_ally().name:
 			outside_following_area = false

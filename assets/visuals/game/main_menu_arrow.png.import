@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/main_menu_arrow.png-7d6b9b9d7bad4fd5fdb24766f464db36.stex"
+path="res://.import/main_menu_arrow.png-895a1b78421ce770121e0b47b41ada44.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/visuals/game/battle/main_menu_arrow.png"
-dest_files=[ "res://.import/main_menu_arrow.png-7d6b9b9d7bad4fd5fdb24766f464db36.stex" ]
+source_file="res://assets/visuals/game/main_menu_arrow.png"
+dest_files=[ "res://.import/main_menu_arrow.png-895a1b78421ce770121e0b47b41ada44.stex" ]
 
 [params]
 
