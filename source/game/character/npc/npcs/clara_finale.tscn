@@ -10,4 +10,4 @@ lvl = 4
 [node name="MindTurnKO" parent="MindNode" index="0" instance=ExtResource( 2 )]
 default_fixated_aspect = ExtResource( 3 )
 default_skill_name = "Enflame"
-numof_default_true_turns = 3
+numof_default_true_turns = 2
