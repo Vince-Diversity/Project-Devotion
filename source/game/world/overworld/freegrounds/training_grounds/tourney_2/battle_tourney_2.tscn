@@ -7,7 +7,7 @@
 
 [node name="BattleTourney2" instance=ExtResource( 2 )]
 starting_dialog = "timeline-1641521232.json"
-new_overworld_path = "res://source/game/world/overworld/freegrounds/training_grounds/tourney_2/tourney_2_training_grounds.tscn"
+new_overworld_path = "res://source/game/world/overworld/freegrounds/training_grounds/tourney_3/tourney_3_training_grounds.tscn"
 
 [node name="Clara" parent="Spectators/SpecPos1" index="0" instance=ExtResource( 1 )]
 

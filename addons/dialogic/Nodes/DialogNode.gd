@@ -193,8 +193,8 @@ func update_custom_events() -> void:
 				pass # files in the directory are ignored
 			file_name = dir.get_next()
 	else:
-		print("[D] An error occurred when trying to access the custom event folder.")
-
+#		print("[D] An error occurred when trying to access the custom event folder.")
+		pass
 
 ## -----------------------------------------------------------------------------
 ## 						VISUALS

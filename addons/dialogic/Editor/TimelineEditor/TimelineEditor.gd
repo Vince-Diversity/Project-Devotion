@@ -719,7 +719,6 @@ func update_custom_events() -> void:
 			$ScrollContainer/EventContainer/CustomEventsHeadline.show()
 	else:
 		print("[D] An error occurred when trying to access the custom events folder.")
-	
 	## VISUAL UPDATE
 	
 	
