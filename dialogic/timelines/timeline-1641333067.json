@@ -21,7 +21,7 @@
 
 			],
 			"portrait": "",
-			"question": "Miss Phen always told us, \"Never give in\"! Ready?"
+			"question": "So this is it, finale time! Ready?"
 		},
 		{
 			"choice": "Not yet.",
@@ -52,6 +52,6 @@
 	"metadata": {
 		"dialogic-version": "1.3",
 		"file": "timeline-1641333067.json",
-		"name": "clara_before_final_battle"
+		"name": "clara-before-finale"
 	}
 }

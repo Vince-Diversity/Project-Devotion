@@ -11,4 +11,3 @@ lvl_requirement = 1
 
 [node name="Lightning" parent="." index="1" instance=ExtResource( 3 )]
 true_name = "Wicked Thunder"
-lvl_requirement = 2

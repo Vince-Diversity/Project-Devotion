@@ -3,6 +3,7 @@ extends Control
 signal action_given(action)
 signal target_given(target)
 signal stats_requested(character)
+signal describe_option(descr)
 
 var battle
 onready var battle_option_scene = preload("res://source/game/world/battle/option_list/battle_options.tscn")
@@ -16,6 +17,9 @@ func request_battle_action(character):
 	battle_options.battlers = battle.get_battlers()
 	add_child(battle_options)
 	ally_label.text = "%s[%s]" % [character.name, character.aspect.symbol]
+	emit_signal("describe_option",
+		"%s turn.\nSelect option with arrow keys and X." % character.name
+	)
 
 func _on_OptionList_action_decided(action: BattleAction):
 	emit_signal("action_given", action)

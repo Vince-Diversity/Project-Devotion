@@ -7,4 +7,5 @@
 script = ExtResource( 2 )
 true_name = "Enflame"
 lvl_requirement = 3
+description = "Deal half base damage and raise pwr by 20 %."
 potency = 0.5

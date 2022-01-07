@@ -5,3 +5,5 @@
 
 [node name="SkillSelection" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+
+[connection signal="item_selected" from="." to="." method="_on_SkillSelection_item_selected"]

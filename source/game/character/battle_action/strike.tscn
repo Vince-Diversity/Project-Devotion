@@ -6,3 +6,4 @@
 [node name="Strike" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 true_name = "Aspect Strike"
+description = "Basic attack. Deal base damage."

@@ -1,0 +1,33 @@
+{
+	"events": [
+		{
+			"action": "join",
+			"character": "character-1640600163.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		},
+		{
+			"character": "character-1640600163.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Ha! Your teamwork is not bad either!"
+		},
+		{
+			"emit_signal": "done",
+			"event_id": "dialogic_040"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1641519313.json",
+		"name": "kamo-after-semifinale"
+	}
+}

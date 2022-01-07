@@ -21,3 +21,8 @@ func _on_OptionList_item_activated(index: int):
 		size:
 			option_ui.request_battle_action(character)
 	queue_free()
+
+func _on_SkillSelection_item_selected(index):
+	var size = skills.size()
+	if index < size:
+		option_ui.emit_signal("describe_option", skills[index].description)

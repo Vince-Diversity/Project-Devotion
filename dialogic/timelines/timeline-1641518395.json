@@ -1,0 +1,33 @@
+{
+	"events": [
+		{
+			"action": "join",
+			"character": "character-1641334022.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		},
+		{
+			"character": "character-1641334022.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "How did it go? Round 2 is waiting for you on the left stage!\nNo point in a lesson if you just sit around right? Now get to it!"
+		},
+		{
+			"emit_signal": "done",
+			"event_id": "dialogic_040"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1641518395.json",
+		"name": "hephenea-before-round-2"
+	}
+}

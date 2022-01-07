@@ -10,6 +10,6 @@ func add_targets():
 func _on_OptionList_item_activated(index: int):
 	._on_OptionList_item_activated(index)
 	var battler = battlers[index]
-	emit_signal("stats_decided", battler)
 	option_ui.request_battle_action(character)
+	emit_signal("stats_decided", battler)
 	queue_free()

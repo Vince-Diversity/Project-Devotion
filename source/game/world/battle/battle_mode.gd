@@ -77,6 +77,7 @@ func ready_turn_order():
 	var roles = [opponents, allies]
 	var ally_maxes = _ready_turn_order_helper(allies)
 	var foe_maxes = _ready_turn_order_helper(opponents)
+	var pref: String
 	if foe_maxes["lvl"] > ally_maxes["lvl"]:
 		var max_spd_ch
 		var max_spd
@@ -85,23 +86,20 @@ func ready_turn_order():
 			max_spd_ch = foe_maxes["lead_ch"]
 			max_spd = foe_maxes["spd"]
 			var lead = get_leader(turn_order[0])
-			battle_ui.narrative.tell(
-				"%s's team max lvl lets them be the quickest to act!" % lead.name
-			)
+			pref = "%s's team max lvl lets them be the quickest to act!" % lead.name
 		else:
 			turn_order[0] = roles.pop_at(1)
 			max_spd_ch = ally_maxes["lead_ch"]
 			max_spd = ally_maxes["spd"]
-			battle_ui.narrative.tell(
-				"%s's spd stat (%d) accelerates their team to act first!" \
+			pref = "%s's spd stat (%d) accelerates their team to act first!" \
 				% [max_spd_ch.name, max_spd]
-			)
 	else: # Otherwise, allies go first
 		turn_order[0] = roles.pop_at(1)
 		var lead = get_leader(turn_order[0])
-		battle_ui.narrative.tell(
-			"%s's team are most devoted and act first!" % lead.name
-		)
+		pref = "%s's team are most devoted and act first!" % lead.name
+	battle_ui.narrative.tell(
+		"%s Press X to commence!" % pref
+	)
 	turn_order[1] = roles.pop_at(0)
 	yield(battle_ui, "accept_pressed")
 
@@ -169,26 +167,21 @@ func check_standing(playing_side):
 			if get_characters(role).empty():
 				has_next_turn = false
 				bgm.stop()
-				if role.name == playing_side.name:
-					var leader = get_leader(playing_side)
-					battle_ui.narrative.tell(
-						"%s's team caused their loss!" % [leader.name]
-					)
-					yield(battle_ui, "accept_pressed")
+				var leader = get_leader(playing_side)
+				battle_ui.narrative.tell(
+					"%s's team wins!" % [leader.name]
+				)
+				yield(battle_ui, "accept_pressed")
+				if playing_side == role_dict[Roles.ALLIES]:
+					yield(player_victory(), "completed")
 				else:
-					var leader = get_leader(playing_side)
-					battle_ui.narrative.tell(
-						"%s's team wins!" % [leader.name]
-					)
-					yield(battle_ui, "accept_pressed")
-					if playing_side == role_dict[Roles.ALLIES]:
-						yield(player_victory(playing_side), "completed")
-					Events.emit_signal("load_overworld", npc_party, new_overworld_path)
-					has_next_turn = false
-					break
+					yield(player_defeat(), "completed")
+				Events.emit_signal("load_overworld", npc_party, new_overworld_path)
+				has_next_turn = false
+				break
 
-func player_victory(player_role):
-	for ally in get_characters(player_role):
+func player_victory():
+	for ally in get_characters(role_dict[Roles.ALLIES]):
 		var new_skill = ally.set_lvl(ally.lvl + 1)
 		battle_ui.narrative.tell(
 			"%s levels up to lvl %d!" % [ally.name, ally.lvl]
@@ -200,6 +193,12 @@ func player_victory(player_role):
 				% [new_skill.true_name, ally.name]
 			)
 			yield(battle_ui, "accept_pressed")
+
+func player_defeat():
+	battle_ui.narrative.tell(
+		"The player team lost spirit from their loss and did not gain any lvl."
+	)
+	yield(battle_ui, "accept_pressed")
 
 func is_fallen(character):
 	var aspect = state_dict[character.name]
@@ -251,18 +250,22 @@ class BattleSorter:
 			return true
 		return false
 
-func _on_BattleAction_notable_event(event_id, target) -> bool:
+func _on_BattleAction_notable_event(event_id, user, target) -> bool:
 	var dialog: BattleDialog
 	if end_action_dict.has(event_id):
 		dialog = end_action_dict[event_id]
-		if _has_notable_event_conditions(dialog, target):
+		if _has_notable_event_conditions(dialog, user, target):
 			battle_ui.next_timelines.append(dialog.timeline)
 			return end_action_dict.erase(event_id)
 	return false
 
-func _has_notable_event_conditions(dialog: BattleDialog, target):
-	if dialog.event_target_name != target.name:
-		return false
+func _has_notable_event_conditions(dialog: BattleDialog, user, target):
+	if not dialog.event_user_name.empty():
+		if dialog.event_user_name != user.name:
+			return false
+	if not dialog.event_target_name.empty():
+		if dialog.event_target_name != target.name:
+			return false
 	var existing = get_all_character_names()
 	for required in dialog.required_names:
 		if not required in existing:

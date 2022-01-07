@@ -8,13 +8,7 @@
 			"character": "",
 			"event_id": "dialogic_001",
 			"portrait": "",
-			"text": "... (Press X to continue.)"
-		},
-		{
-			"character": "",
-			"event_id": "dialogic_001",
-			"portrait": "",
-			"text": "... (Use arrow keys to move in menus and walk around. Press X to select actions and interact with people. Press C to save.)"
+			"text": "... (Press X to continue.)\n... (Use arrow keys to scroll, move in menus and walk around. Press X to select actions and interact with people. Press C to save. Press Esc to exit game.)"
 		},
 		{
 			"character": "",

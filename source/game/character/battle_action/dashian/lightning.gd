@@ -26,6 +26,6 @@ func execute_action(battle, target):
 			"%s's attack only struck once..."
 			% [user.name]
 		)
-	yield(get_tree().create_timer(2*use_duration), "timeout")
+	yield(get_tree().create_timer(use_duration), "timeout")
 	.execute_action(battle, target)
 	return true

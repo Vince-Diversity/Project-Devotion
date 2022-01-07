@@ -1,0 +1,53 @@
+{
+	"events": [
+		{
+			"action": "join",
+			"character": "character-1641332025.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		},
+		{
+			"action": "join",
+			"character": "character-1641333086.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		},
+		{
+			"character": "character-1641332025.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "I won't let any shields be shattered by you!"
+		},
+		{
+			"character": "character-1641333086.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Let's see whose fire burns most intensely."
+		},
+		{
+			"emit_signal": "done",
+			"event_id": "dialogic_040"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1641523263.json",
+		"name": "tourney-finale"
+	}
+}

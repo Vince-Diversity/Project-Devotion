@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://source/game/world/overworld/freegrounds/training_grounds/battle_training_grounds.tscn" type="PackedScene" id=1]
+[ext_resource path="res://source/game/character/npc/npcs/luna_finale.tscn" type="PackedScene" id=2]
+[ext_resource path="res://source/game/character/npc/npcs/misa_practice.tscn" type="PackedScene" id=3]
+
+[node name="BattleKies" instance=ExtResource( 1 )]
+starting_dialog = "timeline-1641237790.json"
+new_overworld_path = "res://source/game/world/overworld/freegrounds/training_grounds/tourney_2/tourney_2_training_grounds.tscn"
+
+[node name="Luna" parent="Spectators/SpecPos1" index="0" instance=ExtResource( 2 )]
+
+[node name="Misa" parent="Spectators/SpecPos2" index="0" instance=ExtResource( 3 )]

@@ -9,10 +9,6 @@
 
 [node name="TrainingGrounds" instance=ExtResource( 3 )]
 
-[node name="Place" parent="." index="0"]
-cell_size = Vector2( 16, 16 )
-format = 1
-
 [node name="PracticeParty" parent="Characters/NPCs" index="0" instance=ExtResource( 2 )]
 
 [node name="Misa" parent="Characters/NPCs/PracticeParty" index="0" instance=ExtResource( 6 )]
@@ -32,7 +28,7 @@ interaction_dialog = "timeline-1641309679.json"
 position = Vector2( 138, 70 )
 lvl = 4
 interaction_dialog = "timeline-1641069545.json"
-after_battle_dialog = "timeline-1641313003.json"
+after_battle_dialog = "timeline-1641312310.json"
 battle_path = "res://source/game/world/overworld/freegrounds/training_grounds/practice/battle_practice.tscn"
 
 [node name="Spectators" parent="Characters/NPCs" index="1" instance=ExtResource( 2 )]
@@ -40,10 +36,6 @@ battle_path = "res://source/game/world/overworld/freegrounds/training_grounds/pr
 [node name="Kir" parent="Characters/NPCs/Spectators" index="0" instance=ExtResource( 7 )]
 position = Vector2( 750, 83 )
 interaction_dialog = "timeline-1641320903.json"
-after_battle_dialog = "timeline-1641313003.json"
 
 [node name="Allies" parent="Characters" index="1"]
 position = Vector2( 52, 180 )
-
-[node name="bgm" parent="." index="2"]
-autoplay = true

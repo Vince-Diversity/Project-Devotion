@@ -20,10 +20,11 @@ func ready_skill_learning():
 
 func set_lvl(new_lvl):
 	.set_lvl(new_lvl)
-	var new_skill = dormant_skills[new_lvl]
-	if new_skill != null:
+	if dormant_skills.has(new_lvl):
+		var new_skill = dormant_skills[new_lvl]
 		aspect_skills.add_child(new_skill)
-	return new_skill
+		return new_skill
+	else: return null
 
 func input_direction():
 	.input_direction()

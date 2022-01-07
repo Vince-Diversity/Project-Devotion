@@ -1,0 +1,13 @@
+{
+	"events": [
+		{
+			"change_scene": "res://source/game/world/cutscene/cirruseng/early_ending_scene.tscn",
+			"event_id": "dialogic_041"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1641498834.json",
+		"name": "early-change-v01"
+	}
+}

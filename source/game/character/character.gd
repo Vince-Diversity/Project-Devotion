@@ -17,7 +17,6 @@ var inputted_direction := Vector2.ZERO
 var snapped_direction := Vector2.ZERO
 var speed := 100
 var velocity := Vector2()
-var anim_id: int
 onready var collision_box = $CollisionBox
 onready var following_area = $FollowingArea
 onready var interaction_area = $InteractionArea
@@ -145,11 +144,13 @@ func get_next_ally():
 		return self
 	return party.get_party_ordered()[party_order - 1]
 
-func get_true_anim_id() -> int:
-	if character_visual.is_flipped():
-		return Kw.Anims.RIGHT
-	else:
-		return anim_id
+func get_direction(true_anim_name) -> Vector2:
+	for anim_id in Kw.anim.keys():
+		if Kw.anim[anim_id] == true_anim_name:
+			for direction in Kw.anim_map.keys():
+				if Kw.anim_map[direction] == anim_id:
+					return direction
+	return Vector2.DOWN
 
 func _on_FollowingArea_area_exited(area):
 	if state != Kw.OwStates.BATTLING:

@@ -7,7 +7,7 @@
 [ext_resource path="res://source/game/character/npc/npcs/kir_tournament.tscn" type="PackedScene" id=5]
 [ext_resource path="res://source/game/character/npc/npcs/kamo_practice.tscn" type="PackedScene" id=6]
 [ext_resource path="res://source/game/character/npc/npcs/WiseKies/Mizaru.tscn" type="PackedScene" id=7]
-[ext_resource path="res://source/game/character/npc/npcs/ken_finale.tscn" type="PackedScene" id=8]
+[ext_resource path="res://source/game/character/npc/npcs/ken_tournament.tscn" type="PackedScene" id=8]
 [ext_resource path="res://source/game/character/npc/npcs/WiseKies/Kikazaru.tscn" type="PackedScene" id=9]
 [ext_resource path="res://source/game/character/npc/npcs/WiseKies/Iwazaru.tscn" type="PackedScene" id=10]
 [ext_resource path="res://source/game/character/npc/npcs/clara_finale.tscn" type="PackedScene" id=11]
@@ -45,7 +45,7 @@ interaction_dialog = "timeline-1641309679.json"
 position = Vector2( 186, 123 )
 interaction_dialog = "timeline-1641069545.json"
 after_battle_dialog = "timeline-1641312310.json"
-battle_path = "res://source/game/world/overworld/freegrounds/battle_training_grounds/practice_battle.tscn"
+battle_path = "res://source/game/world/overworld/freegrounds/training_grounds/practice/battle_practice.tscn"
 
 [node name="Kies" parent="Characters/NPCs" index="1" instance=ExtResource( 4 )]
 position = Vector2( 419, 105 )
@@ -60,7 +60,8 @@ party_order = 1
 
 [node name="Mizaru" parent="Characters/NPCs/Kies" index="2" instance=ExtResource( 7 )]
 position = Vector2( 8, -18 )
-battle_path = "res://source/game/world/overworld/freegrounds/battle_training_grounds/battle_kies.tscn"
+after_battle_dialog = "timeline-1641498549.json"
+battle_path = "res://source/game/world/overworld/freegrounds/training_grounds/tourney_2/battle_kies.tscn"
 
 [node name="FinalParty" parent="Characters/NPCs" index="2" instance=ExtResource( 4 )]
 
@@ -72,7 +73,7 @@ party_order = 1
 position = Vector2( 347, 103 )
 battle_order = 2
 interaction_dialog = "timeline-1641333067.json"
-battle_path = "res://source/game/world/overworld/freegrounds/battle_training_grounds/battle_tournament_finale.tscn"
+battle_path = "res://source/game/world/overworld/freegrounds/training_grounds/battle_training_grounds/battle_tournament_finale.tscn"
 
 [node name="Luna" parent="Characters/NPCs/FinalParty" index="2" instance=ExtResource( 2 )]
 position = Vector2( 296, 97 )
@@ -92,12 +93,15 @@ party_order = 1
 default_anim_name = "left"
 interaction_dialog = "timeline-1641320903.json"
 
-[node name="Ken" parent="Characters/NPCs/Teacher" index="2" instance=ExtResource( 8 )]
+[node name="Quick" parent="Characters/NPCs" index="4" instance=ExtResource( 4 )]
+
+[node name="Ken" parent="Characters/NPCs/Quick" index="0" instance=ExtResource( 8 )]
 position = Vector2( 56, 109 )
 battle_order = 1
-party_order = 1
 default_anim_name = "right"
-interaction_dialog = "timeline-1641399112.json"
+interaction_dialog = "timeline-1641499048.json"
+after_battle_dialog = "timeline-1641498834.json"
+battle_path = "res://source/game/world/battle/battle_mode.tscn"
 
 [node name="Allies" parent="Characters" index="1"]
 position = Vector2( 135, 176 )

@@ -3,18 +3,20 @@ class_name Game
 
 const place_data_key := "place"
 const party_data_key := "party"
+const opponents_data_key := "opponents"
 const position_data_key := "position"
 var save_dir: String
 var save_name: String
-var overworld_path: String
 var current_overworld: GameWorld
 var current_battle: BattleMode
 var party_dict := {"node": [], "position": [], "direction": []}
 var opponents_dict := {"node": [], "position": [], "direction": []}
+var opponents_party: Party
 onready var SAVE_KEY := name
 onready var save_path := save_dir.plus_file(save_name)
 onready var ally_scene := preload("res://source/game/character/ally/ally.tscn")
 onready var npc_scene := preload("res://source/game/character/npc/npc.tscn")
+onready var party_scene = preload("res://source/game/world/party.tscn")
 
 func _ready():
 	ready_saver()
@@ -30,35 +32,45 @@ func ready_saver():
 
 func save(save_game: Resource):
 	save_game.data[SAVE_KEY] = {
-		place_data_key: overworld_path,
-		party_data_key: make_party_save_entry(),
-		position_data_key: current_overworld.allies.get_leader().global_position
+		place_data_key: current_overworld.filename,
+		party_data_key: make_party_save_entry(party_dict),
+		position_data_key: current_overworld.allies.get_leader().global_position,
 	}
+	if opponents_party != null:
+		save_game.data[SAVE_KEY][opponents_data_key] = make_party_save_entry(opponents_dict)
 
-func make_party_save_entry():
-	var ally_dict := {}
-	for ally in party_dict["node"]:
+func make_party_save_entry(dict):
+	var ch_dict := {}
+	for ch in dict["node"]:
 		var content := {}
-		content["aspect"] = ally.aspect
-		content["level"] = ally.lvl
-		content["party_order"] = ally.party_order
-		content["battle_order"] = ally.battle_order
+		content["aspect"] = ch.aspect
+		content["level"] = ch.lvl
+		content["party_order"] = ch.party_order
+		content["battle_order"] = ch.battle_order
 		content["visuals"] = {
-			"hair": ally.hair.frames,
-			"skin": ally.skin.frames,
-			"body": ally.body.frames,
-			"accessories": ally.accessories.frames
+			"hair": ch.hair.frames,
+			"skin": ch.skin.frames,
+			"body": ch.body.frames,
+			"accessories": ch.accessories.frames
 		}
-		ally_dict[ally.name] = content
-	return ally_dict
+		content["position"] = ch.global_position
+		content["direction"] = ch.snapped_direction
+		ch_dict[ch.name] = content
+	return ch_dict
 
 func load_save(save_game: Resource):
 	var save_data = save_game.data[SAVE_KEY]
 	load_place(save_data)
-	load_party(save_data)
+	load_party(party_data_key, save_data, ally_scene,
+		current_overworld.allies, party_dict)
+	if save_data.has(opponents_data_key):
+		opponents_party = party_scene.instance()
+		current_overworld.npcs.add_child(opponents_party)
+		load_party(opponents_data_key, save_data, npc_scene,
+			opponents_party, opponents_dict)
 
 func load_place(save_data: Dictionary):
-	overworld_path = save_data[place_data_key]
+	var overworld_path = save_data[place_data_key]
 	var place_scene = load(overworld_path)
 	load_scene(place_scene)
 
@@ -66,35 +78,39 @@ func load_scene(place_scene: PackedScene):
 	current_overworld = place_scene.instance()
 	add_child(current_overworld)
 
-func load_party(save_data: Dictionary):
-	var ally_dict = save_data[party_data_key]
+func load_party(data_key, save_data: Dictionary, ch_scene, ch_party, ch_party_dict):
+	var ch_dict = save_data[data_key]
 	var content
 	var visuals
-	var ally_names = ally_dict.keys()
-	var allies := Utils.Array(ally_names.size())
-	var ally
-	for ally_name in ally_names:
-		content = ally_dict[ally_name]
-		ally = ally_scene.instance()
-		ally.name = ally_name
-		ally.aspect = content["aspect"]
-		ally.lvl = content["level"]
-		ally.party_order = content["party_order"]
-		ally.battle_order = content["battle_order"]
-		allies[ally.party_order] = ally
-	allies.invert()
-	for allyo in allies:
-		party_dict["node"].append(allyo)
-		current_overworld.allies.add_child(allyo)
-		allyo.global_position = current_overworld.allies.global_position
-		content = ally_dict[allyo.name]
+	var ch_names = ch_dict.keys()
+	var characters := Utils.Array(ch_names.size())
+	var ch
+	for ch_name in ch_names:
+		content = ch_dict[ch_name]
+		ch = ch_scene.instance()
+		ch.name = ch_name
+		ch.aspect = content["aspect"]
+		ch.lvl = content["level"]
+		ch.party_order = content["party_order"]
+		ch.battle_order = content["battle_order"]
+		characters[ch.party_order] = ch
+	characters.invert()
+	for allyo in characters:
+		content = ch_dict[allyo.name]
+		ch_party_dict["node"].append(allyo)
+		ch_party.add_child(allyo)
+#		allyo.global_position = ch_party.global_position
+		ch_party_dict["position"].append(content["position"])
+		ch_party_dict["direction"].append(content["direction"])
+		content = ch_dict[allyo.name]
 		visuals = content["visuals"]
 		allyo.accessories.frames = visuals["accessories"]
 		allyo.hair.frames = visuals["hair"]
 		allyo.skin.frames = visuals["skin"]
 		allyo.body.frames = visuals["body"]
-	current_overworld.allies.assign_members()
-	current_overworld.allies.global_position = save_data[position_data_key]
+	ch_party.assign_members()
+#	ch_party.global_position = save_data[position_data_key]
+	_restore_party(ch_party_dict)
 
 func _on_Events_save_game():
 	var save_game = SaveGame.new()
@@ -118,6 +134,7 @@ func _on_NPC_load_battle(battle_scene: PackedScene, foe_party: Party):
 	Transitions.fade_out()
 	yield(Transitions, "transition_done")
 	_store_party_props(party_dict)
+	opponents_party = foe_party
 	opponents_dict["node"] = foe_party.get_party_ordered()
 	_store_party_props(opponents_dict)
 	var battle_mode = battle_scene.instance()
@@ -132,6 +149,8 @@ func _on_NPC_load_battle(battle_scene: PackedScene, foe_party: Party):
 	yield(Transitions, "transition_done")
 
 func _store_party_props(ch_dict):
+	ch_dict["position"] = []
+	ch_dict["direction"] = []
 	for ch in ch_dict["node"]:
 		ch_dict["position"].append(ch.get_global_position())
 		ch_dict["direction"].append(ch.snapped_direction)
@@ -152,18 +171,23 @@ func _on_Battle_load_overworld(foe_party, next_overworld_path):
 	if next_overworld_path.empty():
 		add_child(current_overworld)
 	else:
+		current_overworld.npcs.remove_child(foe_party)
 		current_overworld = load(next_overworld_path).instance()
 		add_child(current_overworld)
 		current_overworld.npcs.add_child(foe_party)
-	_restore_party(party_dict, current_overworld.allies)
-	_restore_party(opponents_dict, foe_party)
+	for ch in party_dict["node"]:
+		current_overworld.allies.add_child(ch)
+	_restore_party(party_dict)
+	for ch in opponents_dict["node"]:
+		foe_party.add_child(ch)
+		ch.interaction_dialog = ""
+	_restore_party(opponents_dict)
 	_after_battle_preps(current_overworld, foe_party)
 
-func _restore_party(dict, overworld_party: Party):
+func _restore_party(dict):
 	var ch
 	for i in dict["node"].size():
 		ch = dict["node"][i]
-		overworld_party.add_child(ch)
 		ch.set_global_position(dict["position"][i])
 		ch.turn_to_direction(dict["direction"][i])
 

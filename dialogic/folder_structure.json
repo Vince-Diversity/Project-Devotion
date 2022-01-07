@@ -81,26 +81,29 @@
 				"Cirruseng": {
 					"files": [
 						"timeline-1639403895.json",
-						"timeline-1641479061.json"
+						"timeline-1641479061.json",
+						"timeline-1641498549.json",
+						"timeline-1641498834.json"
 					],
 					"folders": {
 
 					},
 					"metadata": {
 						"color": null,
-						"folded": false
+						"folded": true
 					}
 				},
 				"Menu": {
 					"files": [
-						"timeline-1641486801.json"
+						"timeline-1641486801.json",
+						"timeline-1641500068.json"
 					],
 					"folders": {
 
 					},
 					"metadata": {
 						"color": null,
-						"folded": false
+						"folded": true
 					}
 				},
 				"TrainingGrounds": {
@@ -126,22 +129,12 @@
 						},
 						"final_battle": {
 							"files": [
-								"timeline-1641333067.json"
-							],
-							"folders": {
-
-							},
-							"metadata": {
-								"color": null,
-								"folded": true
-							}
-						},
-						"npcs": {
-							"files": [
-								"timeline-1641320903.json",
-								"timeline-1641332082.json",
+								"timeline-1641333067.json",
+								"timeline-1641521570.json",
 								"timeline-1641333976.json",
-								"timeline-1641399112.json"
+								"timeline-1641332082.json",
+								"timeline-1641523263.json",
+								"timeline-1641524675.json"
 							],
 							"folders": {
 
@@ -149,6 +142,24 @@
 							"metadata": {
 								"color": null,
 								"folded": false
+							}
+						},
+						"npcs": {
+							"files": [
+								"timeline-1641320903.json",
+								"timeline-1641399112.json",
+								"timeline-1641499048.json",
+								"timeline-1641510299.json",
+								"timeline-1641510473.json",
+								"timeline-1641518395.json",
+								"timeline-1641522969.json"
+							],
+							"folders": {
+
+							},
+							"metadata": {
+								"color": null,
+								"folded": true
 							}
 						},
 						"practice_battle": {
@@ -160,6 +171,21 @@
 								"timeline-1641309679.json",
 								"timeline-1641310514.json",
 								"timeline-1641312310.json"
+							],
+							"folders": {
+
+							},
+							"metadata": {
+								"color": null,
+								"folded": false
+							}
+						},
+						"semifinale": {
+							"files": [
+								"timeline-1641518993.json",
+								"timeline-1641519313.json",
+								"timeline-1641519580.json",
+								"timeline-1641521232.json"
 							],
 							"folders": {
 

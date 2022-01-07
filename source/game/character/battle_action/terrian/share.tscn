@@ -5,6 +5,7 @@
 
 [node name="Share" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-true_name = "Equilibrium"
+true_name = "Symbiosis"
 lvl_requirement = 1
 targets_allies = true
+description = "Share up to half the user's hp with ally."

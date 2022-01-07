@@ -20,7 +20,7 @@ __meta__ = {
 [node name="Wishmaker" type="AnimatedSprite" parent="."]
 position = Vector2( 160, 64 )
 frames = ExtResource( 7 )
-frame = 4
+frame = 3
 playing = true
 
 [node name="Title" type="CenterContainer" parent="."]
@@ -53,18 +53,18 @@ __meta__ = {
 [node name="LoadGame" parent="Options" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 14.0
+margin_top = 2.0
 margin_right = 320.0
-margin_bottom = 34.0
+margin_bottom = 22.0
 focus_neighbour_bottom = NodePath("../NewGame")
 text = "Load Game"
 
 [node name="NewGame" parent="Options" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 38.0
+margin_top = 26.0
 margin_right = 320.0
-margin_bottom = 58.0
+margin_bottom = 46.0
 focus_neighbour_top = NodePath("../LoadGame")
 focus_neighbour_right = NodePath("../LoadDevMode")
 focus_neighbour_bottom = NodePath("../LoadDevMode")
@@ -73,11 +73,21 @@ text = "New Game"
 [node name="LoadDevMode" parent="Options" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 62.0
+margin_top = 50.0
 margin_right = 320.0
-margin_bottom = 82.0
+margin_bottom = 70.0
 focus_neighbour_top = NodePath("../NewGame")
+focus_neighbour_bottom = NodePath("../Quit")
 text = "Load Dev Mode"
+
+[node name="Quit" parent="Options" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 74.0
+margin_right = 320.0
+margin_bottom = 94.0
+focus_neighbour_top = NodePath("../LoadDevMode")
+text = "Quit"
 
 [node name="Controls" type="CenterContainer" parent="."]
 anchor_left = 1.0
@@ -106,3 +116,4 @@ stream = ExtResource( 8 )
 [connection signal="pressed" from="Options/LoadGame" to="." method="_on_LoadGame_pressed"]
 [connection signal="pressed" from="Options/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="pressed" from="Options/LoadDevMode" to="." method="_on_LoadDevMode_pressed"]
+[connection signal="pressed" from="Options/Quit" to="." method="_on_Quit_pressed"]

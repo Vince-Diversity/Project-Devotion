@@ -34,3 +34,6 @@ func _on_LoadGame_pressed():
 
 func _on_NewGame_pressed():
 	emit_signal("enter_new_game", Kw.Aspects.TIME)
+
+func _on_Quit_pressed():
+	get_tree().quit()

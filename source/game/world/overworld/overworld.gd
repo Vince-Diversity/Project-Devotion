@@ -2,6 +2,7 @@ extends GameWorld
 class_name Overworld
 
 const save_timeline = "save-prompt"
+const exit_timeline = "main-menu-prompt"
 onready var allies = $Characters/Allies
 onready var npcs = $Characters/NPCs
 
@@ -16,7 +17,9 @@ func _physics_process(_delta):
 				if Input.is_action_just_pressed("ui_accept"):
 					interact(allies)
 				if Input.is_action_just_pressed("ui_menu"):
-					prompt_menu()
+					prompt_menu(save_timeline)
+				if Input.is_action_just_pressed("ui_exit"):
+					prompt_menu(exit_timeline)
 				for ally in get_party_ordered(allies):
 					ally.roam()
 			Kw.OwStates.INTERACTING:
@@ -37,7 +40,8 @@ func interact(party):
 		if area is InteractionArea:
 			var responder = area.character
 			if responder is NPC:
-				interact_with_npc(party, asker, responder)
+				if !responder.interaction_dialog.empty():
+					interact_with_npc(party, asker, responder)
 				break
 
 func interact_with_npc(party: Party, asker: Character, npc: NPC):
@@ -52,9 +56,9 @@ func interact_with_npc(party: Party, asker: Character, npc: NPC):
 func dialogic_turn_face(args: Array):
 	get_node(args[0]).turn_face(get_node(args[1]))
 
-func prompt_menu():
+func prompt_menu(timeline: String):
 	allies.set_state(Kw.OwStates.INTERACTING)
-	var d = Dialogic.start(save_timeline)
+	var d = Dialogic.start(timeline)
 	yield(_dialogic_helper(d), "completed")
 	allies.set_state(Kw.OwStates.ROAMING)
 

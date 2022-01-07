@@ -10,6 +10,7 @@
 [node name="PracticeBattle" instance=ExtResource( 4 )]
 starting_dialog = "timeline-1639592199.json"
 end_action_dialogs = [ ExtResource( 5 ), ExtResource( 6 ) ]
+new_overworld_path = "res://source/game/world/overworld/freegrounds/training_grounds/tourney_1/tourney_1_training_grounds.tscn"
 
 [node name="Place" parent="." index="1"]
 tile_set = ExtResource( 1 )

@@ -7,3 +7,4 @@
 script = ExtResource( 1 )
 true_name = "Lightning"
 lvl_requirement = 2
+description = "Deal half base damage 1-3 times."

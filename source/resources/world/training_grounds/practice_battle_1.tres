@@ -6,5 +6,6 @@
 script = ExtResource( 1 )
 timeline = "timeline-1640762586.json"
 event_id = "share_cancelled_full_hp"
+event_user_name = ""
 event_target_name = "Miranda"
 required_names = [  ]

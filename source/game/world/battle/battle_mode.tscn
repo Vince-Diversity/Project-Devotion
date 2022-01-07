@@ -161,4 +161,5 @@ margin_bottom = 13.0
 
 [node name="Bgm" type="AudioStreamPlayer" parent="."]
 
+[connection signal="describe_option" from="BattleUI/OptionUI" to="BattleUI/NarrativeDisplay/NarrativeBackground/NarrativeTextContainer/Narrative" method="_on_OptionUI_describe_option"]
 [connection signal="stats_requested" from="BattleUI/OptionUI" to="." method="_on_OptionUI_stats_requested"]

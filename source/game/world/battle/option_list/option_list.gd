@@ -13,8 +13,8 @@ var option_ui
 var battlers: Array
 
 func _ready():
-	grab_focus()
 	ready_battle_ui_connection()
+	grab_focus()
 
 func ready_battle_ui_connection():
 	var err = connect("action_decided", option_ui, "_on_OptionList_action_decided")

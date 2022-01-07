@@ -5,7 +5,7 @@
 [ext_resource path="res://source/resources/aspect/forcian/forcian.tres" type="Resource" id=3]
 
 [node name="Luna" instance=ExtResource( 1 )]
-lvl = 2
+lvl = 4
 
 [node name="MindAdaptiveSingleSkill" parent="MindNode" index="0" instance=ExtResource( 2 )]
 preferred_skill_name = "Share"

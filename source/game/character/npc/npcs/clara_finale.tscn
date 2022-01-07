@@ -5,6 +5,7 @@
 [ext_resource path="res://source/resources/aspect/forcian/forcian.tres" type="Resource" id=3]
 
 [node name="Clara" instance=ExtResource( 1 )]
+lvl = 4
 
 [node name="MindTurnKO" parent="MindNode" index="0" instance=ExtResource( 2 )]
 default_fixated_aspect = ExtResource( 3 )
